@@ -1,0 +1,65 @@
+(function(){
+    
+	mstrmojo.requiresCls(
+            "mstrmojo.Container");
+	
+	function _makeTable(txt, ind, img){
+		// table with 1 row
+		var table = '<div> <table border="0"> <tr>';
+		
+		for (i = 0; i < ind; i++){
+			table += '<td width="13px"></td>'; // add empty spaces to the table
+		}
+		
+		// add the icon
+		table += '<td><span class="mstrmojo-ArchitectListIcon32 t'+ img +'"></span></td>';
+		// add the text
+		table += '<td>' + txt + '</td>';
+		
+		// Close the table
+		table += '</tr> </table> </div>';
+		
+        return table;
+	}
+	
+    /**
+	 * <p>
+	 * Widget that represents a DB Table Row
+	 * </p>
+	 * 
+	 * @class
+	 * @extends mstrmojo.Container
+	 */
+    mstrmojo.DBTableRow = mstrmojo.declare(
+    		// superclass
+    		mstrmojo.Container,
+    		
+    		// mixins
+    		null,
+    		
+    		{
+    			/**
+				 * @Class name
+				 */
+    			scriptClass: "mstrmojo.DBTableRow",
+    			
+    			image: 'Attribute.bmp',
+    			
+    			indent: 0,
+    			
+	   	        text: '',
+	   	        
+	   	        id:'',
+	   	        
+	   	        draggable:true,
+	   	        	
+    			markupString: '<div id="{@id}" class="mstrmojo-DBTableRow {@cssClass}" style="{@cssText}" mstrAttach:click>' +
+                				'</div>',
+    					 		
+                markupMethods: {
+                	ontextChange: function(){  this.domNode.innerHTML = _makeTable(this.text, this.indent, this.image); }
+	            }
+
+    		}	    
+	    );
+})();

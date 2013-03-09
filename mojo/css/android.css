@@ -1,0 +1,2781 @@
+/* CSS Reset from "http://meyerweb.com/eric/tools/css/reset/" */
+
+html, body, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, font, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    outline: 0;
+    font-size: 100%;
+}
+h1, h2, h3, h4, h5, h6, em, strong, b {
+    font-weight: normal;
+}
+body {
+    line-height: 1;
+    background-color: #ffffff;
+}
+
+blockquote, q {
+    quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+    content: '';
+    content: none;
+}
+
+/* remember to define focus styles! */
+:focus {
+    outline: 0;
+}
+
+/* remember to highlight inserts somehow! */
+ins {
+    text-decoration: none;
+}
+del {
+    text-decoration: line-through;
+}
+
+/* tables still need 'cellspacing="0"' in the markup */
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+* {
+   -webkit-tap-highlight-color: rgba(0,0,0,0);  /* No touch highlights */
+}
+
+
+/** end reset **/
+
+html {
+    height: 100%;
+}
+
+body {
+    background: #000;
+    color: #000;
+    font-family: Helvetica;
+    font-size: 10pt;
+    height: 100%;
+    overflow: hidden; /** Change to 'auto' to view in desktop web browser **/
+    -webkit-user-select:none;
+}
+
+
+/*
+ * work-around for WebKit bug that prevents styling SELECT tags on Android
+ */
+select {
+    -webkit-appearance: listbox;
+}
+select, input {
+    border: 1px solid #999;
+    border-radius: 6px;
+    line-height: 24px;
+    margin-bottom: 10px;
+}
+
+/*
+ * Webkit's translate3d does not respect z-index on table rows. Hence, disable it.
+ * Since all grids will be scrollable in documents, disable it for all Xtabs and not just Interactive Grids.
+ */
+.mstrmojo-Xtab-content tbody:nth-child(1) * {
+    -webkit-transform: none;
+}
+
+.mstrmojo-XtabZone table {
+                border-collapse: separate;
+}
+
+.mstrmojo-MobileBooklet,
+.mstrmojo-MobileBooklet .mstrmojo-Mobilebooklet-slider {
+    height: 100%;
+    position: relative;
+    width: 100%;
+    -webkit-transform: translate3d(0, 0, 0);
+}
+
+.mstrmojo-MobileBookletPage {
+    background-color: transparent;
+    height: 100%;
+    left: 0;
+    overflow: hidden;
+    position: absolute;
+    top: 0;
+    width: 100%;
+}
+
+.mstrmojo-MobileBookletPage:nth-child(2) {
+    -webkit-transform: translate(100%, 0);
+}
+
+.mstrmojo-RootViewMessage {
+    border: 1px solid #313131;
+    color: #bebebe;
+    font-size: 22pt;
+    display: none;
+    left: -1000px;
+    padding: 20px;
+    min-width: 200px;
+    line-height: 36px;
+    position: absolute;
+    z-index: 1000;
+    -webkit-transition: opacity 400ms;
+    background-color: rgba(50, 50, 50, .9);
+    background-position: 90% 50%;
+    background-repeat: no-repeat; 
+    background-image: url(images/Android/loader_hdpi_ANIMATED.gif);
+}
+
+/* All Android title bars - main and sub-title */
+.mstrmojo-AndroidView-Title {
+    background-color: #1F1F1F;
+    border-top: 1px solid #444;
+    border-bottom: 1px solid #444;
+    color: #FFF;
+    font-size: 18pt;
+    line-height: 48px;
+    overflow: hidden;
+    padding: 0 10px 0 10px;
+    text-overflow: ellipsis;
+    text-shadow: 0 0px 4px #000;    
+    white-space: nowrap;
+}
+
+
+/* main title bar appears at the top of every screen */
+.mstrmojo-AndroidView-MainTitle {
+    border-top: 0 !important;
+    background: transparent url(images/Android/homescreen/title_bg.png) 0 0 repeat;
+    overflow: hidden;
+}
+
+.mstrmojo-AndroidView-MainTitle .mstrmojo-AndroidView-Title {
+    background: transparent url(images/Android/homescreen/title_glow.png) 50% 100% no-repeat;
+    font-weight: bold;
+    text-align: center;
+}
+
+.mstrmojo-AndroidView > div:nth-child(2) {
+    position: relative;
+}
+
+.mstrmojo-ListBase {
+    overflow: hidden;
+}
+
+.mstrmojo-Doc .pre-loader {
+    background: #000 url(images/Android/layout-loader.gif) 50% 50% no-repeat;
+    height: 100%;
+    width: 100%;
+}
+
+.mstrmojo-DocLayoutViewer-layout {
+    background: transparent;
+    border: none;
+}
+
+.mstrmojo-message {
+    background-color: #000000;
+    color: #ffffff;
+    font-size: 14pt;
+}
+.mstrmojo-DocLayoutViewer-layout .mstrmojo-message {
+    background-color: #ffffff;
+    color: #000000;
+}
+
+.folder-browser {
+    background: #ffffff;
+    overflow: hidden;
+}
+
+.folder-browser .item {
+    border-bottom: 1px solid #bdbebd;
+    color: #000;
+    cursor: pointer;
+    height: 80px;
+    position: relative;
+    -webkit-transition-property: background-color;
+}
+
+.folder-browser .item.selected {
+    background-color: #99CC33;
+}
+
+.folder-browser h3,
+.folder-browser h4 {
+    margin-left: 89px;
+    height: 50%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.folder-browser h3 {
+    font-size: 18pt;
+    line-height: 2em;
+    -webkit-transform: translateY(20px);
+}
+
+.folder-browser h4 {
+    color: #7f7f7f;
+    display: none;
+    line-height: 1.8em;
+    font-size: 14pt;
+}
+
+.folder-browser .item.desc h3 {
+    -webkit-transform: translateY(0);
+}
+
+.folder-browser .item.desc h4 {
+    display: block;
+}
+
+.folder-browser .item div {
+    background: transparent 50% 50% no-repeat;
+    height: 64px;
+    position: absolute;
+    width: 64px;
+}
+
+.folder-browser .item > div {
+    left: 10px;
+    top: 10px;
+}
+
+.folder-browser .item.tyProject div {
+    background-image: url(images/Android/homescreen/shared_library.png);
+}
+
+.folder-browser .item.tyProject.disabled div {
+    background-image: url(images/Android/homescreen/shared_library_gray.png);
+}
+
+.folder-browser .item.ty2048 > div {
+    background-image: url(images/Android/folder-browser/folder.png);
+}
+
+
+.folder-browser .item.ty2048.disabled > div {
+    background-image: url(images/Android/folder-browser/folder_gray.png);
+}
+
+.folder-browser .item.ty14081 > div {
+    background-image: url(images/Android/folder-browser/document.png);
+}
+
+.folder-browser .item.ty14081.disabled > div {
+    background-image: url(images/Android/folder-browser/document_gray.png);
+}
+
+.folder-browser .item.ty768 > div,
+.folder-browser .item.ty774 > div {
+        background-image: url(images/Android/folder-browser/grid.png);
+}
+
+.folder-browser .item.ty768.disabled > div,
+.folder-browser .item.ty774.disabled > div {
+        background-image: url(images/Android/folder-browser/grid_gray.png);
+}
+
+.folder-browser .item.ty769 > div {
+    background-image: url(images/Android/folder-browser/graph.png);
+}
+
+.folder-browser .item.ty769.disabled > div {
+    background-image: url(images/Android/folder-browser/graph_gray.png);
+}
+
+.folder-browser .item.isc > div > div {
+    background-image: url(images/Android/folder-browser/shortcut.png);
+    background-position: 0 100%;
+    bottom: 0;
+    left: 0;
+    position: absolute;
+}
+
+/*
+.folder-browser .item.disabled {
+    background-color: #e0e0e0;
+}
+*/
+
+.mstrmojo-touch-scrollBar {
+    xbackground: rgba(123, 123, 123, 0.85);
+    border: 1px solid #635d63; 
+    height: 6px;
+    opacity: 0;
+    position: absolute;
+    width: 6px;
+    z-index: 5;
+    -webkit-border-radius: 4px;
+    -webkit-transition: opacity 400ms;
+    -webkit-transform-origin: 0 0;
+}
+
+.mstrmojo-touch-scrollBar.yAxis {
+    background: -webkit-gradient(linear, left top, right top, from(#b5b6b5), to(#949294));
+}
+
+.mstrmojo-touch-scrollBar.xAxis {
+    background: -webkit-gradient(linear, left top, left bottom, from(#b5b6b5), to(#949294));
+}
+
+.xtab-td > div.overlay {
+    background: rgba(173, 93, 8, .7);
+    border: 1px solid rgb(173, 93, 8);
+    position: absolute;
+}
+
+/** Empty grid message **/
+.mstrmojo-Xtab > div:first-child > div:first-child {  
+    padding: 20px;
+}
+
+.mstrmojo-Dialog {
+    opacity: 1;
+    -webkit-transition: opacity 400ms;
+}
+
+.dialog-expand {
+    -webkit-transition: -webkit-transform 250ms;
+    -webkit-transform: scale3d(.75, .75, 1);
+}
+
+.dialog-expand.expanded {
+    -webkit-transform: scale3d(1, 1, 1);
+}
+
+.mstrmojo-Dialog.modal .mstrmojo-Editor-curtain {
+    background-color: rgba(0, 0, 0, .60);
+    opacity: 1;
+}
+
+/** Editors **/
+
+/** Basic Editor **/
+
+.mstrmojo-Editor {
+    background-color: #fff;
+    border: 2px solid #5C5C5C;
+    border-radius: 1px;
+}
+
+.mstrmojo-Editor-titlebar {
+    background: #BDBEBD;
+    height: 12px;
+    border-top-left-radius: 1px;
+    border-top-right-radius: 1px;    
+}
+
+.mstrmojo-Editor-title {
+    color: #fff;
+    font-size: 22pt;
+    line-height: 32px;
+    height: auto;
+    min-height: 36px;
+    padding: 21px 0 15px 15px;
+}
+
+.mstrmojo-Editor-content {
+    border-radius: 0;
+    padding: 0;
+}
+
+.mstrmojo-Dialog .mstrmojo-Editor-buttons {
+    background: #bdbebd;
+    border-bottom-left-radius: 1px;
+    border-bottom-right-radius: 1px;
+    margin: 0;
+    padding: 5px 10px;
+}
+
+.mstrmojo-Dialog .mstrmojo-Editor-buttons .mstrmojo-Button {
+    background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#ffffff), to(#bdbebe));
+    border: 2px solid #656565 !important;
+    border-radius: 0;
+    color: #000;
+    height: 50px !important;
+    vertical-align: middle;
+}
+
+.mstrmojo-Button.glow {
+    -webkit-box-shadow: #9C3 0px 0px 10px;
+    background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#B1E732), to(#9C3)) !important;
+}
+
+.mstrmojo-Dialog .mstrmojo-Editor-buttons .mstrmojo-Button-text {
+    font-size: 18pt;
+    height: 100%;
+    line-height: 50px;
+    text-overflow: ellipsis;
+    text-align: center;
+}
+
+.mstrmojo-Dialog .mstrmojo-Editor-buttons .mstrmojo-Button {
+    margin: 0;
+    padding: 0;
+}
+
+/** Basic Editor: END **/
+
+/** Basic Editor with title **/
+
+.has-ttl .mstrmojo-Editor-titlebar {
+    background: #000;
+    min-height: 75px;
+    height: 75px;
+}
+
+.mstrmojo-Editor-titlebar-button {
+    background: transparent none 0px 0px no-repeat;
+    height: 45px;
+    left: auto;
+    min-height:45px;
+    min-width: 45px;
+    position: absolute;
+    right: 15px;
+    top: 15px;
+    width: 45px;
+}
+
+.mstrmojo-Editor-titlebar-button.btnBarcode {
+    background-image: url(images/Android/icons/barCode_light.png);
+}
+
+.mstrmojo-Editor-titlebar-button.btnBarcode.btnLeft {
+	right: 75px;
+}
+
+.mstrmojo-Editor-titlebar-button.btnSearch {
+    background-image: url(images/Android/icons/search_light.png);
+}
+
+.mstrmojo-Editor-titlebar-button.btnGeo {
+    background-image: url(images/Android/icons/gps_light.png);
+}
+
+/** Basic Editor with title: END **/
+
+/** Specific Editors **/
+
+.mstrmojo-Dialog.has-ttl.paging-editor .mstrmojo-Editor-titlebar {
+    
+}
+
+.mstrmojo-Dialog.has-ttl.grouping-editor .mstrmojo-Editor-titlebar {
+   
+}
+
+/** Specific Editors: END **/
+
+
+/** Anchored Popup **/
+
+.mstrmojo-Dialog.anchor .mstrmojo-Editor {
+    background: transparent;
+    border-radius: 0;
+    border-width: 38px 38px 38px 38px;
+    -webkit-border-image: url(images/Android/tablet/popup/bgPopup.png) 38 38 38 38;
+}
+
+.mstrmojo-Dialog.anchor {
+    background: transparent;
+}
+
+.mstrmojo-Dialog.anchor .mstrmojo-Editor-tip {
+    background: transparent url(images/Android/tablet/popup/arrowUp.png) top left no-repeat;
+    height: 27px;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 48px;
+    z-index: 1001;
+}
+
+.mstrmojo-Dialog.anchor .mstrmojo-Editor-tip.left,
+.mstrmojo-Dialog.anchor .mstrmojo-Editor-tip.right {
+    height: 48px;
+    width: 27px;
+}
+
+.mstrmojo-Dialog.anchor .mstrmojo-Editor-tip.right {
+    background-image: url(images/Android/tablet/popup/arrowRight.png);
+}
+
+.mstrmojo-Dialog.anchor .mstrmojo-Editor-tip.bottom {
+    background-image: url(images/Android/tablet/popup/arrowDown.png);
+}
+
+.mstrmojo-Dialog.anchor .mstrmojo-Editor-tip.left {
+    background-image: url(images/Android/tablet/popup/arrowLeft.png);
+}
+
+.mstrmojo-Dialog.anchor .mstrmojo-Editor-titlebar,
+.mstrmojo-Dialog.anchor .mstrmojo-Editor-buttons {
+    display: none;
+}
+/** Anchored Popup: END **/
+
+/** Android DIC Popup: START **/
+.mstrmojo-Dialog.mstrmojo-AndroidDICPopup .mstrmojo-Editor-titlebar {
+    display: none;
+}
+.mstrmojo-Dialog.mstrmojo-AndroidDICPopup.has-ttl .mstrmojo-Editor-titlebar {
+    display: block;
+}
+.mstrmojo-Dialog.mstrmojo-AndroidDICPopup .mstrmojo-Editor-buttons,
+.mstrmojo-Dialog.anchor.mstrmojo-AndroidDICPopup .mstrmojo-Editor-buttons {
+    display: block;
+}
+/** Android DIC Popup: END **/
+
+/** Search Elements Popup **/
+
+.edtSearch .mstrmojo-Editor-content table td {
+    text-align: center;
+}
+
+.edtTextInput .mstrmojo-Editor-content {
+    text-align: center;
+}
+
+.edtTextInput .mstrmojo-Editor-content input,
+.edtSearch .mstrmojo-Editor-content input {
+    font-size: 24pt;
+    line-height: 1.5em;
+    margin: 10px auto;
+    padding: 0 10px;
+    text-align: left;
+    width: 90%;
+    -webkit-tap-highlight-color: rgba(255,0,0,1);   
+}
+
+.edtSearch .mstrmojo-Editor-content .mstrmojo-ListBase .item {
+    border: 1px solid transparent;
+    border-bottom-color: #646464;
+    color: #000;
+    font-size: 24pt;
+    padding: 15px 10px;
+}
+
+
+.edtSearch .mstrmojo-Editor-content .mstrmojo-ListBase .item:last-child {
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+
+/** Search Elements Popup END **/
+
+
+/** Editors: END **/
+
+/** Mobile Checklist **/
+
+.mobile-checklist {
+    background: #fff;
+    overflow: hidden;
+}
+
+.mobile-checklist .item {
+    border-bottom: 2px solid #bdbebd;
+    color: #000;
+    cursor: pointer;
+    padding: 10px 25px;
+    -webkit-transition-property: background-color;
+}
+
+.mobile-checklist .item.glow {
+    background-color: #99CC33;
+}
+
+.mobile-checklist .item:last-child {
+    border-bottom-color: transparent;
+}
+
+.mobile-checklist .item > div {
+    background: transparent none 100% 50% no-repeat;
+    padding-right: 40px;
+}
+
+.mobile-checklist .item > div {
+    background-image: url(images/Android/radio_unchecked.png);
+}
+
+.mobile-checklist .item.selected > div {
+    background-image: url(images/Android/radio_checked.png);
+}
+
+.mobile-checklist.multi .item > div {
+    background-image: url(images/Android/checkbox_unchecked_large.png);
+}
+
+.mobile-checklist.multi .item.selected > div {
+    background-image: url(images/Android/checkbox_checked_large.png);
+}
+
+.mobile-checklist .item h3 {
+    font-size: 24pt;
+    line-height: 75px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    min-height: 75px;
+}
+
+/** Mobile Checklist END **/
+
+/** Tablet Checklists **/
+
+.mstrmojo-Dialog.tabletList .mstrmojo-Editor.win {
+	border-width: 0;
+    -webkit-box-shadow: rgba(24, 24, 24, .85) 3px 3px 18px;
+}
+
+.mstrmojo-Dialog.tabletList .mstrmojo-Editor-titlebar,
+.mstrmojo-Dialog.tabletList .mstrmojo-Editor-buttons {
+	background: #F5F5F5;
+	border-radius: 0;
+	height: 5px;
+	padding: 0;
+}
+
+.mstrmojo-Dialog.tabletList .mobile-checklist {
+    background: #F5F5F5;
+}
+
+.mstrmojo-Dialog.tabletList .mobile-checklist .item {
+    border-bottom: 1px solid #DBDBDB;
+    color: #000;
+    height: 28px;
+    margin: 0 5px;
+    padding: 10px 15px;
+}
+
+.mstrmojo-Dialog.tabletList .mobile-checklist .item:last-child {
+	border: none;
+}
+
+.mstrmojo-Dialog.tabletList .mobile-checklist .item.selected {
+    background: -webkit-gradient(linear, left top, left bottom, from(#B1E732), to(#9C3));
+    color: #FFF;
+    text-shadow: 0 0 2px #666;
+}
+
+.mstrmojo-Dialog.tabletList .mobile-checklist .item h3 {
+    font-size: 14pt;
+    line-height: 28px;
+    min-height: 28px;
+}
+
+.mstrmojo-Dialog.tabletList .mobile-checklist .item > div {
+    background-image: none;
+}
+
+/** Tablet Checklists **/
+
+.mstrmojo-Label.Android-tristate {
+    background-image: url(images/Android/checkbox_unchecked.png);
+    background-repeat: no-repeat;
+}
+
+.mstrmojo-Label.Android-tristate.checked {
+    background-image: url(images/Android/checkbox_checked.png);
+}
+
+.mstrmojo-SelectBoxList-item {
+    background: transparent url(images/Android/icons/select-dark.png) 97% 50% no-repeat;
+    border-bottom: 2px solid #bdbebd;
+    position: relative;
+}
+
+.mstrmojo-SelectBoxList-item  label {
+    color: #0000ff;
+    display: block;
+    font-size: 28pt;
+    line-height: 95px;
+    margin-left: 15px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: 365px;
+}
+
+.mstrmojo-SelectBoxList-item label em {
+    color: #000;
+    font-style: normal;
+}
+
+/* MAPS */
+
+.mstr-googleMapView {
+    position: relative;    
+}
+
+.mstr-googleMap * {
+    z-index: 1;
+    -webkit-transform: none;
+    color: black;
+    font-size: 11px;
+}
+
+.mstr-googleMap a {
+    display: none !important;
+}
+
+.androidMap-errorMsg {
+    text-align: center;
+    color: white;
+    font-size: 14pt;
+    margin-top: 25%;
+    font-family: Helvetica;
+    margin-left: 10%;
+    margin-right: 10%;
+}
+
+.androidMap-toggleHeader {
+    float: left;
+    border-color: #678AC7 transparent transparent transparent;
+    border-style: solid;
+    border-width: 10px 20px 15px 0px;
+    width: 0;
+    height: 0;
+}
+
+.androidMap-metricSelector {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    z-index: 10;
+    color: black;
+    cursor: pointer;
+
+    -webkit-user-select: none; 
+    font-size: 13px;
+    font-weight: bold;
+    line-height: 32px;
+    text-align: center;
+
+    padding: 0;
+    border-radius: 2px 2px;
+
+    -webkit-box-shadow: rgba(0, 0, 0, 0.347656) 2px 2px 3px;
+    box-shadow: rgba(0, 0, 0, 0.347656) 2px 2px 3px;
+
+    min-width: 26px;
+
+    border: 1px solid rgb(103,138,199);
+
+    background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(rgb(254, 254, 254)), to(rgb(243, 243, 243)));
+}
+
+.androidMap-infoWindowText {
+    font-weight:bold;
+    padding-right: 3px;
+}
+.androidMap-infoWindowTitle {
+    font-size: 15pt;
+    font-weight:bold;
+    padding-bottom:4px;
+}
+
+/*************** Prompts styles ******************/
+.mstrmojo-Prompts {
+    background-color: #BDBEBD;
+}
+
+.mstrmojo-Prompts > .summary {
+    background: #fff;
+}
+
+.mstrmojo-Prompts > .command .mstrmojo-Button {     
+    background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#fff), to(#bdbebd));
+    border: 2px solid #656565;
+    border-radius: 0;
+    text-align: center;
+    height: 60px;
+    width: 70%;
+    margin: 8px 15%;
+    font-size: 20pt;
+}
+
+.mstrmojo-Prompts > .command .mstrmojo-Button .mstrmojo-Button-text {
+    margin: 15px 0;
+}
+
+.prompt-item-required {
+    font-weight: 900;
+    color: #333;    	
+}
+
+.mstrmojo-Prompts .prompt-item {
+    border-bottom: 2px solid #BDBEBD;
+    padding: 10px 32px 10px 20px;
+}
+
+.mstrmojo-Prompts .prompt-item > div {
+    min-height: 100px;
+}
+
+.mstrmojo-Prompts .prompt-item h3 {
+    font-size: 22pt;
+    line-height: 1.1em;
+    max-height: 70px;
+    overflow: hidden;
+}
+
+.mstrmojo-Prompts .prompt-item h3 strong {
+    font-weight: bold;
+}
+
+.mstrmojo-Prompts .prompt-item h4 {
+    font-size: 14pt;
+    color: #7f7f7f;
+    line-height: 1.25em;
+    max-height: 50px;
+    overflow: hidden;
+}
+
+.mstrmojo-Prompts .prompt-item.drop-down.selected {
+    background-color: #99CC33;
+}
+
+.mstrmojo-Prompts .prompt-item.drop-down > div {
+    background: transparent url(images/Android/icons/select-light.png) 100% 50% no-repeat;
+    padding-right: 55px;  
+}
+
+.mstrmojo-Prompts .prompt-item.drop-down.geo > div {
+    background-image: url(images/Android/icons/gps.png);
+}
+
+.mstrmojo-Prompts .prompt-item.stepper > div {
+    padding-right: 185px;
+    position: relative;
+}
+
+.mstrmojo-Prompts .prompt-item.stepper > div > div {
+    height: 43px;
+    position: absolute;
+    margin-top: -21px;
+    right: 0;
+    top: 50%;
+}
+
+.mstrmojo-Prompts .prompt-item.stepper > div > div > div {
+    height: 100%;
+}
+
+.mstrmojo-Prompts .prompt-item.stepper > div > div > div:nth-child(2) {
+    border: 1px solid #BEBFB0;
+    border-color: #404041 #BEBFB0 #9D9D9E;
+    font-size: 16pt;
+    height: 41px;
+    line-height: 41px;
+    margin: 0 40px;
+    min-width: 55px;
+    text-align: center;
+}
+
+
+.mstrmojo-Prompts .prompt-item.stepper > div > div > div:first-child,
+.mstrmojo-Prompts .prompt-item.stepper > div > div > div:last-child {
+    background: transparent none 0 0 no-repeat;
+    height: 43px;
+    position: absolute;
+    top: 0;
+    width: 40px;
+}
+
+.mstrmojo-Prompts .prompt-item.stepper > div > div > div:first-child {
+    background-image: url(images/Android/stepper-minus-horiz-on.png);
+    left: 0; 
+}
+
+.mstrmojo-Prompts .prompt-item.stepper > div > div > div:last-child {
+    background-image: url(images/Android/stepper-plus-horiz-on.png);
+    right: 0;
+}
+
+.mstrmojo-Prompts .prompt-item.stepper.min > div > div > div:first-child {
+    background-image: url(images/Android/stepper-minus-horiz.png);
+}
+
+.mstrmojo-Prompts .prompt-item.stepper.max > div > div > div:last-child {
+    background-image: url(images/Android/stepper-plus-horiz.png);
+}
+
+.mstrmojo-Prompts .prompt-item.switch > div {
+    padding-right: 48px; 
+    background: transparent url(images/Android/checkbox_unchecked_large.png) 100% 50% no-repeat;
+}
+
+.mstrmojo-Prompts .prompt-item.switch.on > div {
+    background-image: url(images/Android/checkbox_checked_large.png);
+}
+
+.edtSlider .title {
+    font-size: 16pt;
+    margin: 20px 5%;
+}
+
+.edtSlider .value {
+    font-size: 16pt;
+    margin: 20px 5%;
+}
+
+.edtSlider .mstrmojo-MobileSlider {
+    margin: 25px auto 40px;
+    position: relative;
+}
+
+.mstrmojo-MobileSlider {
+    width: 90%;
+    position: relative;
+}
+.mstrmojo-MobileSlider .v {
+    background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#a8d43e), color-stop(0.76, #70942c), color-stop(0.80, #70942c), color-stop(0.88, #6a8e2a), color-stop(0.92, #6e932a), to(#79a12a));
+    border: 2px solid #8AA05C;
+    height: 25px;
+    -webkit-border-radius: 6px;
+    margin: 5px 0;
+    display:inline-block;
+}
+.mstrmojo-MobileSlider .bk {
+    background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#5B5D5f), color-stop(0.76, #282829), color-stop(0.80, #252526), color-stop(0.88, #272728), color-stop(0.92, #313334), to(#4C4E4F));
+    border: 2px solid #606265;
+    border-bottom-color: #5C5C5E;
+    height: 25px;
+    -webkit-border-radius: 6px;
+    margin: 5px 0;
+    display:inline-block;
+}
+.mstrmojo-MobileSlider .th {
+    background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#dcdcdc), color-stop(0.83, #868686), to(#b4b4b4));
+    background-position: 0 0;
+    border: 2px solid #6F6F6F;
+    height: 35px;
+    width: 25px;
+    -webkit-border-radius: 4px;
+    position:absolute;
+    top: 0px;
+}
+
+.mstrmojo-MobileSlider .min {
+    display: inline-block;
+    height: 35px;
+    width: auto;
+    float: left;
+}
+.mstrmojo-MobileSlider .max {
+    display: inline-block;
+    height: 35px;
+    width: auto;
+    float: right;
+}
+
+/*************** End Prompts styles ******************/
+
+
+/** Don't show graph pre-loader images. **/
+.mstrmojo-AndroidView .mstrmojo-DocXtabGraph img {
+    background-image: none;
+}
+
+
+/** STEPPER **/
+
+.mstrmojo-Stepper {
+    height: 45px !important;
+    width: 65px;
+    position: relative;
+}
+
+.mstrmojo-Stepper.vertical {
+    margin: 55px 5px 55px 5px;
+}
+
+.mstrmojo-Stepper.horizontal {
+    margin: 5px 80px 5px 80px;
+}
+
+.mstrmojo-Stepper .title {
+    text-align: center;
+    width: 100%;
+    top: -80px;
+    font-size: 16px;
+    color: #000;
+}
+
+.mstrmojo-Stepper div {
+    position: absolute;
+    color: rgba(0, 0, 0, .55);
+    font-size: 24pt;
+    height: 100%;
+    width: 100%;
+    xfont-weight: bold !important;
+    line-height: 45px;
+    text-align: center;
+}
+
+.mstrmojo-DateTimePicker .meridiem,
+.mstrmojo-Stepper .next,
+.mstrmojo-Stepper .prev {
+    background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(rgba(0, 0, 0, .30)), to(rgba(0, 0, 0, .60)));
+    background-color: #FFFFFF;
+}
+
+.mstrmojo-Stepper .next.glow,
+.mstrmojo-Stepper .prev.glow {
+    -webkit-box-shadow: #9C3 0px 0px 10px;
+    background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#B1E732), to(#9C3)) !important;
+}
+
+.mstrmojo-Stepper.vertical .next {
+    margin-top: -100%;
+    border-top-left-radius: 6px;
+    border-top-right-radius: 6px;
+}
+
+.mstrmojo-Stepper.vertical .prev {
+    margin-top: 100%;
+    border-bottom-left-radius: 6px;
+    border-bottom-right-radius: 6px;
+}
+
+.mstrmojo-Stepper.horizontal .next {
+    margin-left: 100%;
+    border-top-right-radius: 6px;
+    border-bottom-right-radius: 6px;
+}
+
+.mstrmojo-Stepper.horizontal .prev {
+    margin-left: -100%;
+    border-top-left-radius: 6px;
+    border-bottom-left-radius: 6px;
+}
+
+.mstrmojo-Stepper .text {
+    color: #000;
+    background: #FFF -webkit-gradient(linear, 0% 0%, 0% 100%, from(rgba(0, 0, 0, .25)), to(rgba(0, 0, 0, 0.08)));
+    font-size: 27pt;
+}
+
+/** DateTimePicker **/
+.mstrmojo-DateTimePicker {
+    text-align: center;
+}
+
+.mstrmojo-DateTimePicker .stepNode {
+    display: inline-block;
+    vertical-align: middle;
+    margin: 0 10px;
+}
+
+.mstrmojo-DateTimePicker .stepNode.year .mstrmojo-Stepper {
+    width: 100px;
+}
+
+.mstrmojo-DateTimePicker .dateView,
+.mstrmojo-DateTimePicker .timeView {
+    margin: 20px 0;
+}
+
+.mstrmojo-DateTimePicker .dateView .hour,
+.mstrmojo-DateTimePicker .dateView .min,
+.mstrmojo-DateTimePicker .dateView .meridiem {
+    display: none;
+}
+
+.mstrmojo-DateTimePicker .timeView .year,
+.mstrmojo-DateTimePicker .timeView .month,
+.mstrmojo-DateTimePicker .timeView .day {
+    display: none;
+}
+
+.mstrmojo-DateTimePicker .meridiem {
+    display: inline-block;
+    position: relative;
+    margin: 50px 15px;
+    color: rgba(0, 0, 0, .55);
+    font-size: 24pt;
+    width: 75px;
+    line-height: 50px;
+    border-radius: 6px;
+    vertical-align: middle;
+}
+
+.mstrmojo-DateTimePicker .meridiem.glow {
+    -webkit-box-shadow: #9C3 0px 0px 10px;
+    background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#B1E732), to(#9C3)) !important;
+}
+
+.mstrmojo-DateTimePicker .meridiem .mstrmojo-Button {
+    border-radius: 6px;
+    height: 50px;
+    width: 75px;
+    font-size: 27pt;
+}
+
+.mstrmojo-DateTimePicker .switcher {
+    margin-bottom: 10px;
+}
+
+.mstrmojo-DateTimePicker .switcher .mstrmojo-Button {
+    background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#ffffff), to(#bdbebe));
+    border: 2px solid #656565;
+    border-radius: 6px;
+    color: #000;
+    height: 45px;
+    line-height: 45px;
+    margin: 10px auto 10px;
+    font-size: 26px;
+    width: 185px;
+    text-align: center;
+}
+
+.mstrmojo-DateTimePicker .switcher .mstrmojo-Button.selected {
+    border: 2px solid #00FF00;
+}
+/** DateTimePicker END **/
+
+/** Mobile DocSelectors **/
+.mstrmojo-DocSelector .content {
+    overflow: hidden;
+    text-decoration: inherit;
+}
+
+.mstrmojo-DocSelector .content .unsupported {
+    padding: 5px;
+}
+
+.mstrmojo-DocSelector .content .mstrmojo-AndroidDropDownList {
+    background: url(images/Android/dropdown_inactive.png) no-repeat top right, -webkit-gradient(linear, 0% 0%, 0% 100%, from(rgb(252, 252, 252)), color-stop(0.01, rgb(242, 242, 242)), color-stop(.49, rgb(235, 235, 235)), color-stop(.50, rgb(221, 221, 221)), color-stop(.99, rgb(207, 207, 207)), to(rgb(243, 243, 243)));
+    border: 1px solid #707070;
+    cursor: pointer;
+    padding: 4px 8px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    min-height: 1em;
+    -webkit-border-radius: 3px;  
+    padding-right: 48px; 
+    background-size: auto 100%;
+}
+
+.mstrmojo-DocSelector .content .mstrmojo-AndroidDropDownList.down {
+    background: url(images/Android/dropdown_active.png) no-repeat top right, -webkit-gradient(linear, 0% 0%, 0% 100%, from(rgb(252, 252, 252)), color-stop(0.01, rgb(242, 242, 242)), color-stop(.49, rgb(235, 235, 235)), color-stop(.50, rgb(221, 221, 221)), color-stop(.99, rgb(207, 207, 207)), to(rgb(243, 243, 243)));
+}
+
+.mstrmojo-DocSelector .content .selector-checklist > div label {
+    background: transparent url(images/Android/radio_unchecked_small.png) 0px 50% no-repeat;
+    display: block;
+    overflow: hidden;
+    padding-left: 19px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.mstrmojo-DocSelector .content .selector-checklist.multi > div label {
+    background-image: url(images/Android/checkbox_unchecked_small.png);
+}
+
+.mstrmojo-DocSelector .content .selector-checklist > div label.selected {
+    background-image: url(images/Android/radio_checked_small.png);
+}
+
+.mstrmojo-DocSelector .content .selector-checklist.multi > div label.selected {
+    background-image: url(images/Android/checkbox_checked_small.png);
+}
+
+.mstrmojo-DocSelector .content .mstrmojo-ListBase.horiz {
+    text-decoration: inherit;
+    width: 100%;
+}
+
+.mstrmojo-DocSelector .content .mstrmojo-ListBase.horiz.fixedWidth {
+    table-layout: fixed;
+}
+
+.mstrmojo-DocSelector .content .mstrmojo-ListBase.horiz > div {
+    display: table-row;
+    width: 100%;
+}
+
+.mstrmojo-DocSelector .content .mstrmojo-ListBase.horiz label {
+    display: table-cell;
+    vertical-align: middle;
+}
+
+.mstrmojo-DocSelector.mstrmojo-ActionSelector .content .selector-btnbar > div label {
+    line-height: 45px;
+}
+
+.mstrmojo-DocSelector .content .selector-listbox .item {
+    cursor: pointer;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.mstrmojo-DocSelector .content .selector-listbox .item.selected {
+    background: -webkit-gradient(linear, left top, left bottom, from(#96fe6e), to(#72c800));
+    color: #fff;
+}
+
+
+.mstrmojo-DocSelector .content .selector-linkbar > div label {
+    display: block;
+    line-height: 1.9em;
+    overflow: hidden;
+    text-align: center;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.mstrmojo-DocSelector .content .selector-linkbar > div label > div {
+    position: relative;
+    height: 100%;
+}
+
+.mstrmojo-DocSelector .content .selector-linkbar > div label > div > div {
+    bottom: 0;
+    height: 1px;
+    position: absolute;
+    left: 3%;
+    width: 94%;
+}
+
+.mstrmojo-DocSelector .content .selector-linkbar.horiz > div label > div > div {
+    bottom: auto;
+    height: 100%;
+    left: auto;
+    right: 0;
+    top: 0;
+    width: 1px;
+}
+
+.mstrmojo-DocSelector .content .selector-linkbar > div label:last-child > div > div {
+    display: none;
+}
+
+
+.mstrmojo-DocSelector .content .selector-btnbar > div label {
+    display: block;
+}
+
+.mstrmojo-DocSelector .content .selector-btnbar > div label div {
+    background: -webkit-gradient(linear, left top, left bottom, from(#eaeaea), to(#d1d1d1));
+    border: 1px solid #d3d3d3;
+    border-width-top: 0;
+    overflow: hidden;
+    text-align: center;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.mstrmojo-DocSelector.mstrmojo-ActionSelector .content .selector-btnbar > div label div {
+    background: -webkit-gradient(linear, left top, left bottom, from(#ccea89), to(#a4c855));
+    border: 1px solid #59990e;
+}
+
+.mstrmojo-DocSelector.mstrmojo-ActionSelector.glow .content .selector-btnbar > div label div {
+    background: -webkit-gradient(linear, left top, left bottom, from(#99cc33), to(#84af2c));
+    color: #FFF;
+}
+
+.mstrmojo-DocSelector .content .selector-btnbar.horiz > div label div {
+    border-width: 1px 1px 1px 0;
+}
+
+.mstrmojo-DocSelector .content .selector-btnbar > div label:first-child div {
+    border-width: 1px; 
+    -webkit-border-radius: 6px 6px 0 0;
+}
+
+.mstrmojo-DocSelector .content .selector-btnbar > div label:last-child div {
+    border-width: 0px 1px 1px 1px; 
+    -webkit-border-radius: 0 0 6px 6px;
+}
+
+.mstrmojo-DocSelector.mstrmojo-ActionSelector .content .selector-btnbar.horiz > div label:last-child div {
+    border-width: 1px; 
+    -webkit-border-radius: 6px;
+}
+
+.mstrmojo-DocSelector .content .selector-btnbar.horiz > div label:first-child div {
+    -webkit-border-radius: 6px 0 0 6px;
+}
+
+.mstrmojo-DocSelector .content .selector-btnbar.horiz > div label:last-child div {
+    border-width: 1px 1px 1px 0px; 
+    -webkit-border-radius: 0 6px 6px 0;
+}
+
+.mstrmojo-DocSelector .content .selector-btnbar > div label.selected div {
+    background: -webkit-gradient(linear, left top, left bottom, from(#888888), to(#333333));
+    border-style: inset;
+    color: #fff;
+}
+
+.mstrmojo-DocSelector.strikeout .mstrmojo-AndroidDropDownList,
+.mstrmojo-DocSelector.strikeout .selected {
+    text-decoration: line-through;
+}
+
+/** Mobile DocSelectors END **/
+
+
+/** Settings **/
+.mstrmojo-AndroidSettings {
+    background-color: #000;
+}
+
+
+.mstrmojo-AndroidSettings .item {
+    background-color: transparent;
+    border-bottom: 1px solid #686868;
+    color: #fff;
+    cursor: pointer;
+    font-size: 18pt;
+    line-height: 65px;
+    padding: 10px 32px 10px 30px;
+    -webkit-transition-property: background-color;
+}
+
+.mstrmojo-AndroidSettings .item.selected {
+    background-color: #99CC33;
+}
+
+.mstrmojo-AndroidSettings .item.hidden {
+    left: -10000px;
+    position: absolute;
+}
+
+.mstrmojo-AndroidSettings .item.header {
+    background: #111;
+    height: 30px;
+    line-height: 30px;
+    padding-left: 10px;
+}
+
+.mstrmojo-AndroidSettings .item.header h3 {
+    color: #bdbebd;
+    font-size: 80%;
+}
+
+.mstrmojo-AndroidSettings .item.with-desc h3 {
+    line-height: 1.25em;
+}
+
+.mstrmojo-AndroidSettings .item.with-desc h4 {
+    color: #777;
+    line-height: 1.5em;
+    font-size: 80%;
+}
+
+.mstrmojo-AndroidSettings .item.with-desc.center h3,
+.mstrmojo-AndroidSettings .item.with-desc.center h4 {
+    text-align:center;
+}
+
+.mstrmojo-AndroidSettings .item.drop-down > div {
+    background: transparent url(images/Android/icons/select-light.png) 100% 50% no-repeat;
+    padding-right: 55px;  
+}
+
+.mstrmojo-AndroidSettings .item.check {
+    padding-right: 34px;
+}
+
+.mstrmojo-AndroidSettings .item.check > div {
+    padding-right: 48px; 
+    background: transparent url(images/Android/checkbox_unchecked_large.png) 100% 50% no-repeat;
+}
+
+.mstrmojo-AndroidSettings .item.check.on > div {
+    background-image: url(images/Android/checkbox_checked_large.png);
+}
+
+.mstrmojo-AndroidSettings .item.image {
+    height: 106px;
+    padding-top: 32px;
+    padding-bottom: 32px;
+    -webkit-user-select: none;
+}
+
+.mstrmojo-AndroidSettings .item.image.logo h3 {
+    width: 100%;
+    padding: 0;
+    background: transparent url(images/Android/about_logo@2x.png) 50% 50% no-repeat;
+    background-size: contain;
+    -webkit-border-radius: 20px;
+    cursor: pointer;
+    height: 106px;
+}
+
+
+
+.mstrmojo-AndroidSettings .item.info h3 {
+    width: 100%;
+    padding: 0;
+    background-color: white;
+    -webkit-border-radius: 20px;
+    cursor: pointer;
+    height: 106px;
+}
+
+
+
+
+.mstrmojo-AndroidSettings .item.textarea {
+    background-color: white;
+    color: black;
+    -webkit-user-select: none;
+    width: 100%;
+    height: 100%;
+    padding: 0;
+}
+
+.mstrmojo-AndroidSettings .item.textarea div {
+    -webkit-user-select: none;
+    border: 0;
+    width: 100%;
+    height: 100%;
+    font-family: monospace;
+    font-size: 7pt;
+    line-height: 11pt;
+    padding: 4px;
+}
+
+.mstrmojo-AndroidSettings .item.textarea  p {
+    padding-bottom: 8px;
+}
+
+/** Settings END **/
+
+.mstrmojo-LoginDialog {   
+}
+
+.mstrmojo-LoginDialog .mstrmojo-TextBoxWithLabel {
+    color: white;
+    background-color: transparent;
+    cursor: pointer;
+    font-size: 18pt;
+    right: 20px;
+    text-align: left;
+    padding: 4px 8px 4px 4px;    
+    display: block;
+}
+
+.mstrmojo-LoginDialog-Label {
+    color: black;
+    background-color: transparent;
+    font-size: 2.2em;
+    right: 20px;
+    text-align: center;
+    display: block;
+    padding: 32px 0;
+}
+.mstrmojo-LoginDialog .mstrmojo-TextBox-label{
+    padding-right: 8px;
+    padding-left: 8px;
+    color: #000;
+}
+
+.mstrmojo-LoginDialog .mstrmojo-Editor-content {
+    text-align: center;
+}
+.mstrmojo-LoginDialog .mstrmojo-Editor-content input {
+    font-size: 24pt;
+    line-height: 1.5em;
+    margin: 10px auto;
+    padding: 0 10px;
+    text-align: left;
+    width: 60%;
+}
+
+
+
+
+
+
+
+
+
+
+
+.mstrmojo-SimpleOptions .mstrmojo-ListBase .item {
+    border-bottom: 2px solid #bdbebd; 
+    font-size: 18pt;
+    height: 80px;
+    line-height: 80px;
+    padding: 5px 20px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.mstrmojo-SimpleOptions .mstrmojo-ListBase .item:last-child {
+    border-bottom-width: 0;
+}
+
+
+/** MobileLayoutSelector **/
+
+.mstrmojo-DocumentView .mstrmojo-AndroidView-MainTitle {
+    position: relative;
+    z-index: 3;
+}
+
+.mstrmojo-DocumentView .mstrmojo-AndroidView-ContainerNode {
+    position: relative;
+    z-index: 1;
+}
+
+.mstrmojo-MobileLayoutSelector {
+    background-color: rgba(0, 0, 0, .80);
+    position: absolute;
+    z-index: 2;
+    -webkit-transition-property: none;
+    -webkit-transition-duration: 400ms;
+    -webkit-transition-timing-function: ease-in;
+}
+
+/** MobileLayoutSelector: END **/
+
+/** MobileLayoutSelector (DOTS) **/
+
+.mstrmojo-MobileLayoutSelector.DotStyle .mstrmojo-Label {
+    border-top: 1px solid #515151;
+    color: #fff;
+    font-size: 14pt;
+    font-weight: bold;
+    line-height: 23px;
+    text-align: center;
+    text-shadow: 0 0px 4px #000;
+}
+
+/** MobileLayoutSelector (DOTS): End **/
+
+/** MobileLayoutSelector (TABS) **/
+.mstrmojo-MobileLayoutSelector.TabStyle {
+    border-top: 1px solid #000;
+}
+
+.mstrmojo-MobileLayoutSelector.TabStyle > div {
+    border-top: 2px solid #fff;
+    display: inline-block;
+    margin-top: 1px;
+    min-width: 100%;
+    white-space: nowrap;
+}
+
+.mstrmojo-MobileLayoutSelector.TabStyle .item {
+    display: inline-block;
+}
+
+.mstrmojo-MobileLayoutSelector.TabStyle .item > div {
+    background: rgba(64, 64, 64, .90);
+    border: 1px solid #505050;
+    color: #c4c4c4;
+    cursor: pointer;
+    font-size: 16pt;
+    line-height: 43px;
+    overflow: hidden;
+    padding: 0 5px;
+    margin: 2px 0 2px 6px;
+    text-align: center;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    min-width: 100px;
+    max-width: 500px;
+    -webkit-border-radius: 5px;
+}
+
+.mstrmojo-MobileLayoutSelector.TabStyle .item.selected > div {
+    background: #fff;
+    border-top-color: transparent;
+    color: #000;
+    cursor: default;
+    line-height: 46px;
+    -webkit-border-radius: 0 0 7px 7px;
+    -webkit-transform: translateY(-2px);
+}
+
+/** MobileLayoutSelector (TABS): End **/
+
+/** SelectorBtns **/
+
+.mstrmojo-SelectorBtns {
+    height: 24px;
+    margin: 0 auto;
+}
+
+.mstrmojo-SelectorBtns > div {
+    display: inline-block;
+    height: 24px;
+    width: 38px;
+}
+
+.mstrmojo-SelectorBtns > div > div {
+    background-color: #e6e7e8;
+    height: 8px;
+    margin: 8px auto;
+    width: 8px;
+    -webkit-border-radius: 4px;
+}
+
+.mstrmojo-SelectorBtns > div.selected > div,
+.mstrmojo-SelectorBtns > div.on > div {
+    background: #fff;
+    height: 12px;
+    margin: 6px auto;
+    width: 12px;
+    -webkit-box-shadow: 0 0 6px #fff;  
+    -webkit-border-radius: 6px;
+}
+
+/** SelectorBtns: End **/
+
+/** DocPanelStack **/
+
+.mstrmojo-DocPanelStack > div:first-child {
+    height: 100%;
+    position: relative;
+    -webkit-transition-duration: 0ms;
+    -webkit-transition-property: -webkit-transform;
+    -webkit-transform-origin: 0% 50%;
+    -webkit-transform: translate3d(0, 0, 0);
+}
+
+.mstrmojo-DocPanelStack .mstrmojo-PanelSelector {
+    background-color: rgba(0, 0, 0, .80);
+    bottom: 0;
+    display: none;
+    height: 22px;
+    left: 0;
+    position: absolute;
+    width: 100%;
+    z-index: 2;
+}
+
+.mstrmojo-DocPanelStack .mstrmojo-SelectorBtns > div > div {
+    margin: 7px auto;
+}
+
+.mstrmojo-DocPanelStack .mstrmojo-SelectorBtns > div.on > div {
+    height: 10px;
+    margin: 6px auto;
+    width: 10px;
+    -webkit-border-radius: 5px;
+}
+
+.mstrmojo-DocPanelStack .mstrmojo-DocPanel {
+    overflow: visible;
+    position: absolute;
+    z-index: 1;
+    -webkit-transition-duration: 350ms;
+    -webkit-transition-property: -webkit-transform;
+    -webkit-transform: scale3d(1, 1, 1);
+}
+
+.mstrmojo-DocPanelStack.zoom .mstrmojo-DocPanel {
+    -webkit-box-shadow: 12px 12px 30px #0f0f0f;  
+    -webkit-transform: scale3d(.9, .9, 1);
+}
+
+.mstrmojo-DocPanelStack .mstrmojo-DocSubPanel-content {
+    height: 100%;
+    overflow: hidden;
+    width: 100%;
+}
+
+.mstrmojo-DocPanel.placeholder .mstrmojo-DocSubPanel-content {
+    background: #1f1f1f url(images/Android/PanelSelector/loader.gif) 50% 50% no-repeat !important;  /** !important is necessary to override panel formatting **/
+}
+
+.mstrmojo-DocPanelStack .mstrmojo-DocPanel .mstrmojo-DocSubPanel-title {
+    color: #e5e5e5;
+    display: none;      /** Hidden since we are not supporting this feature at this time **/
+    font-size: 24pt;
+    margin-top: 25px;
+    overflow: hidden;
+    padding: 0 10px;
+    text-align: center;
+    text-overflow: ellipsis;
+}
+
+/** DocPanelStack: END **/
+
+
+.barcodeReaderButton {
+    background: #000;
+    border-radius: 4px;
+    color: #fff;
+    float: right;
+    font-size: 2em;
+    padding: 7px;
+    margin: -70px 10px 0 0;
+    background-image: url(images/Android/icons/bcr_button.png);
+    height: 45px;
+    width: 45px;
+}
+
+/** CSS FOR MOBILE CALENDAR **/
+
+.mstrmojo-Calendar{
+    border:0;
+}
+
+.mobile-calendar .mstrmojo-Editor {
+    background: transparent;
+    border: 0;
+    border-radius: 1px;
+}
+
+.mobile-calendar .mstrmojo-Calendar-increase{
+    float:right;
+    margin:3px -5px 0 0;
+    border-color: transparent transparent transparent black;
+}
+
+.mobile-calendar .mstrmojo-Calendar-decrease{
+    float:left;
+    margin:3px 0 0 -5px;
+    border-color: transparent black transparent transparent;
+}
+
+.mobile-calendar .mstrmojo-Calendar-monthLabel,
+.mobile-calendar .mstrmojo-Calendar-yearLabel,
+.mobile-calendar .mstrmojo-Calendar-hourLabel,
+.mobile-calendar .mstrmojo-Calendar-minuteLabel,
+.mobile-calendar .mstrmojo-Calendar-secondLabel{
+    text-decoration:none;
+}
+
+/** MobileSliderSelector BEGIN **/
+
+.mstrmojo-portlet.no-border .mstrmojo-portlet-titlebar{
+    -webkit-border-top-right-radius: 5px;
+    -webkit-border-top-left-radius: 5px;
+}
+
+.mstrmojo-portlet-title{
+    padding-left:10px;
+}
+
+.mstrmojo-sliderSel {
+    font-size: 14pt;
+    padding: 5px;
+    font-family: Helvetica;
+    -webkit-border-bottom-right-radius: 5px;
+    -webkit-border-bottom-left-radius: 5px;
+}
+
+.mstrmojo-sliderSelTitle {
+    background: transparent url(images/Android/icons/select-light.png) 100% 50% no-repeat;
+    height: 35px;
+    padding-top: 15px;
+    font-weight: bold;
+    font-size: 18pt;
+}
+
+.mstrmojo-sliderSelSummary {
+    padding-left: 15px;
+}
+
+.mstrmojo-sliderSelLabels {
+    height: 20px;
+}
+
+/*TEMPORARY HACK: We want to get rid of padding, summary and labels so that demo objects look nice
+                  We need to fix this afterwards.
+                    1) Are we really using lables for this widget or was it carried over from old code?
+                    2) We should replace summary with tooltip from issue #505742
+                    3) We might want to get rid of the padding permanently */
+.mstrmojo-DocSelector .mstrmojo-sliderSelSummary,
+.mstrmojo-DocSelector .mstrmojo-sliderSelLabels
+{
+    display: none;
+}
+.mstrmojo-DocSelector .mstrmojo-sliderSel
+{
+    padding: 0px;   
+}
+/* END HACK */
+
+.mstrmojo-sliderSelLL {
+    float: left;
+}
+
+.mstrmojo-sliderSelLR {
+    float: right;
+}
+
+.mstrmojo-sliderSelScrollerContainerExcl,
+.mstrmojo-sliderSelScrollerContainer
+    {
+    height: 32px;
+    background: -webkit-gradient(linear,
+                                 left top,
+                                 left bottom,
+                                 color-stop(0.0, rgba(0,0,0,0)),
+                                 color-stop(0.25, rgba(0,0,0,0)),
+                                 color-stop(0.25, rgb(17,17,17)),
+                                 color-stop(0.30, rgb(38,38,38)),
+                                 color-stop(0.75, rgb(143,145,145)),
+                                 color-stop(0.75, rgba(0,0,0,0)),
+                                 color-stop(1, rgba(0,0,0,0)));
+    overflow: hidden;
+
+    position: relative;
+    border-radius: 30px;
+}
+
+.mstrmojo-sliderSelScrollerContainerExcl {
+    background: -webkit-gradient(linear, 
+                                 left top,
+                                 left bottom,
+                                 color-stop(0.0, rgba(0,0,0,0)),
+                                 color-stop(0.25, rgba(0,0,0,0)),
+                                 color-stop(0.25, rgba(132,175,44,1)),
+                                 color-stop(0.35, rgba(153,204,51,1)),
+                                 color-stop(0.75, rgba(132,175,44,1)),
+                                 color-stop(0.75, rgba(0,0,0,0)),
+                                 color-stop(1, rgba(0,0,0,0)));
+    padding-top: 0px;
+    padding-bottom: 1px;
+}
+
+.mstrmojo-sliderSelScrollerHandle2,
+.mstrmojo-sliderSelScrollerHandle1 {
+    background: transparent url(images/Android/icons/Slider_handle.png) center center no-repeat;
+    height: 32px;
+    width: 32px;
+    float: left;
+    position: absolute;
+    border-radius: 16px;
+    -webkit-box-shadow: 4px 4px 2px rgba(145, 145, 145, 0.1);
+}
+
+.mstrmojo-sliderSelScrollerHandle2.glow,
+.mstrmojo-sliderSelScrollerHandle1.glow {
+    height: 32px;
+    width: 32px;
+    float: left;
+    position: absolute; 
+    border-radius: 16px;
+    background: transparent url(images/Android/icons/Slider_handle_selected.png) center center no-repeat;    
+    -webkit-box-shadow: 4px 4px 2px rgba(145, 145, 145, 0.1);
+}
+
+.mstrmojo-sliderSelScrollerHandle
+    {
+    background: url(images/Android/icons/Slider_grab.png) center center no-repeat,
+                -webkit-gradient(linear, 
+                                 left top,
+                                 left bottom,
+                                 color-stop(0.0, rgba(0,0,0,0)),
+                                 color-stop(0.25, rgba(0,0,0,0)),
+                                 color-stop(0.25, rgba(132,175,44,1)),
+                                 color-stop(0.35, rgba(153,204,51,1)),
+                                 color-stop(0.75, rgba(132,175,44,1)),
+                                 color-stop(0.75, rgba(0,0,0,0)),
+                                 color-stop(1, rgba(0,0,0,0)));    
+    height: 32px;
+    position: absolute;
+    border-radius: 30px;
+}
+
+.mstrmojo-sliderSelScrollerContainerExcl 
+.mstrmojo-sliderSelScrollerHandle {
+    background: -webkit-gradient(linear,
+                                 left top,
+                                 left bottom,
+                                 color-stop(0.0, rgba(0,0,0,0)),
+                                 color-stop(0.25, rgba(0,0,0,0)),
+                                 color-stop(0.25, rgb(17,17,17)),
+                                 color-stop(0.30, rgb(38,38,38)),
+                                 color-stop(0.75, rgb(143,145,145)),
+                                 color-stop(0.75, rgba(0,0,0,0)),
+                                 color-stop(1, rgba(0,0,0,0)));   
+}
+
+.mstrmojo-sliderSelScrollerHandle2 {
+    background: transparent url(images/Android/icons/Slider_handle.png) right no-repeat;
+
+}
+
+.mstrmojo-sliderSelScrollerHandle2.leftHandle {
+
+    background: transparent url(images/Android/icons/Slider_handle.png) no repeat; 
+}
+
+.mstrmojo-sliderSelScrollerHandle2.leftHandle.glow {
+
+    background: url(images/Android/icons/Slider_handle_selected.png); 
+}
+
+.mstrmojo-sliderSelScrollerHandle2.rightHandle,
+.mstrmojo-sliderSelScrollerHandle1.rightHandle{
+    right: 0px;
+}
+
+.mstrmojo-sliderSelScrollerHandle2.rightHandle {    
+                                 
+    background: transparent url(images/Android/icons/Slider_handle.png) left no-repeat;                                 
+}
+
+.mstrmojo-sliderSelScrollerHandle2.rightHandle.glow {    
+                                 
+    background: transparent url(images/Android/icons/Slider_handle_selected.png) left no-repeat;                                 
+}
+
+.mstrmojo-sliderSelScrollerHandle2.leftHandleD,
+.mstrmojo-sliderSelScrollerHandle2.rightHandleD
+    {
+    height: 32px;
+    width: 32px;
+    background: none;
+}
+
+
+.mstrmojo-sliderSelScrollerHandle2.rightHandleD {
+    position: absolute;
+    right: 0px;
+}
+
+.mstrmojo-sliderTip {
+    border: 0px;
+}
+
+.mstrmojo-sliderTip-top {
+    border: 2px #777 solid;
+    border-radius: 5px;
+    background-color: #f1f1f1;
+    font-size: 13pt;
+    font-family: Helvetica;
+    color: #000 !important;
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-top: 5px;
+    padding-bottom: 3px; 
+    font-weight: bold;        
+}
+
+.mstrmojo-sliderTip-bottom {
+    background: transparent url(images/Android/icons/tooltip_pointer.png) no-repeat;
+    width: 18px;
+    height: 10px;
+    position: absolute;
+    left: 50%;
+    margin-left: -9px;
+}
+
+.mstrmojo-sliderTip-bottom.down {
+    top: -9px;
+    -webkit-transform: rotate(180deg);
+}
+
+/** mstrmojo-sliderSel END **/
+
+.mstrmojo-androidAlert > div {
+	font-size: 18pt;
+    line-height: 1.5em;
+	padding: 10px 20px;
+    text-align: center;
+}
+
+.mstrmojo-TextArea {
+	overflow: hidden;
+}
+
+.mstrmojo-ReportGraph {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.mstrmojo-PopupSlider {
+    background-color: #FFF;
+    height: 170px;
+}
+
+.mstrmojo-PopupSlider .sliderPart {
+    width: 90%;
+    top: 100px;
+    margin-left: 10%;
+}
+
+.mstrmojo-PopupSlider .valuePart {
+    line-height: 80px;
+    font-size: 24pt;
+    padding-left: 5%;   
+}
+
+.mstrmojo-PopupSlider .valueLabel {
+    display: none;
+}
+
+.mstrmojo-SliderGroup {
+    text-align: left !important;
+    right: 0px;
+    position: relative;
+    float: right;
+}
+
+.mstrmojo-SliderGroup .sliderPart {
+    width: 100%;
+}
+
+.mstrmojo-SliderGroup .valuePart {
+    position: absolute;
+}
+
+.minText, .maxText,
+.mstrmojo-SliderGroup .valueLabel,
+.mstrmojo-SliderGroup .mstrmojo-MobileSlider .min,
+.mstrmojo-SliderGroup .mstrmojo-MobileSlider .max {
+    display: none !important;
+}
+
+/* Input control preview */
+.mstrmojo-Android-PreviewButton{
+    width: 100%;
+}
+
+.mstrmojo-Android-PreviewButton .icon{
+    background-repeat: no-repeat;
+    background-position: right;
+    width: 30px;
+}
+
+.mstrmojo-DocTextfield-valueNode{
+    word-wrap: break-word;
+}
+.mstrmojo-DocTextfield .mstrmojo-Android-PreviewButton{
+    position: absolute;
+}
+
+.mstrmojo-DocTextfield .mstrmojo-Android-PreviewButton .label{
+    min-width: 85px;
+    height: 28px;
+    line-height: 30px;
+    border: 1px solid #5E5E5E;
+    border-right: 1px solid #FFF;
+    text-align: center !important;
+    border-top-left-radius: 6px;
+    border-bottom-left-radius: 6px;
+    background-image: -webkit-gradient(linear, left top, left bottom, from(#ffffff), color-stop(0.94, #bdbdbd), to(#dadada));
+}
+
+.mstrmojo-DocTextfield .mstrmojo-Android-PreviewButton .icon{
+    width: 30px;
+    height: 30px;
+}
+
+.mstrmojo-Android-TimePreview {
+    background-image: url(images/Android/time_button_inactive.png);
+}
+
+.mstrmojo-Android-TimePreview.tapped {
+    background-image: url(images/Android/time_button_active.png) !important;
+}
+
+.mstrmojo-Android-DatePreview {
+    background-image: url(images/Android/calendar_button_inactive.png);
+}
+
+.mstrmojo-Android-DatePreview.tapped {
+    background-image: url(images/Android/calendar_button_active.png) !important;
+}
+
+.mstrmojo-Android-PreviewButton col:first-child {
+    width: 100%;
+} 
+
+.mstrmojo-XtabZone .mstrmojo-Android-ListPreview {
+    display: none !important;
+} 
+
+.mstrmojo-Android-ListPreview {
+    background-image: url(images/Android/list_button_inactive.png);
+}
+
+.mstrmojo-Android-ListPreview.tapped {
+    background-image: url(images/Android/list_button_active.png) !important;
+}
+ 
+.mstrmojo-Android-TextAreaPreview {
+    background-image: url(images/Android/textarea_preview_nobg.png);
+}
+.mstrmojo-Android-TextAreaPreview-filled {
+    background-image: url(images/Android/textarea_preview_filled_nobg.png);
+}
+.mstrmojo-DocTextfield .mstrmojo-Android-TextAreaPreview {
+    background-image: url(images/Android/textarea_preview_inactive.png);
+}
+.mstrmojo-DocTextfield .mstrmojo-Android-TextAreaPreview-filled {
+    background-image: url(images/Android/textarea_preview_filled_inactive.png);
+}
+.mstrmojo-Android-TextAreaPreview.tapped {
+    background-image: url(images/Android/textarea_preview_active.png);
+}
+.mstrmojo-Android-TextAreaPreview-filled.tapped {
+    background-image: url(images/Android/textarea_preview_filled_active.png);
+}
+
+.mstrmojo-TextFieldDIC {
+    width: 90%; 
+    margin: 10px auto;
+    min-width: 390px;
+    height: 55px; 
+    padding: 0 3px; 
+    font-size: 30px; 
+    font-family: Helvetica; 
+    text-align: left !important;
+}
+
+.mstrmojo-TextAreaDIC-Popup {
+    width: 90%;
+    margin: 10px auto;
+    min-width: 390px;
+    padding: 0 3px;
+    font-size: 18px;
+    font-family: Helvetica;
+    text-align: left !important;
+    border: 1px solid #999;
+    border-radius: 6px;
+}
+
+/*** ImageCarousel BEGIN ***/
+.mstrmojo-ImageCarousel {
+    height: 600px;
+    width: 300px;
+    background-color: #555;
+    border: 15px solid #555;    
+    position: relative;
+}
+
+.mstrmojo-ImageCarousel table {
+    border: 1px solid #555;
+    text-align: center;
+}
+
+.mstrmojo-ImageCarousel table div {
+    width: 100%;
+}
+
+.mstrmojo-ImageCarousel .imageViewer {
+    height: 100%;
+    color: #fff;
+    font-size: 28pt;
+    text-align: center;
+}
+
+.mstrmojo-ImageCarousel.noImage .imageViewer {
+    margin-top: 25%;
+    height: auto;
+}
+
+.mstrmojo-ImageCarousel.noImage table {
+    display: none;
+}
+
+.mstrmojo-ImageCarousel .statusBar,
+.mstrmojo-ImageCarousel .imageTitle {
+    position: absolute;
+    width: 100%;
+}
+
+.mstrmojo-ImageCarousel .statusBar {
+    bottom: 0px;
+}
+
+.mstrmojo-ImageCarousel .imageTitle {
+    bottom: 20px;
+}
+
+.mstrmojo-ImageCarousel .mstrmojo-Label {
+    color: #fff;
+    font-size: 14pt;
+    text-align: center;
+}
+
+.mstrmojo-ImageCarousel .statusBar {
+    width: 100%;
+    position: absolute;
+}
+
+.mstrmojo-ImageCarousel .statusBar > table.center {
+    margin: auto;
+    position: relative;
+}
+
+.mstrmojo-ImageCarousel .statusBar .mstrmojo-Label {
+    background: transparent url(images/Android/grey-dot.png) 50% 50% no-repeat;
+    height: 12px;
+    width: 32px;
+}
+
+.mstrmojo-ImageCarousel .statusBar .mstrmojo-Label.selected {
+    background: transparent url(images/Android/white-dot.png) 50% 50% no-repeat;
+}
+
+.mstrmojo-Dialog.image-FullScreen .mstrmojo-Editor-buttons,
+.mstrmojo-Dialog.image-FullScreen .mstrmojo-Editor-titlebar {
+    display: none;
+}
+
+.mstrmojo-Dialog.image-FullScreen .mstrmojo-Image {
+    text-align: center;
+}
+
+.mstrmojo-Dialog.image-FullScreen .mstrmojo-Editor {
+    border-radius: 0;
+    border-width: 0;
+    background: transparent;
+}
+
+.mstrmojo-Dialog.image-FullScreen .mstrmojo-Editor-curtain {
+    background-color: #000;
+}
+/*** ImageCarousel END***/
+.mstrmojo-PhotoUploader {
+    position: absolute;
+}
+
+.mstrmojo-PhotoUploader.empty .numberBadge,
+.mstrmojo-PhotoUploader.empty .preview {
+    display: none;
+}
+
+.mstrmojo-PhotoUploader.empty .actionButton{
+    display: block;
+}
+
+.mstrmojo-PhotoUploader .actionButton {
+    width: 100%;
+    height: 100%;
+    font-size: 18px;
+    color: #FFF;
+    border-radius: 8px;
+    background-color: #808080;
+    text-align: center;
+    position: absolute;
+    display: none;
+}
+
+.mstrmojo-PhotoUploader .numberBadge {
+    position: absolute;
+    width: 24px;
+    height: 24px;
+    right: -9px;
+    top: -9px;    
+    border-radius: 12px;
+    background-color: #FFF;
+}
+
+.mstrmojo-PhotoUploader .badgeText {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    left: 2px;
+    top: 2px;
+    border-radius: 10px;
+    font-size: 15px;
+    font-weight: bold;
+    line-height: 20px;
+    text-align: center;
+    background-color: #00F;
+    color: #FFF;
+}
+
+.mstrmojo-PhotoUploader .preview {
+    width: 100%;
+    height: 100%;
+    border-radius: 8px;
+    position: absolute;
+}
+
+/*Fullscreen info window support for Info Windows on phones.*/
+.FSInfoWindow .mstrmojo-DocInfoWindow {
+    top: -5px !important;
+    left: -7px !important;
+}
+.FSInfoWindow .mstrmojo-Editor-titlebar,
+.FSInfoWindow .mstrmojo-Editor-buttons,
+.FSInfoWindow .mstrmojo-DocInfoWindow-tip {
+
+    display: none;
+}
+
+/** For Mobile Graph tooltips **/
+.mstrmojo-mobileGraph-Tooltip-content {
+	position: absolute;
+	z-index: 100000;
+    background-color:#FFFFFF;
+    border:1.8px solid #FCC90D;
+    color:#000000;
+    overflow:visible;
+    text-align:left;
+    padding: 2px;
+    white-space:nowrap;
+    opacity:0.9;
+    filter:progid:DXImageTransform.Microsoft.Alpha(opacity=90);
+}
+
+/* Prevent underlines for linked grid cells */
+.hl { 
+    text-decoration: none;
+}
+
+/** HTML Containers **/
+.mstrmojo-HTMLContainer {
+	overflow: hidden;
+	position: absolute;
+}
+
+.mstrmojo-HTMLContainer p {
+    -webkit-margin-before: 1em;
+    -webkit-margin-after: 1em;
+    -webkit-margin-start: 0px;
+    -webkit-margin-end: 0px;    
+}
+
+.mstrmojo-HTMLContainer h1 {
+	font-size: 2em;
+	-webkit-margin-before: 0.67em;
+	-webkit-margin-after: 0.67em;
+	-webkit-margin-start: 0px;
+	-webkit-margin-end: 0px;
+	font-weight: bold;
+}
+
+.mstrmojo-HTMLContainer h2 {
+    font-size: 1.5em;
+	-webkit-margin-before: 0.83em;
+	-webkit-margin-after: 0.83em;
+	-webkit-margin-start: 0px;
+	-webkit-margin-end: 0px;
+	font-weight: bold;
+}
+
+.mstrmojo-HTMLContainer h3 {
+	font-size: 1.17em;
+	-webkit-margin-before: 1em;
+	-webkit-margin-after: 1em;
+	-webkit-margin-start: 0px;
+	-webkit-margin-end: 0px;
+	font-weight: bold;
+}
+
+.mstrmojo-HTMLContainer h4 {
+	-webkit-margin-before: 1.33em;
+	-webkit-margin-after: 1.33em;
+	-webkit-margin-start: 0px;
+	-webkit-margin-end: 0px;
+	font-weight: bold;
+}
+
+.mstrmojo-HTMLContainer h5 {
+	font-size: 0.83em;
+	-webkit-margin-before: 1.67em;
+	-webkit-margin-after: 1.67em;
+	-webkit-margin-start: 0px;
+	-webkit-margin-end: 0px;
+	font-weight: bold;	
+}
+
+.mstrmojo-HTMLContainer h6 {
+	font-size: 0.67em;
+	-webkit-margin-before: 2.33em;
+	-webkit-margin-after: 2.33em;
+	-webkit-margin-start: 0px;
+	-webkit-margin-end: 0px;
+	font-weight: bold;	
+}
+
+.mstrmojo-HTMLContainer b,
+.mstrmojo-HTMLContainer em,
+.mstrmojo-HTMLContainer strong {
+    font-weight: bold;
+}
+
+.mstrmojo-HTMLContainer i {
+    line-style: italic;
+}
+
+.mstrmojo-HTMLContainer ol,
+.mstrmojo-HTMLContainer ul {
+    -webkit-margin-before: 1em;
+    -webkit-margin-after: 1em;
+    -webkit-margin-start: 0px;
+    -webkit-margin-end: 0px;
+    -webkit-padding-start: 40px;
+}
+
+/** End HTML Containers **/
+
+
+/* Mojo Visualization - Interactive Grids.*/
+.mstrmojo-InteractiveGrid .iggroup {
+    color: #A8B1B8 !important;
+    background: -webkit-gradient(linear, left top, left bottom, from(#171717), to(#373737)) !important;
+    border-color: transparent !important;
+    line-height: 32px !important;
+    text-align: left !important;
+    font-weight: bold !important;
+    font-size: 13pt !important;
+}
+
+.mstrmojo-InteractiveGrid.white .iggroup {
+    color: #0E4977 !important;
+    background: #CDCDCD !important;
+}
+
+.mstrmojo-InteractiveGrid.gray .iggroup {
+    color: #E2E2E2 !important;
+    background: #575757 !important;
+}
+
+.mstrmojo-InteractiveGrid.black .total {
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0, #2E2E2E), color-stop(1, #0D0D0D)) !important;
+} 
+
+.mstrmojo-InteractiveGrid.black .total.igbanding {
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0, #191919), color-stop(1, #3E3E3E)) !important;
+} 
+
+.mstrmojo-InteractiveGrid.white .total {
+    background: #F2F2FD !important;
+} 
+
+.mstrmojo-InteractiveGrid.white .total.igbanding {
+    background: #E1E1E8 !important;
+}
+
+.mstrmojo-InteractiveGrid.gray .total {
+    background: #222222 !important;
+}
+
+.mstrmojo-InteractiveGrid.gray .total.igbanding {
+    background: #333333 !important;
+}
+
+.ig-title {
+    color: #000000 !important;
+    border-width: 0px 0px 1px 0px !important;
+}
+
+.mstrmojo-InteractiveGrid.black .ig-title {
+    color: #FFFFFF !important;
+}
+
+.mstrmojo-InteractiveGrid.white .ig-title {
+    background-color: #ABABAB !important;
+    border-color: #C0C0C0;
+}
+
+/*The column headers in Interactive Grids have a triangle on the top left.*/
+.toggleHeader {
+    background-image: url(images/Android/orange-triangle.png);background-repeat: no-repeat;
+    padding: 4px;
+}
+
+/*** Default font - size for Interactive Grids ***/
+.mstrmojo-InteractiveGrid * {
+    font-size: 14pt !important;
+    font-family: Helvetica !important;
+    text-overflow: ellipsis;
+    line-height: normal !important;
+    text-decoration: none !important;
+    vertical-align: middle !important;
+}
+
+.mstrmojo-InteractiveGrid tr.ig-selected-row .igbanding,
+.mstrmojo-InteractiveGrid tr.ig-selected-row {
+    background: #99cc33 !important;
+    color: #fff;
+}
+
+.mstrmojo-InteractiveGrid .IG-ActionArrow > div {
+    position:relative;
+}
+.mstrmojo-InteractiveGrid .IG-ActionArrow-IMG {
+    position:absolute;
+    width: 30px;
+    right: 22px;
+    background:transparent url(images/Android/arrow_grey.png) 50% 50% no-repeat;
+}
+
+.mstrmojo-InteractiveGrid.gray .IG-ActionArrow-IMG {
+    background:transparent url(images/Android/arrow_dark.png) 50% 50% no-repeat;
+}
+
+.mstrmojo-InteractiveGrid .IG-ActionArrow.xtab-td {
+    overflow: visible !important;   
+} 
+
+.mstrmojo-InteractiveGrid tr > td.IG-lastdatacolumn {
+    padding-right: 45px;
+}
+
+.mstrmojo-InteractiveGrid .empty-igcell {
+    line-height: normal !important;
+    font-size: 0px !important;
+}
+
+.mstrmojo-InteractiveGrid .rtAlign {
+    text-align: right;
+    background-position: top right !important;
+}
+
+.mstrmojo-InteractiveGrid .leftAlign {
+    text-align: left;
+    background-position: top left !important;
+}
+
+/* Add a 15px padding left since all tds in interactive grids have it. */
+.mstrmojo-InteractiveGrid .mstrmojo-StickySections {
+    padding-left: 15px;
+}
+
+/* Stacking changes*/
+.mstrmojo-InteractiveGrid td {
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-top: 0;
+    padding-bottom: 0;
+}
+
+.mstrmojo-InteractiveGrid .stack-full {
+    border-bottom: 0 !important;
+    overflow:visible !important;
+    padding-left: 5px;
+}
+
+.mstrmojo-InteractiveGrid .stack-full > div {
+    position: relative;
+}
+
+.mstrmojo-InteractiveGrid .stack-full > div > div {
+    position:absolute;
+    left:0;
+    font-size: 1px !important;
+}
+
+.mstrmojo-InteractiveGrid .stack-full img {
+    vertical-align:middle;
+}
+
+.mstrmojo-InteractiveGrid .stack-top > span,
+.mstrmojo-InteractiveGrid .stack-top {
+    border-bottom: 0 !important;
+    font-weight: bold;
+    font-size: 13pt !important;
+    vertical-align: middle;
+}
+
+.mstrmojo-InteractiveGrid .stack-middle > span,
+.mstrmojo-InteractiveGrid .stack-middle {
+    border-top: 0 !important;
+    border-bottom: 0 !important;
+    font-size: 12pt !important;
+    line-height: normal !important;
+    vertical-align: top !important;
+    font-weight: normal;
+}
+
+.mstrmojo-InteractiveGrid .stack-bottom > span,
+.mstrmojo-InteractiveGrid .stack-bottom {
+    border-top: 0 !important;
+    font-size: 11pt !important;
+    line-height: normal !important;
+    vertical-align: top !important;
+    font-weight: normal;
+}
+
+.mstrmojo-InteractiveGrid .no-stack {
+    background-position: center center !important;
+}
+
+.mstrmojo-InteractiveGrid.white .no-stack,
+.mstrmojo-InteractiveGrid.white .stack-bottom {
+    border-bottom: 1px solid #C0C0C0 !important;
+}
+
+.mstrmojo-InteractiveGrid.gray .no-stack,
+.mstrmojo-InteractiveGrid.gray .stack-bottom {
+    border-bottom: 1px solid #121212 !important;
+}
+
+.mstrmojo-InteractiveGrid.transparent .no-stack,
+.mstrmojo-InteractiveGrid.transparent .stack-bottom {
+    border-bottom: 1px solid #e0e0e0 !important;
+}
+
+.mstrmojo-InteractiveGrid.black .no-stack,
+.mstrmojo-InteractiveGrid.black .stack-bottom {
+    border-bottom: 1px solid #313131 !important;
+}
+/*End of Stacking changes*/
+
+/* Interactive Grid Color Themes CSS */
+/* Black */
+.mstrmojo-InteractiveGrid.black {
+    background-color: #000;
+}
+.igbanding {
+    background-color: rgba(55, 55, 55, 1.0) !important;
+}
+
+/* White */
+.mstrmojo-InteractiveGrid.white {
+    background-color: #fff;
+}
+.mstrmojo-InteractiveGrid.white .igbanding {
+    background-color: #ededed !important;
+}
+.mstrmojo-InteractiveGrid.white .toggleHeader {
+    background-image: url(images/Android/white_theme_toggle.png);background-repeat: no-repeat;
+}
+
+/* Gray */
+.mstrmojo-InteractiveGrid.gray {
+    background-color: gray;
+}
+.mstrmojo-InteractiveGrid.gray .igbanding {
+    background-color: #353535 !important;
+}
+
+/* Transparent */
+.mstrmojo-InteractiveGrid.transparent {
+    background-color: transparent;
+}
+.mstrmojo-InteractiveGrid.transparent .igbanding {
+    background-color: transparent !important;
+}
+.mstrmojo-InteractiveGrid.transparent .toggleHeader {
+    background-image: url(images/Android/trans_theme_toggle.png);background-repeat: no-repeat;
+}
+
+/* Resetting uncessary CSS */
+.mstrmojo-InteractiveGrid .hl,
+.mstrmojo-InteractiveGrid i {
+    text-decoration: none;
+}
+.mstrmojo-InteractiveGrid p {
+    display: inline;
+}
+
+/* End Mojo Visualization - Interactive Grids.*/
+
+/** Transaction Widgets on Interactive Grids **/
+
+.mstrmojo-InteractiveGrid .igDIC {
+	display: block;
+	overflow: visible;
+	position: relative;
+}
+
+td.xtab-selected-cell {
+    background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#56a5ec), to(#488ac7));
+}
+.mstrmojo-magnifier .content {
+    border-spacing:0px 0px;
+    background: #FFF;
+    border-collapse:collapse;
+    table-layout: auto;
+    width: 100%;
+}
+.mstrmojo-magnifier .content tr.moreBtnRow {
+    display: none;
+}
+.mstrmojo-magnifier .content.hideMore tr:nth-child(n+5) {
+    display: none;
+}
+.mstrmojo-magnifier .content.hideMore tr.moreBtnRow, 
+.mstrmojo-magnifier .content.hideMore tr.actionBtnsRow{ 
+    display: table-row;
+}
+.mstrmojo-magnifier tr.actionBtnsRow td {
+    padding: 0;
+}
+.mstrmojo-magnifier .content td{
+    text-align:left;
+}
+.mstrmojo-magnifier .content td.selected {
+    background-color: rgba(170,170,170,0.2);
+    border-bottom: 1px solid #aaa;
+}
+.mstrmojo-magnifier .content div.drillBtn,
+.mstrmojo-magnifier .content div.linkBtn {
+    text-align: center;
+    width: 50%;
+    display: inline-block;
+    outline: 1px solid #aaa;
+}
+.mstrmojo-magnifier .content div.drillBtn.disabled,
+.mstrmojo-magnifier .content div.linkBtn.disabled {
+    color: #aaa;
+}
+.mstrmojo-magnifier .actionMenu div{
+    text-align: left;
+    border-bottom: 1px solid #aaa;
+}
+.mstrmojo-magnifier .actionMenu {
+    background-color: #FFF;
+}
+.mstrmojo-magnifier .content td{
+    font-size: 18pt;
+    height: 60px;
+    padding: 0 12px;
+}
+.mstrmojo-magnifier tr.actionBtnsRow td {
+    line-height: 60px;
+}
+.mstrmojo-magnifier .actionMenu div{
+    font-size: 18pt;
+    line-height: 60px;
+    padding: 0 12px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.mstrmojo-Dialog.anchor.mstrmojo-magnifier {
+    pointer-events: none;
+}
+.mstrmojo-Dialog.anchor.mstrmojo-magnifier .mstrmojo-Editor-titlebar {
+    display: block;
+    height: 80px;
+    background-color: #FFF;
+    border-bottom: 3px #33B5E9 solid;
+}
+.mstrmojo-Dialog.anchor.mstrmojo-magnifier .mstrmojo-Editor-title{
+    line-height: 80px;
+    font-size: 25pt;
+    color: #0099cc;
+    padding: 0 12px;
+}
+.mstrmojo-Dialog.anchor.mstrmojo-magnifier .mstrmojo-Editor{
+    min-width: 200px;
+    width: auto;
+    border-width: 1px;
+}
+.mstrmojo-Dialog.anchor.mstrmojo-magnifier .mstrmojo-Editor-curtain{
+    opacity: 0;
+}
+.mstrmojo-Dialog.anchor.mstrmojo-magnifier .mstrmojo-Editor-content{
+    overflow: hidden;
+}

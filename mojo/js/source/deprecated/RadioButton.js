@@ -1,0 +1,1 @@
+mstrmojo.requiresCls("mstrmojo.CheckBox");

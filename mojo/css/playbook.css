@@ -1,0 +1,9 @@
+@CHARSET "ISO-8859-1";
+
+/* CSS specific for BlackBerry Playbook */
+
+/* Need to make button higher because resolution of playbook is fixed at 1024 * 600*/
+.homeScreenList div.cols1 {
+    height: 28%; // was 25%
+    width: 100%;
+}

@@ -1,0 +1,1047 @@
+/*START of configure environment page css classes*/
+@media all and (min-width: 968px){
+.mstr-config-table {
+    table-layout: auto;
+//   width: 1028px;
+	margin: 0 auto;
+	 
+	width : 950px; 
+	
+	}
+}
+
+@media all and (max-width:768px)
+{
+.mstr-config-table {
+    table-layout: auto;
+//   width: 1028px;
+	margin: 0 auto;	 
+	width : 768px; 
+	
+	}
+
+}
+
+
+.mstrmojo-dnd-avatar {
+	position: absolute;	
+	min-width: 15px;
+	min-height:15px;
+	z-index: 1000;
+	margin: 24px 0 0 24px;
+	display: none;
+	cursor:pointer;
+}
+
+.mstrmojo-dnd-avatar-inner {
+	padding: 3px;
+	min-width: 15px;
+	min-height:15px;	
+	background:url(images/IPA/machine_normal.gif)repeat-x scroll left 0px;	
+	border:none;	
+	cursor:pointer;
+}
+
+.mstr-left-column {
+    width: 0px;
+    vertical-align: top;
+    empty-cells: hide;
+    padding-top: 0px;
+    border-right-width: 1px;
+    border-right-style: solid;
+    border-right-color: #AAA;
+	border-left-width: 1px;
+    border-left-style: solid;
+    border-left-color: #AAA;
+}
+
+.mstr-right-column {
+    empty-cells: hide;
+    width: 100%;
+    vertical-align: top;
+}
+
+.mstr-left-div {
+    width: 245px;
+    display: block;
+    position: relative;
+    vertical-align: top;
+    padding: 0px;
+}
+
+.mstr-right-div {
+    display: block;
+    height: auto;
+    margin: 0px;
+    overflow: visible;
+    padding: 6px;
+    white-space: normal;
+}
+
+.mstrmojo-leftcolumn-table {
+    width: 210px;
+    border: 0px;
+    padding: 6px;
+}
+
+.mstrmojo-IPA-label {
+    color: #800000;
+    font-weight: bold;
+}
+
+.mstrmojo-left-pad-button {
+    padding-left: 15px;
+    padding-top: 4px;
+}
+.mstrmojo-left-pad-button.selected {
+	color: #C00 !important;
+	font-weight: bold;
+}
+
+.mstrmojo-left-unpad-labels {
+    padding-top: 15px;
+    font-size: 8pt;
+    font-weight: bold;
+}
+
+.mstrmojo-rightcolumn-label {
+    font-size: 10pt;
+    font-weight: bold;
+    color: #800000;
+    padding-left: 10px;
+}
+
+.mstrmojo-rightcolumn-vbox {
+    display: block;
+}
+
+.mstrmojo-IPAAddServerManually {	
+	margin-bottom:10px;
+	margin-top:10px;
+	margin-left:10px;	
+}
+
+.mstrmojo-IPAAddEnvironmentManually {	
+	margin-bottom:10px;
+	margin-top:10px;
+	margin-left:10px;	
+}
+
+.mstrmojo-IPABuildEnvironmentsVBox{
+	margin:10px;
+	width:700px;	
+	border:ridge;
+	border-color:grey;
+	border-width:1px;
+	border-shadow:1px;
+	border-shadow-fade:50%;
+}
+
+.mstrmojo-IPACreateEnvHeaderTable{
+	width:700px;	
+}
+
+.mstrmojo-informative-label {
+	width:720px;
+    padding-left: 10px;
+    padding-top: 3px;
+	text-align:justify;
+	display:block;
+}
+
+.mstrmojo-DragAndDropStatusLabel{
+	margin-left:11px;
+	color:red;	
+	font-weight:bold;
+	width:200px;
+}
+
+.mstrmojo-envBufferHBox{
+   	 width:20px;
+}
+
+.mstrmojo-collapsiblepanel-rightside-title {	
+    font-weight: bold;
+    padding-left: 10.5px;
+}
+
+.mstrmojo-collapsiblepanel-rightside {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    width:700px;   
+}
+
+
+
+/* Begin of Divyanshu */
+
+
+.mstrmojo-Add-Environment-Manually {    
+	margin-left: 10px;
+    margin-top: 10px;
+    width:720px;
+    background-color:#E4E4E4; 
+    border-radius:5px;
+    border:1px solid #AAAAAA;
+}
+.mstrmojo-Add-Environment-Manually-title {
+	width:710px;
+	height:40px;
+	padding-left:10px;
+	padding-top:18px;
+	border-radius:5px;
+	margin:0px;
+	font-family: Tahoma;
+	color: #6e6d6d;
+	font-size: 1.2em;
+	font-weight: bold;
+	background: #ededed; /* Old browsers */
+	background: -moz-linear-gradient(top,  #ededed 37%, #d0cece 81%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(37%,#ededed), color-stop(81%,#d0cece)); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top,  #ededed 37%,#d0cece 81%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top,  #ededed 37%,#d0cece 81%); /* Opera 11.10+ */
+	background: -ms-linear-gradient(top,  #ededed 37%,#d0cece 81%); /* IE10+ */
+	background: linear-gradient(top,  #ededed 37%,#d0cece 81%); /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ededed', endColorstr='#d0cece',GradientType=0 ); /* IE6-9 */
+	border-color: #848484; /* Old browsers */
+	border-color: -moz-linear-gradient(top,  #ededed 37%, #d0cece 81%); /* FF3.6+ */
+	border-color: -webkit-gradient(linear, left top, left bottom, color-stop(37%,#ff0000), color-stop(81%,#dd0000)); /* Chrome,Safari4+ */
+	border-color: -webkit-linear-gradient(top,  #ff0000 37%,#dd0000 81%); /* Chrome10+,Safari5.1+ */
+	border-color: -o-linear-gradient(top,  #ff0000 37%,#dd0000 81%); /* Opera 11.10+ */
+	border-color: -ms-linear-gradient(top,  #ff0000 37%,#d0cece 81%); /* IE10+ */
+	border-color: linear-gradient(top,  #ff0000 37%,#d0cece 81%); /* W3C */
+	text-shadow: #FFFFFF 1px 1px 1px;   
+	box-shadow: 1px 2px 2px #848484;
+}
+
+.mstrmojo-mha-panel {
+    margin-left: 10px;
+    margin-top: 10px;    
+    background-color:#828282;
+    border-radius:5px;
+    width:720px;
+    color:#fefcfc;   
+    border:1px solid #767676; 
+}
+
+.mstrmojo-mha-title{	
+	width:710px;	
+	height:40px;
+	padding-left:10px;
+	padding-top:18px;
+	border-radius:5px;
+	background: -moz-linear-gradient(top,  #767676 37%, #4d4d4d 81%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(37%,#767676), color-stop(81%,#4d4d4d)); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top,  #767676 37%,#4d4d4d 81%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top,  #767676 37%,#4d4d4d 81%); /* Opera 11.10+ */
+	background: -ms-linear-gradient(top,  #767676 37%,#4d4d4d81%); /* IE10+ */
+	background: linear-gradient(top,  #767676 37%,#4d4d4d 81%); /* W3C */
+	
+	border-color: #848484; /* Old browsers */
+	border-color: -moz-linear-gradient(top,  #ededed 37%, #d0cece 81%); /* FF3.6+ */
+	border-color: -webkit-gradient(linear, left top, left bottom, color-stop(37%,#ff0000), color-stop(81%,#dd0000)); /* Chrome,Safari4+ */
+	border-color: -webkit-linear-gradient(top,  #ff0000 37%,#dd0000 81%); /* Chrome10+,Safari5.1+ */
+	border-color: -o-linear-gradient(top,  #ff0000 37%,#dd0000 81%); /* Opera 11.10+ */
+	border-color: -ms-linear-gradient(top,  #ff0000 37%,#d0cece 81%); /* IE10+ */
+	border-color: linear-gradient(top,  #ff0000 37%,#d0cece 81%); /* W3C */
+	text-shadow: black 1px 1px 1px;
+	box-shadow: 1px 2px 2px #484848;	   
+	}
+	
+.mstrmojo-add-server-manually-title{
+	width:334px;
+	background: -moz-linear-gradient(top,  #CFE5EC 37%, #C6DADE 81%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(37%,#CFE5EC), color-stop(81%,#C6DADE)); /* Chrome,Safari4+ */		
+	background: -webkit-linear-gradient(top,  #CFE5EC 37%,#C6DADE 81%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top,  #CFE5EC 37%,#C6DADE 81%); /* Opera 11.10+ */
+	background: -ms-linear-gradient(top,  #CFE5EC 37%,#C6DADE 81%); /* IE10+ */
+	background: linear-gradient(top,  #CFE5EC 37%,#C6DADE 81%); /* W3C */
+	
+	border-color: -webkit-linear-gradient(top,  #ff0000 37%,#dd0000 81%); /* Chrome10+,Safari5.1+ */
+	
+	}
+	
+.mstrmojo-add-server-manually-panel{
+	margin-left: 8px;    
+    background-color:#F0FAFD;    
+    width:334px;  
+    border-left:1px solid #B6B6B6;  
+    border-right:1px solid #B6B6B6;    
+	}
+	
+.mstrmojo-Available-Server {    
+  	margin-left: 8px;
+    margin-top: 0px;
+    margin-bottom:0px;
+    background-color:#E3E3E3;        
+    /*width:335px; */
+    border-radius:0px;    
+    border:none;
+    border-left:1px solid #B6B6B6;
+	border-right:1px solid #B6B6B6;
+}
+
+.mstrmojo-Available-Mobile-Server {    
+  	margin-left: 8px;
+    margin-top: 0px;
+    margin-bottom:8px;
+    background-color:#E3E3E3;        
+    /*width:335px; */
+    border-radius:0px;    
+    border:none;
+    border-left:1px solid #B6B6B6;
+	border-right:1px solid #B6B6B6;
+}
+
+.mstrmojo-Env-Server {    
+  	margin-left: 6px;
+    margin-top: 0px;
+    margin-bottom:0px;
+    background-color:#E3E3E3;        
+    width:337px;
+    border-radius:0px;    
+    border:none;
+    border-left:1px solid #B6B6B6;
+	border-right:1px solid #B6B6B6;	
+}
+
+.mstrmojo-Env-Mobile-Server {    
+  	margin-left: 6px;
+    margin-top: 0px;
+    margin-bottom:8px;
+    background-color:#E3E3E3;        
+    width:337px;
+    border-radius:0px;    
+    border:none;
+    border-left:1px solid #B6B6B6;
+	border-right:1px solid #B6B6B6;	
+}
+
+.mstrmojo-Intelligent-Server {    
+  	margin-left: 6px;
+    margin-top: 0px;
+    margin-bottom: 0px;
+    background-color:#F0FAFD;        
+    width:337px;
+    border-radius:0px;
+    border:none; 
+    border-left:1px solid #B6B6B6;
+	border-right:1px solid #B6B6B6;
+}
+.mstrmojo-Available-Server-title {	
+	height:15px;
+	width:324px;
+	padding-left:10px;
+	padding-top:5px;	
+	margin:0px;
+	font-family: Tahoma;
+	color: black;
+	font-size: 1.0em;
+	font-weight: bold;
+	background:#D5D4D4;	
+}
+.mstrmojo-Env-Server-title {	
+	height:15px;
+	width:327px;
+	padding-left:10px;
+	padding-top:5px;	
+	margin:0px;
+	font-family: Tahoma;
+	color: black;
+	font-size: 1.0em;
+	font-weight: bold;
+	background:#D5D4D4;		
+}
+.mstrmojo-I-Server-title {	
+	height:15px;
+	width:327px;
+	padding-left:10px;
+	padding-top:5px;	
+	margin:0px;
+	font-family: Tahoma;
+	color: black;
+	font-size: 1.0em;
+	font-weight: bold;
+	background:#CFE5EC;		
+}
+
+
+.mstrmojo-DataGrid-envlist{
+	font-family: Tahoma, Arial, Helvetica, sans-serif;
+    width:100%;       
+    min-width:720px;
+    width:66em;
+    min-height: 140px;
+    max-height: 160px;
+    border-collapse:collapse;
+    border: 1px solid #bababa;
+    border-radius: 5px 5px 5px 5px;
+    margin-left: 10px;
+    margin-top: 10px;										
+}
+	
+.mstrmojo-DataGrid-envlist .mstrmojo-DataGrid-itemsScrollBox{
+	height:123px;			
+	overflow-x: hidden;	
+	cursor:default;
+}
+.mstrmojo-DataGrid-envlist .mstrmojo-DataGrid-itemsContainer{	
+	cursor:default;
+}
+
+.mstrmojo-DataGrid-envlist .mstrmojo-DataGrid-headerContainer {
+	border-radius: 0 0 5px 5px;
+}
+
+.mstrmojo-DataGrid-headerContainer td{	
+	background: #ededed; /* Old browsers */
+    background: -moz-linear-gradient(top, #ededed 1%, #d8d8d8 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(1%,#ededed), color-stop(100%,#d8d8d8)); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top, #ededed 1%,#d8d8d8 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top, #ededed 1%,#d8d8d8 100%); /* Opera11.10+ */
+    background: -ms-linear-gradient(top, #ededed 1%,#d8d8d8 100%); /* IE10+ */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ededed', endColorstr='#d8d8d8',GradientType=0 ); /* IE6-9 */
+    background: linear-gradient(top, #ededed 1%,#d8d8d8 100%); /* W3C */                
+}
+	
+.mstrmojo-DataGrid-envlist .mstrmojo-DataRow td {
+	border:0px solid #98bf21;
+	padding: 5px 7px 4px 7px;
+}
+
+.mstrmojo-DataGrid-envlist tr.alt td {
+	background-color:#e6e6e6;
+}
+
+.mstrmojo-configPage-textbox {
+	font : 8pt Tahoma, Arial, Verdana;
+}
+
+.mstrmojo-mha-icon
+{
+	width: 75px;
+	height: 58px;
+	display: block;
+	text-indent: -9999px;
+	background: url(images/IPA/configuration_page_sprite.png) no-repeat -5px -15px;
+}
+.mstrmojo-AddEnv-icon
+{
+	width: 78px;
+	height: 58px;
+	display: block;
+	text-indent: -9999px;
+	background: url(images/IPA/configuration_page_sprite.png) no-repeat -96px -17px;
+}
+.mstrmojo-Drag-icon
+{
+	width: 34px;
+	height: 10px;
+	display: block;
+	text-indent: -9999px;
+	background: url(images/IPA/configuration_page_sprite.png) no-repeat -208px -41px;
+}
+/* End of Divyanshu */
+
+.mstrmojo-AddServerManuallyCollapsiblePanel{
+	padding-top: 10px;
+    padding-bottom: 10px;
+    width:95%;   
+}
+
+.mstrmojo-mha-table {
+    padding-left: 10px;
+    padding-top: 10px;	
+    padding-bottom: 10px;
+}
+
+.mstrmojo-mhatable-labels {
+    padding-right: 25px;
+    text-align: left;
+}
+
+.mstrmojo-connect-manually-RadioButton {
+    padding-right: 5px;
+}
+
+.mstrmojo-connect-button{
+    cursor: pointer;
+    width: 70px;
+    padding-bottom: 1px;
+    margin: 3px;
+	margin-left:10px
+    padding-left: 1px;
+    padding-right: 1px;
+    border-color: #EEE #787878 #787878 #EEE;
+    border-style: solid;
+    background: #D5D6D8 url(images/buttonGradient.gif) repeat-x scroll left 0px;
+    height: auto;
+    border-width: 1px;
+    font-weight: bold;
+	text-align:justify;	
+}
+
+.mstrmojo-add-button {
+    cursor: pointer;
+    min-width: 40px;
+    padding-bottom: 1px;
+    margin: 3px;
+    padding-left: 4px;
+    padding-right: 1px;
+    border-color: #EEE #787878 #787878 #EEE;
+    border-style: solid;
+    background: #D5D6D8 url(images/buttonGradient.gif) repeat-x scroll left 0px;
+    height: auto;
+    border-width: 1px;
+    font-weight: bold;
+	text-align:justify;
+}
+
+
+.mstrmojo-addEnv-button {
+    cursor: pointer;
+    width: 43px;
+    padding-bottom: 1px;
+    margin: 5px;	
+    padding-left: 2px;
+    padding-right: 2px;
+    border-color: #EEE #787878 #787878 #EEE;
+    border-style: solid;
+    background: #D5D6D8 url(images/buttonGradient.gif) repeat-x scroll left 0px;
+    height: 22px;
+    border-width: 1px;
+	font-size:10pt;
+    font-weight: bold;
+	text-align:center;
+}
+
+.mstrmojo-addServer-button {
+    cursor: pointer;
+    width: 43px;    
+    margin: 3px;	
+    padding-left: 2px;
+    padding-right: 2px;
+    border-color: #EEE #787878 #787878 #EEE;
+    border-style: solid;
+    background: #D5D6D8 url(images/buttonGradient.gif) repeat-x scroll left 0px;
+    height: 18px;
+    border-width: 1px;
+    font-weight: bold;
+	text-align:center;
+}
+
+.mstrmojo-NoEnvLabel{
+	font-weight:bold;
+	font-size:9pt;
+	color:red;
+	padding-left: 10px;
+	padding-top: 10px;
+    padding-bottom: 5px;
+}
+
+.mstrmojo-buildenv-label {
+    font-weight: bold;
+    padding-left: 10px;
+    padding-top: 10px;
+    padding-bottom: 5px;
+}
+
+.mstrmojo-buildenv-informative-label {    
+    padding-left: 10px;
+    padding-top: 3px;
+    padding-bottom: 10px;
+}
+
+.mstrmojo-CurrentEnvCollapsiblePanel{
+  	margin-top:4px;
+  	width:330px;	
+	border:ridge;
+	border-color:grey;
+	border-width:1px;	
+}
+
+.mstrmojo-EnvCollapsiblePanel{
+  	margin-top:4px;
+  	width:320px;	
+	border:ridge;
+	border-color:grey;
+	border-width:1px;
+	display:relative;
+}
+
+.mstrmojo-EnvTitlePanel{
+  	background-color:#c8c8c8;
+	color:black;
+	font:bold;			
+}
+
+.mstrmojo-EnvironmentPanel{	
+	margin:10px;		
+	border:ridge;
+	border-color:grey;
+	border-width:1px;
+	border-shadow:1px;
+	border-shadow-fade:50%;
+}
+
+.mstrmojo-CurrentEnvTitlePanel{
+  	background-color:#0d4a7d;;
+	color:white;
+	font:bold;			
+}
+
+						
+.mstrmojo-DataGrid-envserverlist{
+	width:318px;
+	height: 80px;	
+	overflow: hidden;	
+}	
+		
+.mstrmojo-DataGrid-envserverlist .mstrmojo-DataGrid-headerText{
+	height:0px;	
+	visibility:hidden;
+	overflow-y: hidden;	
+}	
+		
+.mstrmojo-DataGrid-envserverlist .mstrmojo-DataGrid-itemsScrollBox{
+	height:96px;		
+	overflow-x: hidden;	
+}
+		
+.mstrmojo-DataGrid-newenvserverlist{
+	width:328px;	
+	margin-right: 5px;
+	height: 80px;		
+	min-height: 95px;
+	border:ridge;
+	border-color:grey;
+	border-width:1px;
+	overflow-x: hidden;		
+}	
+		
+.mstrmojo-DataGrid-newenvserverlist .mstrmojo-DataGrid-headerText{
+	height:0px;	
+	visibility:hidden;
+	overflow-x: hidden;	
+}
+		
+.mstrmojo-Label-mynewenv{
+		
+	            font-size:1.1em;
+                text-align:left;
+                padding-top:5px;
+                padding-bottom:4px;
+                padding-left: 7px;
+                border-top-right-radius: 5px;
+                border-top-left-radius: 5px;
+                border-top: 0px solid #b6b6b6;
+                border-bottom: 1px solid #b6b6b6;
+                background: #ededed; /* Old browsers */
+                background: -moz-linear-gradient(top, #ededed 1%, #d8d8d8 100%); /* FF3.6+ */
+                background: -webkit-gradient(linear, left top, left bottom, color-stop(1%,#ededed), color-stop(100%,#d8d8d8)); /* Chrome,Safari4+ */
+                background: -webkit-linear-gradient(top, #ededed 1%,#d8d8d8 100%); /* Chrome10+,Safari5.1+ */
+                background: -o-linear-gradient(top, #ededed 1%,#d8d8d8 100%); /* Opera11.10+ */
+                background: -ms-linear-gradient(top, #ededed 1%,#d8d8d8 100%); /* IE10+ */
+                filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ededed', endColorstr='#d8d8d8',GradientType=0 ); /* IE6-9 */
+                background: linear-gradient(top, #ededed 1%,#d8d8d8 100%); /* W3C */
+                color:#000000;
+		
+}
+		
+.mstrmojo-DataGrid-envlist .monitorsizeCol{
+	width: 60px;
+}
+			
+.mstrmojo-AddWebServerPortRow{
+	padding-right:13px;
+}
+		
+.mstrmojo-AddMobileServerPortRow{
+			padding-right:5px;			
+}
+		
+.envgrid-delete-env-button-icon{
+	cursor: pointer;
+    width: 8px;
+    padding-bottom: 1px;		    
+    padding-left: 5px;
+    padding-right: 1px;
+    border-color: #EEE #787878 #787878 #EEE;		    
+    background:url(images/delete.gif) no-repeat center right;    
+    height: auto;
+	border-width: 1px;			  	
+}
+.drag-left-arrow-button{
+	background:url(images/IPA/1arrow_left.gif) no-repeat left;
+}
+
+.drag-right-arrow-button{
+	background:url(images/IPA/1arrow_right.gif) no-repeat right;
+}
+
+/*END of configure environment page css classes*/				
+
+/*START of apply templates css*/
+.mstrmojo-TreeBrowser .mstrmojo-TreeNode-state.opened{	
+	background: url(images/IPA/apply_template_sprites.gif) no-repeat -1px 1px;
+	width: 19px;
+	height: 20px;
+	margin-left: 5px;
+	zoom:90%;
+}
+
+.mstrmojo-TreeBrowser .mstrmojo-TreeNode-state.closed{	
+	background: url(images/IPA/apply_template_sprites.gif) no-repeat -22px 1px;
+	width: 19px;
+	height: 20px;
+	margin-left: 5px;	
+	zoom:90%;
+}
+
+.mstrmojo-TreeNode-text.Web{
+	background: url(images/IPA/apply_template_sprites.gif) no-repeat -47px;	
+}
+
+ .mstrmojo-TreeNode-text.AllWeb{
+ 	background: url(images/IPA/apply_template_sprites.gif) no-repeat -47px;	
+ }
+
+ .mstrmojo-TreeNode-text.AllMobile{
+ 	background: url(images/IPA/apply_template_sprites.gif) no-repeat -47px;	
+ }
+ 
+.mstrmojo-TreeNode-text.Mobile{
+	background: url(images/IPA/apply_template_sprites.gif) no-repeat -47px;	
+}
+
+.mstrmojo-TreeNode-text.AllServers{
+	background: url(images/IPA/apply_template_sprites.gif) no-repeat -47px;	
+}
+
+.mstrmojo-TreeNode-text.EnvLevel{	
+	font-weight:600;
+	font-size:8pt;	
+	color:#171a7b;
+}
+
+.mstrmojo-TreeNode-text.MobileLevel{
+	font-weight:bold;
+	color:#974fc8;
+}
+
+.mstrmojo-TreeNode-text.WebLevel{
+	font-weight:bold;
+	color:#507737;
+}
+
+.mstrmojo-TreeNode-text.AllServersLevel{
+	font-weight:bold;
+	color:#d52f33;
+}
+
+.mstrmojo-DataGrid-ApplyTemplatesDataGrid{
+	width:450px;
+}				
+				
+.mstrmojo-DataGrid-ApplyTemplatesDataGrid .mstrmojo-DataGrid-itemsScrollBox{
+	max-height:180px;		
+	overflow-x: hidden;	
+}
+
+.mstrmojo-DataGrid-ApplyTemplatesDataGrid .mstrmojo-DataGrid-headerText{
+	background-color:black;
+	color:white;
+}
+
+.mstrmojo-applyTemplate-button {
+    cursor: pointer;
+    width: 40px;
+    padding-bottom: 1px;
+    margin: 5px;	
+    padding-left: 2px;
+    padding-right: 2px;
+    border-color: #EEE #787878 #787878 #EEE;
+    border-style: solid;
+    background: #D5D6D8 url(images/buttonGradient.gif) repeat-x scroll left 0px;
+    height: 18px;
+    border-width: 1px;
+	font-size:8pt;
+    font-weight: bold;
+	text-align:justify;
+}
+/*END of apply templates css*/
+
+/* KI Config properties */
+
+.mstrmojo-IPA-ConfigEntry {
+    margin: 10px 10px 10px 10px;
+}
+
+
+.mstrmojo-TreeNode-text {
+    background-position: -3px center;
+    cursor:pointer;
+}
+
+.mstrmojo-TreeNode-text.t2 {
+    padding: 3px 0 3px 5px;
+}
+
+.mstrmojo-TreeNode-text.t2.NOT_CONFIGURED
+{
+	color:red;
+}
+
+.mstrmojo-TreeNode-text.noCfg
+{
+	padding: 3px 0 3px 20px;
+	color:grey;
+	cursor:default;
+}
+
+.mstrmojo-TreeNode-text.t0
+{
+	color:navy;
+	background-image: url(images/IPA/machine_normal.gif);
+}
+.mstrmojo-TreeNode-text.t1
+{
+	color:navy;
+}
+
+.mstrmojo-TreeNode-text.t1.conf
+{
+	background-image: url(images/IPA/configuration.gif);
+}
+
+.mstrmojo-TreeNode-text.t1.desk
+{
+	background-image: url(images/IPA/desktop.gif);
+}
+
+.mstrmojo-TreeNode-text.t1.em
+{
+	background-image: url(images/IPA/enterpriseMngr.gif);
+}
+
+.mstrmojo-TreeNode-text.t1.iserver
+{
+	background-image: url(images/IPA/iServer.gif);
+}
+
+.mstrmojo-TreeNode-text.t1.ncs
+{
+	background-image: url(images/IPA/ncs.gif);
+}
+
+.mstrmojo-TreeNode-text.t1.off
+{
+	background-image: url(images/IPA/office.gif);
+}
+
+.mstrmojo-TreeNode-text.t1.ws
+{
+	background-image: url(images/IPA/webServices.gif);
+}
+
+.mstrmojo-TreeNode-text.t1.web
+{
+	background-image: url(images/IPA/web.gif);
+}
+
+.mstrmojo-TreeNode-text.t2
+{
+	//background-image: url(images/IPA/systemCheck.gif);
+}
+
+
+.mstrmojo-IPA-SystemCheckTree
+{
+	height:400px;
+	overflow-x: hidden;
+    	overflow-y: auto;
+}
+
+.mstrmojo-TreeNode-div.selected span
+{
+	background-color: #bbbbbb;
+}
+
+.mstrmojo-IPA-ConfigEntryApplyButton.disabled
+{
+	color: #888888;
+}
+
+.mstrmojo-IPA-CounterList
+{
+	width:auto;
+	height:auto;
+	margin: 10px 5px 5px 10px;
+}
+/*
+.mstrmojo-IPA-CounterList .statusCol
+{
+	width:50px;
+}
+
+.mstrmojo-IPA-CounterList .machineCol
+{
+	width:100px;
+}
+
+.mstrmojo-IPA-CounterList .catCol
+{
+	width:100px;
+}
+
+.mstrmojo-IPA-CounterList .instCol
+{
+	width:100px;
+}
+
+.mstrmojo-IPA-CounterList .counterCol
+{
+	width:100px;
+}
+
+.mstrmojo-IPA-CounterList .productCol
+{
+	width:100px;
+}
+
+.mstrmojo-IPA-CounterList .kiCol
+{
+	width:100px;
+}
+*/
+.mstrmojo-IPA-CounterList-Status-On
+{
+	background: url(images/btnOn.png) center no-repeat;
+	height:20px;
+}
+
+.mstrmojo-IPA-CounterList-Status-Off
+{
+	background: url(images/btnOff.png) center no-repeat;
+	height:20px;
+}
+
+.mstrmojo-mhaConnect-button{
+background: url(../../../images/tick.png) no-repeat center;
+}
+
+.mstrmojo-mhaDisconnect-button{
+background: url(../../../images/tbCloseAcc.gif) no-repeat center;
+}
+
+.mstrmojo-SCCfgWizard-SlideDescription
+{
+	background-color:#494949;
+	border:1px solid #676767;
+	color:white;
+	font-size:10pt;
+	padding:10px;
+	overflow:hidden;
+}
+
+.mstrmojo-ConfigEntry-Status
+{
+	color:red;
+}
+
+.mstrmojo-ConfigEntry-Help
+{
+	min-height:10px;
+}
+
+.mstrmojo-SCConfigWiz-title
+{
+	background-color:#3a3a3a;
+	width:100%;
+}
+
+.mstrmojo-SCConfigWiz-titleText
+{
+	font-family:Tahoma;
+	font-weight:Bold;
+	font-size:10pt;
+	color:#ffffff;
+	padding:10px;
+	text-align:left;
+}
+
+.mstrmojo-SCConfigWiz-titleRestart
+{
+	font-family:Tahoma;
+	font-size:13pt;
+	color:#cccbc6;
+	background: url(images/gear.png) left no-repeat;
+	padding-left:19px;
+	cursor:pointer;
+	width:83px;
+}
+
+.mstrmojo-SCConfigWiz-titleRestart:hover
+{
+	text-decoration:underline;
+}
+
+.mstrmojo-SCConfigWiz-titleHelp
+{
+	font-family:Tahoma;
+	font-size:10pt;
+	color:#cccbc6;
+	background: url(images/gear.png) left no-repeat;
+	padding-left:20px;
+	cursor:pointer;
+}
+
+.mstrmojo-SCConfigWiz-titleHelp:hover
+{
+	text-decoration:underline;
+
+}
+
+.mstrmojo-IPA-PluginTreeNode
+{
+	padding-top: 10px;
+	padding-bottom: 10px;
+	margin-top: 5px;
+	font-size: 1.2em;
+	font-weight: bold;
+	width:auto;
+}
+
+.mstrmojo-IPA-PluginTreeNode .mstrmojo-IPA-PluginTreeNode
+{
+	padding-top: 2px;
+	padding-bottom: 2px;
+	margin-top: 0;
+	font-size: 8pt;
+	font-weight: normal;
+}
+
+.mstrmojo-Wizard-buttons
+{
+    margin: 0 10px;
+    cursor: pointer;
+    min-width: 40px;
+    padding-bottom: 1px;
+    padding-left: 4px;
+    padding-right: 4px;
+    border-color: #EEE #787878 #787878 #EEE;
+    border-style: solid;
+    background: #D5D6D8 url(images/buttonGradient.gif) repeat-x scroll left 0px;
+    height: auto;
+    border-width: 1px;
+    font-weight: bold;
+    text-align:justify;	
+}
+
+.mstrmojo-alert-errorlabel
+{
+    font-size: 10pt;
+    font-weight: bold;
+    color: red;
+    padding-left: 10px;
+}
