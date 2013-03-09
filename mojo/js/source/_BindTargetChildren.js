@@ -9,7 +9,7 @@
      * 
      * <p>For example, this mixin is used in mstrmojo.TabStrip and mstrmojo.TabNameList</p>
      * @class
-     * @public
+     * @public dsfdsa
      */
     mstrmojo._BindTargetChildren = {
             
