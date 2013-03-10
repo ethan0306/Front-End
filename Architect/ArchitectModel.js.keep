@@ -1,0 +1,1945 @@
+(function () {    
+    mstrmojo.requiresCls(
+        "mstrmojo.func",
+        "mstrmojo.Model");
+/*   Structures   */ 
+    var table={
+    	DBTblID:"",
+    	TblID: "",
+    	name:"",
+    	TblSta:"0",
+    	Columns:[],
+    	FactInfos:[],
+    	AttrInfos:[],
+    	Ats:[],
+    	Fcts:[],
+    	IsNew:false,
+    	IsDirty:false,
+    	IsDeleted:false,
+    	DBRoleID:"DBRoleID"
+    }; 
+        
+    var attr={
+    	id:"",
+    	name:"",
+    	Relations:[],
+    	IsNew:false,
+    	IsDirty:false,
+    	IsDeleted:false
+    };
+    
+    var fact={
+    	id:"",
+    	name:"",
+    	IsNew:false,
+    	IsDirty:false,
+    	IsDeleted:false
+    };
+    
+    var form={
+    		"FrmID":"fmrID",
+    		"FrmName":"frmName",
+       		"IsNew":false,
+    		"IsDirty":false,
+    		"IsDeleted":false
+    };
+    
+    var column={
+    		"ClnID":"clnID",
+    		"ClnName":"clnName",
+    		"ClnDataType": "clnDatatype",
+    		"IsNew":false,
+    		"IsDirty":false,
+    		"IsDeleted":false
+    };
+    
+    var relation={
+    		"ParentID":"ParentID",
+    		"ChildID":"ChildID",
+    		"TblID":"tableID",
+    		"IsNew":false,
+    		"IsDirty":false,
+    		"IsDeleted":false
+    };
+    
+    var fctInfo={
+    		"FctInfoID":"TblID+FctID",
+    		"FctID":"fctID",
+    		"TblID":"tblID",
+    		"ClnID":"clnID",
+    		"Expr": "Expression",
+       		"IsNew":false,
+    		"IsDirty":false,
+    		"IsDeleted":false,
+    		"Format":"Email"
+    };
+    
+    var attInfo={
+    		"id":"",
+        	"AttID":"attID",
+        	"FrmID":"frmID",
+        	"TblID":"tblID",
+        	"ClnID":"clnID",
+        	"Expr": "Expression",
+       		"IsNew":false,
+    		"IsDirty":false,
+    		"IsDeleted":false,
+    		"Format":"Email"
+    };
+    
+    var dbrole = {
+    		"name": "name",
+    		"did": "id",
+    		"tp": "type",
+    		"stp": "subtype",
+    		"primary": "primary"
+    };
+
+    var _DEFAULT_LAYER_ID = "xDefaultx";
+    var _DEFAULT_LAYER_NAME = "Default Layer";
+    
+	
+   	var _waitBox = new mstrmojo.Editor({
+		cssClass: "mstrmojo-Architect-WaitBox",
+		draggable: false,
+		showTitle: false,
+		zIndex: 99999,
+		children: [{
+			scriptClass:"mstrmojo.Box",
+		    cssClass: "mstrmojo-Architect-Wait",
+			children: [{
+				scriptClass:"mstrmojo.Box",
+			    cssClass: "mstrmojo-Architect-WaitBox-Close",
+				onRender: function (evt) {
+				    var _close_menu = function(evt){
+				        _waitBox.close();
+					};
+					if (this.domNode) {  
+					    mstrmojo.dom.attachEvent(this.domNode, 'click', _close_menu);
+					}    
+				}
+			}] 
+		}],
+		onRender: function (evt) {
+   		    if (this.curtainNode) {
+   		    	this.curtainNode.style.cursor = "progress";   //set cursor shape on the curtain	
+   		    }	
+   	    }
+    });
+    
+    var dummyTable1=null;
+    var dummyTable2=null;
+    function _showWaitPage() {
+    	if (!_waitBox.visible) {
+    	    _waitBox.open();
+    	}    
+    };
+    
+    function _hideWaitPage() {
+    	if (_waitBox.visible) {
+    	    _waitBox.close();
+    	}
+    };
+    
+	function loadDSNs(mdl, callback){
+		if (mdl.dsns.length == 0){
+    		//populate the dsns
+			var dsnparams = {taskId:'arch.getODBCDSNs'};
+			
+			var dsncb = {
+				success: function(res){ 
+					_hideWaitPage();
+					
+					//add an entry to select the existing one
+					var a = new Array(res.dsns.dsn.length + 1); 
+					a[0] = {n:'select a dsn', des:0};
+					
+					//copy all the supported ones
+					for (var i=0; i<res.dsns.dsn.length; i++)
+	        		{
+	        			a[i+1]= res.dsns.dsn[i];
+	        		}
+					
+					mdl.set("dsns", a); 
+					if (callback){callback();}
+				},
+				failure: function(res){ _hideWaitPage(); mstrmojo.alert(res.getResponseHeader('X-MSTR-TaskFailureMsg')); }
+			};
+			
+			_showWaitPage();
+			if (mstrApp.sessionState !== undefined){ dsnparams.sessionState = mstrApp.sessionState; }
+			mstrmojo.xhr.request('POST', mstrmojo.App.taskURL, dsncb, dsnparams);
+   		}
+		else{
+			if (callback){callback();}
+		}
+	};
+
+	function loadSuppDBs(mdl, callback){
+   		if (mdl.suppdbs.length == 0){
+			//populate the supported dbs
+			var suppdbparams = {taskId:'arch.readFileContents', relativePath:'/swf/xml/DBProperties.xml'};
+			
+			var suppdbcb = {
+				success: function(res){				
+				    _hideWaitPage();
+					//add an entry to select the existing one
+					var a = new Array(res.DBS.DB.length + 1); 
+					a[0] = {n:'existing dsn', captionIDS:'1', id:0};
+					
+					//copy all the supported ones
+					for (var i=0; i<res.DBS.DB.length; i++)
+	        		{
+	        			a[i+1]= res.DBS.DB[i];
+	        		}
+					
+					mdl.set("suppdbs", a); 
+					
+					loadDrivers(mdl, callback);
+				},
+				failure: function(res){ _hideWaitPage(); mstrmojo.alert(res.getResponseHeader('X-MSTR-TaskFailureMsg')); }
+			};		
+			_showWaitPage();
+			mstrmojo.xhr.request('POST', mstrmojo.App.taskURL, suppdbcb, suppdbparams);
+   		}
+   		else{
+   			loadDrivers(mdl, callback);
+   		}
+	};
+			
+	function loadDrivers(mdl, callback){
+   		if (mdl.drivers.length == 0){ 
+       		//populate the dbms
+			var driversparams = {taskId:'arch.getODBCDrivers'};
+			
+			var driverscb = {
+				success: function(res){ _hideWaitPage(); mdl.set("drivers", res.odns.name); loadDSNs(mdl, callback);},
+				failure: function(res){ _hideWaitPage(); mstrmojo.alert(res.getResponseHeader('X-MSTR-TaskFailureMsg')); }
+			};
+			
+			_showWaitPage();
+			if (mstrApp.sessionState !== undefined){ driversparams.sessionState = mstrApp.sessionState; }
+			mstrmojo.xhr.request('POST', mstrmojo.App.taskURL, driverscb, driversparams);
+   		}
+   		else{
+   			loadDSNs(mdl, callback);
+   		}
+   	};
+   	
+   	function loadDBMSObjects(mdl, callback){
+   		if (mdl.dbms.length == 0){ 
+       		//populate the dbms
+			var dbmsparams = {taskId:'arch.getDBMSObjects'};
+			
+			var dbmscb = {
+				success: function(res){ _hideWaitPage(); mdl.set("dbms", res.dbmss.dbms); loadSuppDBs(mdl, callback);},
+				failure: function(res){ _hideWaitPage(); mstrmojo.alert(res.getResponseHeader('X-MSTR-TaskFailureMsg')); }
+			};
+			
+			_showWaitPage();
+			if (mstrApp.sessionState !== undefined){ dbmsparams.sessionState = mstrApp.sessionState; }
+			mstrmojo.xhr.request('POST', mstrmojo.App.taskURL, dbmscb, dbmsparams);
+   		}
+   		else{
+   			loadSuppDBs(mdl, callback);
+   		}
+   	};
+   	
+    /**
+     * get the number of element inside of a collection
+     * @param {object} c.
+     */
+   	function _getElementCount(c) {
+   	    var count=0;
+   		for (var k in c) {
+   		    count++;	
+   		}
+   		return count;
+   	};	
+	/**
+     * return the function type constant 
+     * @param  (fn) the function string name
+     */
+   	function getFunctionType(fn) {
+    	switch (fn){
+    	case "Sum":{
+    		return "12";}
+    	case "Count":{
+    		return "13";}
+    	case "Max":{
+    		return "16";}
+    	case "Min":{
+    		return "15";}   
+    	case "Variance": {
+    		return "33";}    
+    	case "Avg": {
+    		return "14";}
+   		}
+   	};	
+   	/**
+     * return the xml format of the metric definition
+     * @param {object} t.
+     */
+   	function _constructMetricXML(nm, fn, fct) {
+   	    var fnType=getFunctionType(fn);
+   	    var xml ="<schm smt='1'><oi tp='4'  n='"+ nm + "'><def><fun fnt='" + fnType + "'/><fc did='" + fct.id + "'/></def></oi></schm>";
+   	    return xml;
+   	};
+    /**
+     * return the xml format of the table definition
+     * @param {object} t.
+     */
+   	function _constructTableXML(t) {
+   	    var xml ='<ti ';
+   	    var tbs = 'ps="' + t.ns+ '" tbn="' + t.tbn +'" sz="' + t.sz+'" tbid="'+ t.tbid+ '" prid="' + mstrApp.projectID + '" sta="' +t.sta+'"><clis>';
+   	    xml+=tbs;
+   	    for (var i=0;i<t.clis.length;i++){
+   	    	var cl = t.clis[i];
+   	        var cls = '<cli cln="'+cl.cln+'" cad="'+cl.cad+'" cmid="'+cl.cmid+'" sta="'+cl.sta+'">' + 
+   	                  '<dt tp="'+cl.dt.tp+'" ps="' + cl.dt.ps +'" sc="' + cl.dt.sc +'"/></cli>';
+   	        xml+=cls;
+   	    }	
+   	    xml+= '</clis></ti>';
+   	    return xml;
+   	};	
+    
+    /*******************************************************************************
+     * Name:      showContextButton
+     * Purpose:   show the data grid's context button on the correct location
+     * Assumes:
+     * Returns:   
+     * History:   08/25/2011 JAGR Created
+     ********************************************************************************/
+    mstrmojo.Architect.ArchitectModel = mstrmojo.declare(
+        // superclass
+        mstrmojo.Model,
+        
+        // mixins
+        null,
+        
+        /**
+         * @lends mstrmojo.DocModel.prototype
+         */
+        {
+            scriptClass: 'mstrmojo.Architect.ArchitectModel',
+            
+            attrs:new Object(),
+            fcts:new Object(),
+            dbrs:[],
+            dsns:[],
+            drivers:[],
+            dbms:[],
+            suppdbs:[],
+            frms:[],
+            clns:[],
+            rels:[],
+            prjTbls:[],	
+            factInfos:[],
+            attrInfos:[],
+            SelDBRoleID: null,
+            SelTableID:null,
+            SelAttrID:null,
+            SelTables:[],
+            SchemaInstanceID:null,
+            ProjectID:null,
+            ProjectDBRoles: new Object(),
+            ProjectPrimaryDBRole: new Object(),
+            dbtbls: new Object(),
+            tables: new Object(),
+            attributes: new Object(),
+            tblsToAdd: [],
+            layers: new Object(),
+            currentlayerID: _DEFAULT_LAYER_ID,
+            isMultiView: false,  //whether in multi table view or not
+            IDFormID:"45C11FA478E745FEA08D781CEA190FE5",   // TODO We need to get the ID Form from the project
+            /**
+             * Raise an event whenever the the DBRole is set
+             */
+            _set_SelDBRoleID: function sttxt(n, v){
+         		this.SelDBRoleID = v;
+         		this.raiseEvent({name: 'dbroleChange', value: v}); 
+        	},
+            /**
+             * Raise an event whenever the the current layer ID is set
+             */
+         	_set_currentlayerID: function layerChange(n, v){
+         	    var prev = this.currentlayerID;
+         		if (prev != v) {
+	        		this.currentlayerID = v;
+	         		this.raiseEvent({name: 'layerChange', value: v});
+                }
+        	},
+             /**
+             * Show the wait page feedback
+             */
+         	showWaitPage: function(){
+        		_showWaitPage();
+        	},
+            /**
+             * Hide the wait page feedback
+             */
+         	hideWaitPage: function(){
+        		_hideWaitPage();
+        	},
+        	
+        	getLayer: function(id) {
+        		return this.layers[id];
+        	},	
+        	
+        	getCurrentRelationBlocks: function(){
+        		//in the format of [ {data: [ [{n:'name', icon: 12, lvl: 0}],..},...]
+        		return [       		        
+        		       ];
+        	},
+        	
+        	getFrmDescription:function getFrmDescription(frmID)
+    	    {
+    	    	for (lIterForm=0; lIterForm < this.frms.length;lIterForm++)	
+    	   	 	{
+    				var frm=this.frms[lIterForm];
+    				if (frm.FrmID==frmID)
+    	   		 		{
+    	   			      return frm.FrmName;	 
+    	   		 		};
+    	    	 	}	 
+    	    },
+    	    
+    	    populateFormCategories: function populateFormCategories()
+    	    {
+     	    	var mdl=this;
+     	    	if (mdl.frms.length!=0) return;
+     	    	mdl.frms[0]={
+    	    			FrmID:"45C11FA478E745FEA08D781CEA190FE5",
+    	        		FrmName:"ID"
+    	    	};
+    	    	mdl.frms[1]={
+    	    			FrmID:"CCFBE2A5EADB4F50941FB879CCF1721C",
+    	        		FrmName:"DESC"
+    	    	};
+    	    },
+    	    
+    	    addProjectDBRole:function addProjectDBRole(dbrlid){
+    	    	var mdl=this;  
+    	    	mdl.ProjectDBRoles[dbrlid]=dbrlid;
+    	    	var tableparams = {taskId:'arch.linkDBRToProject', projectid:mstrApp.projectID, dbrid:dbrlid };
+    	    	var tablecb = {
+            			success: function(res){
+       	    						var dbrl=res.dbroles[res.dbroles.length-1];
+    	    						mdl.ProjectDBRoles[dbrlid]=dbrl;
+            		 				if (dbrl.primary=='true')	
+            		 					mdl.ProjectPrimaryDBRole=dbrl;
+           							},
+            			failure: function(res){ 
+           								mstrmojo.alert(res.getResponseHeader('X-MSTR-TaskFailureMsg'));
+           					}
+            		};
+
+        		if (mstrApp.sessionState !== undefined){ tableparams.sessionState = mstrApp.sessionState; }
+        		mstrmojo.xhr.request('POST', mstrmojo.App.taskURL, tablecb, tableparams);
+    	    },
+     	    getProjectDBRoles:function getProjectDBRoles(){
+    	    	var mdl=this;   
+    	    	var tableparams = {taskId:'arch.getProjectDBRoles', projectid:mstrApp.projectID };
+    	    	var tablecb = {
+            			success: function(res){
+    	    				for (var lc=0; lc <res.dbroles.length; lc++)
+    	    					{
+    	    					var dbrl=res.dbroles[lc];
+    	    					mdl.ProjectDBRoles[dbrl.did]=dbrl;
+    	    					if (lc==0)	
+    	    						mdl.ProjectPrimaryDBRole=dbrl;
+    	    					}
+           					},
+            			failure: function(res){ 
+           								mstrmojo.alert(res.getResponseHeader('X-MSTR-TaskFailureMsg'));
+           				}
+            		};
+
+        		if (mstrApp.sessionState !== undefined){ tableparams.sessionState = mstrApp.sessionState; }
+        		mstrmojo.xhr.request('POST', mstrmojo.App.taskURL, tablecb, tableparams);
+    	    },
+    	    addAttributeInfo:function addAttributeInfo(baseFormID, AttID, expr, cmid, tableIds, callback){
+    	    	var mdl=this;   
+    	    	var tableparams = {taskId:'arch.schemaManipulation', schemaid: this.SchemaInstanceID, manipulationtype: 7, objectid:AttID, baseformid:baseFormID, expression:expr, tableids:tableIds};
+        		if (mstrApp.sessionState !== undefined){ tableparams.sessionState = mstrApp.sessionState; }
+        		var cb = {
+        		    success: function(res){
+        			    _hideWaitPage();
+        			    //update model
+        			    var attInfo={
+				    		"id":AttID,
+				        	"AttID":AttID,
+				        	"FrmID":mdl.IDFormID,
+				        	"TblID":tableIds,
+				        	"ClnID": cmid,
+				        	"Expr": expr,
+				       		"IsNew":true,
+				    		"IsDirty":false,
+				    		"IsDeleted":false,
+				    		"Format": "Text"
+					    };
+        			    var t = mdl.tables[tableIds];
+        			    t.AttrInfos[AttID]= attInfo;
+        			    callback.success(attInfo);
+        		    },
+        		    failure: function(res) {
+        		    	_hideWaitPage();
+        		    	callback.failure(res);
+        		    }        				
+        		};
+        		_showWaitPage();
+        		mstrmojo.xhr.request('POST', mstrmojo.App.taskURL, cb, tableparams);
+    	    },
+    	    removeAttributeInfo:function removeAttributeInfo(baseFormID, AttID,  tableIds, callback){
+    	    	var mdl=this;   
+    	    	var tableparams = {taskId:'arch.schemaManipulation', schemaid: this.SchemaInstanceID, manipulationtype: 8, objectid:AttID, baseformid:baseFormID,  tableids:tableIds};
+        		if (mstrApp.sessionState !== undefined){ tableparams.sessionState = mstrApp.sessionState; }
+        		var cb = {
+        		    success: function(res){
+        			    _hideWaitPage();
+        			    //update model 
+        			    var t = mdl.tables[tableIds];
+        			    delete t.AttrInfos[AttID];
+        			    //after we delete this attributeinfo, we also want to check if this is the last piece of attributeinfo this attribute has
+        			    //if so, we may delete this attribute as well
+        			    var found=false;
+        			    for (var tid in mdl.tables) {
+        			         t = mdl.tables[tid];
+        			         if (t.AttrInfos[AttID]) {
+        			        	 found= true;
+        			        	 break;
+        			         }	 
+        			    }
+        			    if (!found) {
+        			    	delete mdl.attrs[AttID];
+        			    }
+        			    mdl.raiseEvent({name:"TableContentChange", did:tableIds});
+        			    callback.success(res);
+        		    },
+        		    failure: function(res) {
+        		    	_hideWaitPage();
+        		    	callback.failure(res);
+        		    }        				
+        		};
+        		_showWaitPage();
+        		mstrmojo.xhr.request('POST', mstrmojo.App.taskURL, cb, tableparams);
+    	    },
+    	    addFactInfo:function addFactInfo(factID, expr, cmid, tableIds,callback){
+    	    	var mdl=this;   
+    	    	var tableparams = {taskId:'arch.schemaManipulation', schemaid: this.SchemaInstanceID, manipulationtype: 4, objectid:factID, expression:expr, tableids:tableIds};
+        		if (mstrApp.sessionState !== undefined){ tableparams.sessionState = mstrApp.sessionState; }
+        		var cb = {
+        		    success: function(res){
+        			    _hideWaitPage();
+        			    //update model
+        			    var factInfo={
+				    		id:factID,
+				        	FactID:factID,				        	
+				        	TblID:tableIds,
+				        	ClnID: cmid,
+				        	Expr: expr,
+				       		IsNew:true,
+				    	    IsDirty:false,
+				    		IsDeleted:false,
+				    		Format: "Text",
+				    		tag: res
+					    };
+        			    var t = mdl.tables[tableIds];
+        			    t.FactInfos[factID]= factInfo;
+        			    mdl.raiseEvent({name:"TableContentChange", did:tableIds});
+        			    callback.success(factInfo);
+        		    },
+        		    failure: function(res) {
+        		    	_hideWaitPage();
+        		    	callback.failure(res);
+        		    }        				
+        		};
+        		_showWaitPage();
+        		mstrmojo.xhr.request('POST', mstrmojo.App.taskURL, cb, tableparams);
+    	    },
+    	    removeFactInfo:function removeFactInfo(factID, tableIds,callback){
+    	    	var mdl=this;   
+    	    	var tableparams = {taskId:'arch.schemaManipulation', schemaid: this.SchemaInstanceID, manipulationtype: 5, objectid:factID, tableids:tableIds};
+        		if (mstrApp.sessionState !== undefined){ tableparams.sessionState = mstrApp.sessionState; }
+        		var cb = {
+        		    success: function(res){
+        			    _hideWaitPage();
+        			    //update model 
+        			    var t = mdl.tables[tableIds];
+        			    delete t.FactInfos[factID];
+        			    var found=false;
+        			    for (var tid in mdl.tables) {
+        			         t = mdl.tables[tid];
+        			         if (t.FactInfos[factID]) {
+        			        	 found= true;
+        			        	 break;
+        			         }	 
+        			    }
+        			    if (!found) {        			    	
+        			    	delete mdl.fcts[factID];
+        			    }
+        				mdl.raiseEvent({name:"TableContentChange", did:tableIds});
+        			    callback.success(res);
+        		    },
+        		    failure: function(res) {
+        		    	_hideWaitPage();
+        		    	callback.failure(res);
+        		    }        				
+        		};
+        		_showWaitPage();
+        		mstrmojo.xhr.request('POST', mstrmojo.App.taskURL, cb, tableparams);
+    	    },
+    	    updateFactInfo:function updateFactInfo(factID, expr, tableIds, callback){
+    	    	var mdl=this;   
+    	    	var tableparams = {taskId:'arch.schemaManipulation', schemaid: this.SchemaInstanceID, manipulationtype: 6, objectid:factID, expression:expr, tableids :tableIds};
+        		if (mstrApp.sessionState !== undefined){ tableparams.sessionState = mstrApp.sessionState; }
+        		mstrmojo.xhr.request('POST', mstrmojo.App.taskURL, callback, tableparams);
+    	    },
+    	    addAttributeForm:function addAttributeForm(objID, sFormCategID, columnId, expr ,tableIds, sort, browseSort, isMultilingual, baseformType, isbf, istf, useName, useDesc,callback){
+     	    	var mdl=this;
+       	    	var tableparams = {taskId:'arch.schemaManipulation', schemaid: this.SchemaInstanceID, manipulationtype: 12, objectid:objID, formcatid:sFormCategID, tableids:tableIds, columnid:columnId, expression:expr};
+        	    if (typeof sort!="undefined")
+        	    	tableparams.sorttype= sort;
+    	    	if (typeof browseSort!="undefined")
+    	    		tableparams.browsesorttype= browseSort;
+    	    	if (typeof isMultilingual!="undefined")
+    	    		tableparams.ismultilingual= isMultilingual;
+    	    	if (typeof baseformType!="undefined")
+    	     	    tableparams.baseformtype= baseformType;
+    	    	else
+    	    		tableparams.baseformtype=mdl.EnumDSSBaseFormType.DssBaseFormText; 
+     	    	if (typeof useName!="undefined")
+     	    		tableparams.usename= useName;
+    	    	if (typeof useDesc!="undefined")
+    	    		tableparams.usedesc= useDesc;
+    	    	if (typeof isbf!="undefined")
+    	    		tableparams.isbrowseform= isbf;
+    	    	if (typeof istf!="undefined")
+    	    		tableparams.istemplateform= istf;
+    	    	
+    	    	var localCallBack={
+    	    			success: function(res){
+    	    			var ob=res.mi["in"].oi;
+    	    			var fr=ob.def;
+       					var attr=mdl.getAttribute(ob.did);
+       					attr.Forms[0]=fr;
+       					res.expr = expr;  //pass back the expression
+       					res.clnid = columnId;
+    					callback.success(res);
+    				},
+    				failure: function(res){ 
+    					callback.failure(res);
+    				}
+    	    		};
+         		if (mstrApp.sessionState !== undefined){ tableparams.sessionState = mstrApp.sessionState; }
+        		mstrmojo.xhr.request('POST', mstrmojo.App.taskURL, localCallBack, tableparams);
+    	    },
+    	    removeAttributeForm:function removeAttributeForm(attID, sFormCategID,callback){
+    	    	var mdl=this;   
+    	    	var tableparams = {taskId:'arch.schemaManipulation', schemaid: this.SchemaInstanceID, manipulationtype: 13, objectid:attID, formcatid:sFormCategID};
+        		if (mstrApp.sessionState !== undefined){ tableparams.sessionState = mstrApp.sessionState; }
+        		mstrmojo.xhr.request('POST', mstrmojo.App.taskURL, callback, tableparams);
+    	    },
+      	    updateAttributeForm:function updateAttributeForm(objID, sFormCategID, columnId, expr ,tableIds, sort, browseSort, isMultilingual, baseformType, isbf, istf,  useName, useDesc,callback){
+    	    	var mdl=this;
+       	    	var tableparams = {taskId:'arch.schemaManipulation', schemaid: this.SchemaInstanceID, manipulationtype: 12, objectid:objID, formcatid:sFormCategID, tableids:tableIds, columnid:columnId, expression:expr};
+       	    	if (typeof tableIds!="undefined")
+        	    	tableparams.tableids= tableIds;
+       	    	if (typeof expr!="undefined")
+        	    	tableparams.exp= expr;
+       	    	if (typeof columnId!="undefined")
+        	    	tableparams.columnid= columnId;
+       	    	if (typeof sort!="undefined")
+        	    	tableparams.sorttype= sort;
+    	    	if (typeof browseSort!="undefined")
+    	    		tableparams.browsesorttype= browseSort;
+    	    	if (typeof isMultilingual!="undefined")
+    	    		tableparams.ismultilingual= isMultilingual;
+    	    	if (typeof baseformType!="undefined")
+    	    		tableparams.baseformtype= baseformType;
+     	    	if (typeof useName!="undefined")
+     	    		tableparams.usename= useName;
+    	    	if (typeof useDesc!="undefined")
+    	    		tableparams.usedesc= useDesc;
+    	    	if (typeof isbf!="undefined")
+    	    		tableparams.isbrowseform= isbf;
+    	    	if (typeof istf!="undefined")
+    	    		tableparams.istemplateform= istf;
+         		if (mstrApp.sessionState !== undefined){ tableparams.sessionState = mstrApp.sessionState; }
+        		mstrmojo.xhr.request('POST', mstrmojo.App.taskURL, callback, tableparams);
+    	    },
+
+    	    setAsLookUp:function setAsLookUp(attID, baseFormID, tableIds, callback){
+    	    	var mdl=this;   
+    	    	var tableparams = {taskId:'arch.schemaManipulation', schemaid: this.SchemaInstanceID, manipulationtype: 11, objectid:attID, baseformid:baseFormID, tableids:tableIds};
+        		if (mstrApp.sessionState !== undefined){ tableparams.sessionState = mstrApp.sessionState; }
+        		mstrmojo.xhr.request('POST', mstrmojo.App.taskURL, callback, tableparams);
+    	    },
+    	    
+    	    loadProjectTables: function(callback) {
+    	    	var mdl=this;   
+    	    	var params = {taskId:'arch.search', schemaid: this.SchemaInstanceID, objecttypes: 15 };
+        		if (mstrApp.sessionState !== undefined){ params.sessionState = mstrApp.sessionState; }
+        		mstrmojo.xhr.request('POST', mstrmojo.App.taskURL, callback, params);
+    	    	
+    	    },	
+    	    
+    	    addLayer: function (callback) {
+    	    	var mdl=this;   
+    	    	if (!mdl.SchemaInstanceID)
+            		return;
+    	    	//get a name for the new layer
+    	    	var count= _getElementCount(mdl.layers);    	    
+    	    	var n = "new layer " + count.toString();
+    	    	while (mdl.layers[n]) {   //give unique name for each layer
+    	    		n = n + "(1)";
+    	    	}	
+    	    	mdl.layers[n] = new Object();
+    	    	mdl.layers[n].name = n;
+    	    	mdl.layers[n].id = n;
+    	    	mdl.layers[n].tables = new Object();
+    	    	mdl.currentlayerID = n;
+    	    	callback.success(mdl.layers[n]);    	     	     	
+    	    },
+    	    delLayer: function (id, callback) {
+    	    	var mdl=this;   
+    	    	if (!mdl.SchemaInstanceID) {
+            		return;
+    	    	}	
+    	    	var layers = mdl.layers, prev = null;
+    	    	if (id != _DEFAULT_LAYER_ID) {
+	    	    	if (layers[id]) {
+	    	    		//set the previous layer to be current selected one
+	    	    		for (var key in layers) {
+	    	    			if (key == id) {
+	    	    			    break;	
+	    	    			}	
+	    	    			prev = key;
+	    	    	    }	
+	    	    	    var res = mdl.layers[id];
+	    	    		delete mdl.layers[id];
+	    	    		mdl.currentlayerID = prev;
+	    	    		callback.success(res);
+	    	    	}
+    	    	}else {
+    	    	    callback.failure("You cannot delete the default layer."); 	
+    	    	}	
+    	    		
+    	    },
+     	    addTablesToLayer: function (tlist,layerid, callback) {
+    	    	var mdl=this;   
+    	    	if (!mdl.SchemaInstanceID)
+            		return;
+    	    	var layer = mdl.layers[layerid];
+    	    	for (var item in tlist) {
+    	    	    if (!layer.tables[item]){
+    	    	        layer.tables[item] = item; 	
+    	    	    }	
+    	    	}  	    	
+    	    },
+    	    
+      	    createTable:function createTable(sObjectName, t,callback){
+            	var mdl=this;   
+               	if (!mdl.SchemaInstanceID)
+            		return;
+               
+                var t3 =_constructTableXML(t);
+            	
+              	var tableparams = {taskId:'arch.schemaManipulation', schemaid: this.SchemaInstanceID, manipulationtype: 1, flag: (mdl.DssCatalogFlags.DssCatalogReuseAny),  objecttype: 15, objectname: sObjectName, objectdef:t3};
+              
+            	var tablecb = {
+            		success: function(res){
+            		 					callback.success({item: res});
+           							},
+            		failure: function(res){ 
+           								mstrmojo.alert(res.getResponseHeader('X-MSTR-TaskFailureMsg')); }
+                };
+
+        		if (mstrApp.sessionState !== undefined){ tableparams.sessionState = mstrApp.sessionState; }
+        		mstrmojo.xhr.request('POST', mstrmojo.App.taskURL, tablecb, tableparams);
+            },
+             findObjectByName: function (n, tp, callback) {
+            	var mdl=this;   
+               	if (!mdl.SchemaInstanceID)
+            		return;
+                                       	
+                var params = {taskId:'arch.search', schemaid: this.SchemaInstanceID, namepattern: n, objecttypes: tp };
+                           
+            	var cb = {
+            		success: function(res){
+            		    _hideWaitPage();
+            		 	callback.success(res);
+           			},
+            		failure: function(res){
+           		        _hideWaitPage();
+           				mstrmojo.alert(res.getResponseHeader('X-MSTR-TaskFailureMsg')); 
+           			}
+                };
+            	_showWaitPage();
+        		if (mstrApp.sessionState !== undefined){ params.sessionState = mstrApp.sessionState; }
+        		mstrmojo.xhr.request('POST', mstrmojo.App.taskURL, cb, params);
+     
+            	
+            },   	
+            findAttributeByName: function (n) {
+                for (var did in this.attrs) {
+                    if (n == this.attrs[did].name) {
+                        return this.attrs[did];
+                    }
+                }	
+            	return null;
+            },	
+            findFactByName:function (n){
+            	 for (var did in this.fcts) {
+                     if (n == this.fcts[did].name) {
+                         return this.fcts[did];
+                     }
+                 }	
+             	return null;
+            },
+                   
+    	    getColumnsForDBAddedTable: function getColumnsForDBTable(t, callback){
+            	//perform the task to retrieve DBColumns for a DBtable
+            	var mdl = this;
+            	var dbroleid = this.SelDBRoleID;
+            	var dbtablename= t.n;
+            	if (dbroleid){
+            	   var flags = this.DssCatalogFlags.DssCatalogGetColumns; 
+            	   var ctparams = {taskId:'arch.catalogAction', dbrid: dbroleid, dbtname: dbtablename, flags: flags};
+            	   var cbc = {
+            	       success: function(res){
+             			   var t = res.xrc.cas[0].tis[0];
+          				   callback.success({item: t});
+ 
+             		   },
+             		   
+             		   failure: function(res){
+             			   mstrmojo.alert(res.getResponseHeader('X-MSTR-TaskFailureMsg'));
+             		   }
+            	   };
+            		
+             	    if (mstrApp.sessionState !== undefined){ ctparams.sessionState = mstrApp.sessionState; }
+            		mstrmojo.xhr.request('POST', mstrmojo.App.taskURL, cbc, ctparams);
+            	}
+            },
+    	    addTable: function(t, callback )
+    	    {
+               	var attinfos=[];
+            	var mdl=this;
+            	var tblCols=[];
+        		var cb1= {
+        				success:function(res){
+        					var cb2={
+        						success:function(res){
+        						    
+        						    if (res.item.mi.schml.schm.length){
+	       						    	var pos = res.item.mi.schml.schm.length - 1;
+	       						    	var tbl = res.item.mi.schml.schm[pos].oi;
+	       						    	var dbtbl = res.item.mi.schml.schm[pos].ti;
+	       						    }else{
+	       						    	var tbl = res.item.mi.schml.schm.oi;
+	       						    	var dbtbl = res.item.mi.schml.schm.ti;
+	       						    }
+        							var newone={
+    	           							name : tbl.n,
+    	           							TblID : tbl.did,
+    	           							tag : dbtbl,    	           							
+    	           							isNew : true,           							
+    	           							FactInfos : {},
+    	           							AttrInfos : {}
+    	        	    	    	}; 
+        							
+        							mdl.tables[tbl.did] = newone;
+        							tblCols=dbtbl.clis.cli;
+        							var lIt=mdl.attrs.length;
+        							var cc=tblCols.length, ic=0; icc=0;       							
+        							for (var lc=0; lc< cc; lc++){
+        								var col=tblCols[lc];
+        								var n=col.cln;  //get column name
+        								var cmid = col.cmid;  //get column id
+        								var mnret2={
+        					    			success: function(res){
+        						   				ic++;
+        		       							if (ic==cc){
+        		       								callback.success({item: newone});
+        		       							}
+        					    			},
+        					    			failure: function(res){
+        					    				ic++;
+        					    				mstrmojo.alert(res.getResponseHeader('X-MSTR-TaskFailureMsg'));
+        					    			}
+	        					    	};
+	        						   	var mnret={
+	        					    			success: function(res){
+    						   						at= res;
+    						   						var mnret3={
+	        						   					success: function(res){	        								   			 	
+	        								   			    var ob=res.mi["in"].oi;	        								   			 	 
+	        						   						mdl.addAttributeInfo(0, ob.did, res.expr, res.clnid, tbl.did, mnret2);
+	        						   					},
+	        						   					failure: function(res){ 
+	    	        					    				mstrmojo.alert(res.getResponseHeader('X-MSTR-TaskFailureMsg'));
+	    	        					    			}
+	        						   				};
+	        						   			    mdl.addAttributeForm(at.did, mdl.IDFormID, res.clnid, at.n ,tbl.did, null, null, null, mdl.EnumDSSBaseFormType.DssBaseFormText , 1, 1, "ID", null ,mnret3);  //hardcode ID form name
+	        						   			},
+	        					    			failure: function(res){ 
+	        					    				mstrmojo.alert(res.getResponseHeader('X-MSTR-TaskFailureMsg'));
+	        					    			}
+	        					    	};
+        								var fcb = {
+        								    success: function(res){
+        									     if (res) {
+        									    	 
+        									    	 
+        									     }else{
+        									    	  mdl.createObject(mdl.DSSObjectType.DSSObjectTypeAttribute, n, cmid, mnret);
+        									     }        									    	 
+        								    },
+        								    failure: function(res){
+        								        return;	
+        								    }
+        								};
+        								var attr = mdl.findAttributeByName(n);
+	        						   	if (attr) {  //create attributeinfo	 
+	        					   			mdl.addAttributeInfo(0, attr.id, n, cmid, tbl.did, mnret2);	        						   	    	
+	        						   	}else {  //only create this attribute if it does not exist	
+	        							    mdl.createObject(mdl.DSSObjectType.DSSObjectTypeAttribute, n, cmid, mnret);
+	        						   	}    
+	       							}
+        							//add new table to the default layer
+        							var defaultlayer = mdl.layers[_DEFAULT_LAYER_ID];
+        							if (defaultlayer) {
+        							    defaultlayer.tables[newone.TblID] = newone;
+        							}
+         						},
+        						failure: function(res){ 
+        							mstrmojo.alert(res.getResponseHeader('X-MSTR-TaskFailureMsg'));
+                				}
+        					};        				
+        					mdl.createTable(res.item.tbn, res.item ,cb2);
+        				},
+        				failure: function(res){ 
+        					mstrmojo.alert(res.getResponseHeader('X-MSTR-TaskFailureMsg'));
+        				}
+        		};
+        		mdl.getColumnsForDBAddedTable(t, cb1);
+
+    	    },
+    	    
+    	    addTables: function(dbtables){ 
+    	    	var mdl=this, length = dbtables.length, newones=[], count=0, tcount, t;
+    	    	var sdbr=mdl.SelDBRoleID;
+    	    	var cb3={
+               		success:function(res){
+    	    		  //  mdl.tables[res.item.TblID] = res.item;
+	               		newones[count]=res.item;
+	           			count++;
+	           		    //get current dbtable list, and update the flag for those dbtables
+           				var dbr = sdbr, dbts = mdl.dbtbls[dbr];
+           			 	if (!mdl.ProjectDBRoles[sdbr]) {
+           			     	mdl.addProjectDBRole(sdbr);
+           			 	} 	
+           				if (dbts) {
+           				     var tbn = res.item.tag && res.item.tag.tbn;
+           				     dbts[tbn].sta = mdl.DSSCatalogStateFlags.DssCatalogStateSelected;
+           				}
+	           			if (count==length) {
+	           				_hideWaitPage();	           					
+	           				mdl.set("tblsToAdd", newones);
+	           				tcount = _getElementCount(mdl.tables);
+	           				switch (true) {
+	           				    case (tcount > 1) : {
+	           				    	 mdl.raiseEvent({name:"PanelToggled", value:true, index:1});
+	           				    	 break;
+	           				    } 
+	           				    case (tcount==1) :  {
+	           					     mdl.set("SelTableID", res.item.TblID);
+	           					     break;
+	           				    }
+	           				    default:
+	           				    	break;
+	           				} 
+	           			}else {
+	           				t = dbtables[count];
+        	    	    	mdl.addTable(t, cb3);	
+	           			}               			
+               		},
+               		failure:function(res){
+               			_hideWaitPage();
+       					mstrmojo.alert(res.getResponseHeader('X-MSTR-TaskFailureMsg'));
+       					count++;
+                		}
+               	};
+    	    	_showWaitPage();
+             	t = dbtables[0];
+	    	  	mdl.addTable(t, cb3);
+	    	   
+    	    },        	   	    
+        	
+        	getSelectedDBRoleTables: function (callbacks, usecache) {        		
+        		//perform the task to retrieve DBTables for given dbrole
+            	var mdl = this;
+            	var dbr = mdl.SelDBRoleID, dbts = mdl.dbtbls;
+            	if (!dbr) {
+            		return;
+            	}        		
+        		var tbls = dbts[dbr], idx = 0, _ispopulated = false, tables = [];
+            	if ( usecache && dbts[dbr]) {
+            		for (var tbn in tbls) {
+            			_ispopulated = true;
+	                    dbt = tbls[tbn];
+	                    if (parseInt(dbt.sta) == mdl.DSSCatalogStateFlags.DssCatalogStateFresh){
+	                        tables[idx]={
+		                        n: dbt.tbn, 
+		                        id: dbt.tbid, 
+		                        did: dbt.tbn,
+		                        st: 8405,
+		                        tag: dbt,
+		                        items: []};
+		                    idx++;
+	                    }
+	                }
+            		if (_ispopulated) {
+            		    callbacks.success(tables);
+            		    return ;
+            		}
+        		}
+            	
+            	dbts[dbr]= new Object();
+            	tbls = dbts[dbr];
+            	var tables = this.tables;
+            	var flags = this.DssCatalogFlags.DssCatalogGetTables +  this.DssCatalogFlags.DssCatalogCompareWithMetadata;
+            	var tableparams = {taskId:'arch.catalogAction', dbrid: dbr, flags: flags};
+            	var cb = {
+            	       success: function(res){
+	            		   //hide the wait page
+	    	               _hideWaitPage();
+	    	               var cattables = res.xrc.cas[0].tis;
+	        			   var length = cattables.length, n, ds=[], count=0;
+	        			   for (idx = 0; idx < length ; idx++){
+	        			       var dbt = cattables[idx];
+	           				   dbt = cattables[idx];
+	           				   n = dbt.tbn;
+	           				   tbls[n] = dbt;	           			
+	           				   if (dbt){  //table exist in collection
+	           					   switch (parseInt(dbt.sta)) {
+		           					   case mdl.DSSCatalogStateFlags.DssCatalogStateFresh: {
+		           						    ds[count]={
+			 			                            n: dbt.tbn, 
+			 			                            id: dbt.tbid, 
+			 			                            did: dbt.tbn,
+			 			                            st: 8405,
+			 			                            tag: dbt,
+			 			                            items: []};
+			 			                        count++;
+		           						    break;
+		           					   }		           					   
+		           					   case mdl.DSSCatalogStateFlags.DssCatalogStateSelected: {  
+			         						   tables[dbt.tbid] = {
+											    TblID : dbt.tbid,
+											    name : n,
+											    FactInfos : {},
+											    AttrInfos : {},
+											    tag : table
+										    };
+										    break;
+		                                }
+	           					   }
+	           					   		
+	           					}	
+	         			   } 
+	        			   mdl.set("tbls", tables);	        			  
+	        			   mdl.raiseEvent({name:"PanelToggled", value:(_getElementCount(tables)>1), index:1});	        			         			   
+            			   callbacks.success(ds);
+             		   },
+             		   
+             		   failure: function(res){
+             			  //hide the wait page
+	    	               _hideWaitPage();
+             			   mstrmojo.alert(res.getResponseHeader('X-MSTR-TaskFailureMsg'));
+             		   }
+            	   };
+            	   //show the wait page
+        	       _showWaitPage();	
+             	   if (mstrApp.sessionState !== undefined){ tableparams.sessionState = mstrApp.sessionState; }
+            	   mstrmojo.xhr.request('POST', mstrmojo.App.taskURL, cb, tableparams);
+            	  
+        	},	
+        	getTableSampleData:function getTableSampleData(tID, callbacks){
+        		if(!tID) return;
+        		var mdl = this;
+        		
+        		var flags = this.DssCatalogFlags.DssCatalogGetTableContent;
+            	var tableparams = {taskId:'arch.catalogAction',dbrid:mdl.SelDBRoleID, dbtname: mdl.tables[tID].tag.tbn,flags: flags, rowlimit: 25};
+            	var cb = {
+            	       success: function(res){
+	            		   //hide the wait page
+	    	               _hideWaitPage();
+	    	               
+	    	           	var table= res.xrc.cas[0].tis[0].ct;
+	                    callbacks.success(table);
+             		   },
+             		   
+             		   failure: function(res){
+             			  //hide the wait page
+	    	               _hideWaitPage();
+             			  callbacks.failure(res);
+             		   }
+            	   };
+            	   //show the wait page
+        	       _showWaitPage();	
+             	   if (mstrApp.sessionState !== undefined){ tableparams.sessionState = mstrApp.sessionState; }
+            	   mstrmojo.xhr.request('POST', mstrmojo.App.taskURL, cb, tableparams);
+        	},
+        	getIDForm:  function getIDForm(){
+            	return this.IDFormID;
+            },
+     	    createMetric:function createMetric(sObjectName, fn, fct, t3, callback){
+            	var mdl=this;   
+               	if (!mdl.SchemaInstanceID)
+            		return;
+               	var tableparams = {taskId:'arch.schemaManipulation', schemaid: this.SchemaInstanceID, manipulationtype: 1, objecttype: 4, objectname: sObjectName, objectdef:t3};
+            	var tablecb = {
+            		success: function(res){
+            		 					callback.success({item: res});
+           							},
+            		failure: function(res){ 
+           								callback.failure( res);
+           							}
+                };
+        		if (mstrApp.sessionState !== undefined){ tableparams.sessionState = mstrApp.sessionState; }
+        		mstrmojo.xhr.request('POST', mstrmojo.App.taskURL, tablecb, tableparams);
+    	    },
+            saveProject: function SaveProject(cb){
+             	var mdl=this;
+            	var tableparams = {taskId:'arch.schemaInstanceAction', schemaaction: '5', schemaid:mdl.SchemaInstanceID};
+           		var tablecb14 = {
+            			success: function(res){
+           							_hideWaitPage();
+           							if (cb && cb.success) {
+           							   cb.success();
+           							}else{	
+           							  alert('Project Saved');
+           							}
+           						},
+            			failure: function(res){ mstrmojo.alert(res.getResponseHeader('X-MSTR-TaskFailureMsg')); 
+           							 _hideWaitPage();
+           							}
+            		};
+
+        		if (mstrApp.sessionState !== undefined){ tableparams.sessionState = mstrApp.sessionState; }
+        		mstrmojo.xhr.request('POST', mstrmojo.App.taskURL, tablecb14, tableparams);
+             },
+            saveAndUpdate: function() {
+            	 var mdl=this;
+            	 var cb = {
+         			success: function(res){
+    			        params =  {taskId:'arch.refreshEngineSchema'}; //refresh project schema 
+				        var uptcb = {
+				    	    success: function(res){
+					            _hideWaitPage();
+						        alert('Project saved and Schema updated');
+					        },
+					        failure: function(res){
+					           _hideWaitPage();
+					    	   alert('Schema update failed. ' + res.getResponseHeader('X-MSTR-TaskFailureMsg'));
+					        }	
+ 						};	               							
+ 						_showWaitPage();
+ 	            		if (mstrApp.sessionState !== undefined){ params.sessionState = mstrApp.sessionState; }
+ 	            		mstrmojo.xhr.request('POST', mstrmojo.App.taskURL, uptcb, params);               							
+        			},
+         			failure: function(res){ mstrmojo.alert(res.getResponseHeader('X-MSTR-TaskFailureMsg')); 
+        			    _hideWaitPage();
+        			}
+                };
+            	this.persistSchemaInstance(cb);            	 
+            },	 
+            createNFMetrics: function createNewFactMetrics(){
+             	var mdl=this;
+             	var rets=0;
+             	var MetricsXML=null;
+             	for(var it in mdl.fcts)
+					{
+						var fct=mdl.fcts[it];
+						nm=fct.name;
+						if (fct.IsNew){
+								fct.IsNew=false;
+								if (fct.Count){
+									if(MetricsXML!=null)
+										MetricsXML = MetricsXML + _constructMetricXML( "Count of " + nm,"Count",fct);
+									else
+										MetricsXML =_constructMetricXML("Count of " + nm,"Count",fct);	
+								}
+								if (fct.Average){
+									if(MetricsXML!=null)
+										MetricsXML = MetricsXML + _constructMetricXML("Avg of "+ nm,"Avg",fct);
+									else
+										MetricsXML =  _constructMetricXML("Avg of " + nm,"Avg",fct);
+								}
+								if (fct.Variance){
+									if(MetricsXML!=null)
+									MetricsXML = MetricsXML + _constructMetricXML("Variance of " + nm,"Variance",fct);
+									else
+										MetricsXML = _constructMetricXML("Variance of " + nm,"Variance",fct);
+								}
+								if (fct.Min){
+									if(MetricsXML!=null)
+									MetricsXML = MetricsXML + _constructMetricXML("Min of "+ nm,"Min",fct);
+									else
+										MetricsXML =_constructMetricXML("Min of " + nm,"Min",fct);
+								}
+								if (fct.Max){
+									if(MetricsXML!=null)
+									MetricsXML = MetricsXML + _constructMetricXML("Max of "+ nm,"Max",fct);
+									else
+										MetricsXML =_constructMetricXML("Max of " + nm,"Max",fct);
+								}
+								if (fct.Sum){
+									if(MetricsXML!=null)
+									MetricsXML = MetricsXML + _constructMetricXML("Sum of " + nm,"Sum",fct);
+									else
+										MetricsXML = _constructMetricXML("Sum of " + nm,"Sum",fct);
+								}
+								
+						}
+					}
+            	return MetricsXML;
+            },
+            persistSchemaInstance:function persistSchemaInstance(cb){
+             	var mdl=this;
+             	var MetricsXML=null;	
+             	if (!mdl.SchemaInstanceID) return;
+            	_showWaitPage();
+            	MetricsXML=mdl.createNFMetrics();
+            	var resut = {
+            			success: function(res){
+             				mdl.saveProject(cb);
+						},
+						failure: function(res){ 
+	           				mstrmojo.alert(res.getResponseHeader('X-MSTR-TaskFailureMsg'));	           				
+	          			}};	
+            	if (MetricsXML) {
+             	   mdl.createMetric(null, "Multiple Metrics", null , MetricsXML,resut);
+            	}else{
+            	   mdl.saveProject(cb);  //no need to create metrics
+            	}  	            	
+             },
+            createSchemaInstance:function createSchemaInstance(){
+            	var mdl=this;   
+            	var tableparams = {taskId:'arch.schemaInstanceAction', schemaaction: '1'};
+           		var tablecb = {
+            			success: function(res){
+            				mdl.set("SchemaInstanceID", res.siid);
+           				},
+            			failure: function(res){ 
+           					mstrmojo.alert(res.getResponseHeader('X-MSTR-TaskFailureMsg'));
+          				}			
+            		};
+
+           		if (mstrApp.sessionState !== undefined){ tableparams.sessionState = mstrApp.sessionState; }
+        		mstrmojo.xhr.request('POST', mstrmojo.App.taskURL, tablecb, tableparams);
+            },
+            deleteObject:function deleteObject(eObjectType, id, callback){
+            	var mdl=this;   
+            	if (!mdl.SchemaInstanceID)
+            		return;
+            	var tableparams = {taskId:'arch.schemaManipulation', schemaid: this.SchemaInstanceID, objecttype: parseInt(eObjectType), manipulationtype: 2, objectid:id };           		      		
+            	var tablecb = {
+            			success: function(res){
+            		        _hideWaitPage(); 
+            		        var trgt;     
+							switch (eObjectType)
+							{
+							case  12:
+								trgt=mdl.attrs;
+								if (trgt[id]) {
+									delete trgt[id];
+								}
+							    break;
+							case  13:
+								trgt=mdl.fcts;
+								if (trgt[id]) {
+									delete trgt[id];
+								}
+							    break;
+							case  15:
+								trgt=mdl.tables;								
+								mdl.set("SelTableID", "");
+								var tn = trgt[id].n, dbts = mdl.dbtbls[mdl.SelDBRoleID], tbn = trgt[id].tag.tbn ;
+								//todo add the logic to check which DBRole this table is coming from.
+								if (dbts[tbn]) {
+									dbts[tbn].sta = mdl.DSSCatalogStateFlags.DssCatalogStateFresh; //reset the dbt state to fresh
+								}
+								if (trgt[id]) {
+									delete trgt[id];
+								}
+								mdl.raiseEvent({name:"TableDeleted", value:tn , did:id});
+							    break;	
+							}
+							callback.success(res);
+							
+            	       },
+            			failure: function(res){
+							_hideWaitPage();
+							callback.failure(res);
+           				}
+            		};
+            	_showWaitPage();	
+        		if (mstrApp.sessionState !== undefined){ tableparams.sessionState = mstrApp.sessionState; }
+        		mstrmojo.xhr.request('POST', mstrmojo.App.taskURL, tablecb, tableparams);
+            },
+            createObject:function createObject(eObjectType, sObjectName, cln, callback){
+            	var mdl=this;   
+            	if (!mdl.SchemaInstanceID)
+            		return;
+            	var def = '';
+            	if (cln && eObjectType == 13) {
+            		def = '<def><c did="' + cln + '" tp="26"/></def>';
+            	}	
+            	var tableparams = {taskId:'arch.schemaManipulation', schemaid: this.SchemaInstanceID, objecttype: parseInt(eObjectType), manipulationtype: 1, objectname: sObjectName, objectdef: def};
+           		var trgt;
+           		var ele;
+            	var tablecb = {
+            			success: function(res){
+           								switch (eObjectType)
+           								{
+           								case 12:
+           									ele=res.mi.schml.schm[res.mi.schml.schm.length-1].oi;
+               								if (!ele) ele= res.mi.schml.schm.oi;
+            								var attr={
+    						   						"id":ele.did,
+    						   						"name":ele.n,
+    						   						"Relations":[],
+    						   						"Forms":[],
+    						   						"IsNew":true,
+    						   						"IsDirty":false,
+    						   						"IsDeleted":false
+    						   				};
+    						   				mdl.attrs[ele.did] = attr;
+    						   				ele.clnid = cln;
+    						   				ele.id = ele.did;
+    						   				callback.success(ele);
+    						   				return;
+           								    break;
+           								case 13:
+           									ele=res.mi.schml.schm[res.mi.schml.schm.length-1].oi;
+               								if (!ele) ele= res.mi.schml.schm.oi;
+               								var fact={
+						   						"id":ele.did,
+						   						"name":ele.n,
+						   						"IsNew":true,
+						   						"IsDirty":false,
+						   						"IsDeleted":false,
+						   						"Sum":true,
+								            	"Count":false,
+								            	"Max":false,
+								            	"Min":false,
+								            	"Variance":false,
+								            	"Average":false
+    						   				};
+               								mdl.fcts[ele.did]=fact;
+               								callback.success(ele);
+               								return;
+           								    break;
+           								case  15:
+           									trgt=mdl.prjTbls;
+           								break;	
+           								}
+           								ele=res.mi.schml.schm[res.mi.schml.schm.length-1].oi;
+           								if (!ele) ele= res.mi.schml.schm.oi;
+           								trgt[ele.did]=ele;
+           								callback.success(ele);
+           							},
+            			failure: function(res){
+           								callback.failure(res);
+           							}
+            		};
+            	 _showWaitPage();	
+        		if (mstrApp.sessionState !== undefined){ tableparams.sessionState = mstrApp.sessionState; }
+        		mstrmojo.xhr.request('POST', mstrmojo.App.taskURL, tablecb, tableparams);
+            },
+            renameObject:function renameObject(id, eObjectType, newName,callback){
+            	var mdl=this;   
+            	if (!mdl.SchemaInstanceID)
+            		return;
+            	var tableparams = {taskId:'arch.schemaManipulation', schemaid: this.SchemaInstanceID, objectid:id, objecttype: parseInt(eObjectType), manipulationtype: 3, objectname: newName};           		
+            	var tablecb = {
+            			success: function(res){
+            		        _hideWaitPage();	 
+							switch (eObjectType){
+							case 12:
+							    attres=res.mi["in"].oi;
+							    var oldvalue = mdl.attrs[attres.did].name;
+								mdl.attrs[attres.did].name=attres.n;
+								mdl.raiseEvent({name:"AttrNameChange", value:attres.n, did:attres.did, oldvalue:oldvalue});
+								if (callback && callback.success) {
+								    callback.success(res);
+								}
+							    break;
+							case  13:
+								 var o=res.mi["in"].oi;
+	                             mdl.fcts[o.did].name=o.n;
+	                             mdl.raiseEvent({name:"FactNameChange", value:o.n, did:o.did});
+	                             if (callback && callback.success) {
+	                                    callback.success(res);
+	                             }
+	                             break;
+							case  15:
+								 var t=res.mi["in"].oi[0];
+	                             mdl.tables[id].name=newName;	        
+	                             if (callback && callback.success) {
+	                                 callback.success(res);
+	                             }
+	                             mdl.raiseEvent({name:"TableNameChange", value:newName, did: id});
+							    break;	
+							}     
+							return;
+           				},
+            			failure: function(res){
+           					_hideWaitPage();	 
+           					if (callback && callback.failure){			
+           						callback.failure(res);
+           					}
+           				}	
+           					
+            		};
+            	 _showWaitPage();	
+        		if (mstrApp.sessionState !== undefined){ tableparams.sessionState = mstrApp.sessionState; }
+        		mstrmojo.xhr.request('POST', mstrmojo.App.taskURL, tablecb, tableparams);
+            },           	
+           	loadDBRoles:function (){
+           		var mdl=this;
+           	
+        		var dbrparams = {taskId:'arch.getDBRoles'};
+        		
+        		var dbrcb = {
+        			success: function(res){
+        				_hideWaitPage();
+        				mdl.set("dbrs", res.dbrs.dbr); 
+        				if (!mdl.SchemaInstanceID){        				
+        					mdl.createSchemaInstance();
+        					mdl.getProjectDBRoles();
+        				}
+        			},
+        			failure: function(res){ _hideWaitPage(); mstrmojo.alert(res.getResponseHeader('X-MSTR-TaskFailureMsg')); }
+        		};
+        		//show the wait page
+                _showWaitPage();	
+        		if (mstrApp.sessionState !== undefined){ dbrparams.sessionState = mstrApp.sessionState; }
+        		mstrmojo.xhr.request('POST', mstrmojo.App.taskURL, dbrcb, dbrparams);
+       		},
+           	loadDBObjects:function (callback){
+       			loadDBMSObjects(this, callback);
+           	},
+            getColumn:function getColumn(cID){
+        		for (lIterator=0;lIterator <this.clns.length;lIterator++)
+        			{
+        			var cln=this.clns[lIterator];
+        			if (cln.ClnID==cID)
+        				{
+        				return cln;
+        				}
+        			}
+        	},
+        	getTable:function getTable(tID){
+        	    return this.tables[tID];
+        	},
+        	getFact:function getFact(fid){
+        		return this.fcts[fid];            	
+            },
+            getJoinsForTable: function(tid, aid, callbacks) {
+            	var mdl = this;
+            	var t = this.tables[tid];            	
+            	var cb = {
+            		success: function (res) {
+            		    var items= [],
+            		        ts = mdl.tables, attrs =mdl.attrs,
+            		        attrinfos, tgtinfos = t.AttrInfos;
+            		    for (var id in ts) {
+            		    	if (id != tid) {
+            		    		attrinfos = ts[id].AttrInfos;
+            		    		if (!aid) {  //if attr id is not provided, return all joins 
+	            		    	    for (var at in attrinfos){
+	            		    	    	if (tgtinfos[at]){
+	            		    	    	   items.push( { tbn : ts[id].name , a : attrs[at].name , cln : attrinfos[at].Expr });     
+	            		    	    	}	
+	            		    	    }
+            		    		}else {  //return joins for a particular attribute
+            		    			if (attrinfos[aid]){
+	            		    	    	   items.push( { tbn : ts[id].name , a : attrs[aid].name , cln : attrinfos[aid].Expr });     
+	            		    	    }
+            		    		}	
+            		    	}
+            		    }	
+                        callbacks.success(items);
+            	    },
+            	    failure: function(res){ 
+            	    	mstrmojo.alert(res.getResponseHeader('X-MSTR-TaskFailureMsg'));
+            	    }                    
+            	};		
+            	cb.success();
+             }, 	
+            getColumnsForDBTable: function getColumnsForDBTable(params, callbacks){
+            	//perform the task to retrieve DBColumns for a DBtable
+            	var mdl = this;
+            	var dbroleid = this.SelDBRoleID;
+            	var dbtablename= params.data.n;
+            	if (dbroleid){
+            	   var flags = this.DssCatalogFlags.DssCatalogGetColumns; 
+            	   var ctparams = {taskId:'arch.catalogAction', dbrid: dbroleid, dbtname: dbtablename, flags: flags};
+            	   var cb = {
+            	       success: function(res){
+            		       _hideWaitPage();
+             			   var t = res.xrc.cas[0].tis[0];
+            			   var clns = t.clis;
+             			   var length = clns.length;
+             			   var items = [];
+            			   for (index = 0; index < length ; index++) {
+             				   items[index]={
+            				       n: clns[index].cln + " " + mdl.getColumnDataTypeString(clns[index].dt), 
+		                           id: clns[index].cmid,
+		                           cln: clns[index].cln,
+		                           did: clns[index].cln,
+		                           t: 26
+             			       };          
+             		       } 
+           				   callbacks.success({items: items});
+ 
+             		   },
+             		   
+             		   failure: function(res){
+             			   _hideWaitPage();
+             			   mstrmojo.alert(res.getResponseHeader('X-MSTR-TaskFailureMsg'));
+             		   }
+            	   };
+            		_showWaitPage();
+             	    if (mstrApp.sessionState !== undefined){ ctparams.sessionState = mstrApp.sessionState; }
+            		mstrmojo.xhr.request('POST', mstrmojo.App.taskURL, cb, ctparams);
+            	}
+            },
+            
+            getColumnDataTypeString: function getdi(di){
+            	var datatype='unknown';
+            	if (di.tp){
+	                switch (parseInt(di.tp)) {
+	                    case this.DssDataType.DssDataTypeInteger  :
+	                    	datatype='Signed Integer';
+	                    	break;
+	                    case this.DssDataType.DssDataTypeUnsigned  :
+	                    	datatype='Unsigned Integer';
+	                    	break;
+	                    case this.DssDataType.DssDataTypeNumeric  :
+	                    	datatype='Number';
+	                    	break;	
+	                    case this.DssDataType.DssDataTypeDecimal  :
+	                    	datatype='Decimal';
+	                    	break;	
+	                    case this.DssDataType.DssDataTypeReal  :
+	                    	datatype='Real';
+	                    	break;	   	 
+	                    case this.DssDataType.DssDataTypeDouble  :
+		                   	datatype='Double';
+		                   	break;
+	                    case this.DssDataType.DssDataTypeFloat  :
+		                   	datatype='Float';
+		                   	break;  
+	                    case this.DssDataType.DssDataTypeChar  :
+		                   	datatype='Char';
+		                   	break;
+	                    case this.DssDataType.DssDataTypeVarChar  :
+		                   	datatype='VarChar';
+		                   	break;
+	                    case this.DssDataType.DssDataTypeLongVarChar  :
+		                   	datatype='LongVarChar';
+		                   	break;
+	                    case this.DssDataType.DssDataTypeBinary  :
+		                   	datatype='Binary';
+		                   	break;
+	                    case this.DssDataType.DssDataTypeVarBin  :
+		                   	datatype='VarBin';
+		                   	break;
+	                    case this.DssDataType.DssDataTypeLongVarBin  :
+		                   	datatype='LongVarBin';
+		                   	break;
+	                    case this.DssDataType.DssDataTypeDate  :
+		                   	datatype='Date';
+		                   	break;
+	                    case this.DssDataType.DssDataTypeTime  :
+		                   	datatype='Time';
+		                   	break;
+	                    case this.DssDataType.DssDataTypeTimeStamp  :
+		                   	datatype='TimeStamp';
+		                   	break;
+	                    case this.DssDataType.DssDataTypeNChar  :
+		                   	datatype='NChar';
+		                   	break;
+	                    case this.DssDataType.DssDataTypeNVarChar  :
+		                   	datatype='NVarChar';
+		                   	break; 
+	                    case this.DssDataType.DssDataTypeBigDecimal  :
+		                   	datatype='BigDecimal';
+		                   	break; 
+	                    case this.DssDataType.DssDataTypeCellFormatData  :
+		                   	datatype='CellFormatData';
+		                   	break; 
+	                    case this.DssDataType.DssDataTypeUTF8Char  :
+		                   	datatype='UTF8Char';
+		                   	break; 		                   	
+	                }
+                }    
+            	return '[' + datatype + ']';
+            },
+            
+            getAttributesFactsInTable: function getAttributesFactsInTable(tid, callbacks){
+                 var result=[];
+                 if (tid){
+	                	 var table=this.getTable(tid);
+	                	 if (table.isNew) {
+		                	 var attrInfo, attribute,factInfo, fact;
+		                	 for (var aid in table.AttrInfos) {
+		                		 attribute=this.getAttribute(aid);
+		                		 result.push( {n: attribute.name, id: attribute.id, t:12} );
+		                	 }
+		                	 for (var fid in table.FactInfos) {
+		                		 fact=this.getFact(fid);
+		                		 result.push( {n: fact.name, id: fact.id, t:13} );
+		                	 }   
+		                	 if(callbacks.success){
+			            		   callbacks.success({items: result });   
+			            	 }
+	                	 }else{
+	                		  var mdl=this;   
+	                        	                                                    	
+	                          var params = {taskId:'arch.search', schemaid: this.SchemaInstanceID, objecttypes: '12,13', uses: tid  + ',15'};
+	                           
+	                          var cb = {
+	                        		success: function(res){
+	                        		 	callbacks.success({items:result});
+	                       			},
+	                        		failure: function(res){
+	                       				mstrmojo.alert(res.getResponseHeader('X-MSTR-TaskFailureMsg')); 
+	                       			}
+	                            };
+
+	                    		if (mstrApp.sessionState !== undefined){ params.sessionState = mstrApp.sessionState; }
+	                    		mstrmojo.xhr.request('POST', mstrmojo.App.taskURL, cb, params);
+	                	 }
+	                		 
+                 }    		 
+	             
+            	
+            },
+            
+            getAttribute:function getAttribute(id){
+             	return this.attrs[id];   //TODO replace with call to search attributes by ID
+            },
+            processTableChanges:function prcsChanges(atts,fcts){
+            	for (var latt=0;latt<atts.length;latt++)
+            	{
+            		var att=atts[latt];
+            		if (att.dirty==true)
+            		{
+             		}
+            	}
+            	for (var lfct=0;lfct<fcts.length;lfct++)
+            	{
+            		var fct=fcts[lfct];
+            		if (fct.dirty==true)
+            		{
+             		}
+            	}
+            },
+            
+            createProject: function (pname,callback){
+         		var createp_params = {taskId:'arch.createProject',name:pname};
+        		var createpcb = {
+        			success: function(res){
+        			       if (callback){callback(); _hideWaitPage(); } },
+        			failure: function(res){
+        				 _hideWaitPage();
+        				 mstrmojo.alert(res.getResponseHeader('X-MSTR-TaskFailureMsg')); }
+        		};
+        	     _showWaitPage();
+        		if (mstrApp.sessionState !== undefined){createp_params.sessionState = mstrApp.sessionState; }
+        		
+        		mstrmojo.xhr.request('POST', mstrmojo.App.taskURL, createpcb, createp_params);
+         },
+
+
+            deleteProject: function(pid,callback){
+            	var $NIB = mstrmojo.Button.newInteractiveButton;   
+                mstrmojo.confirm("Are you sure?", 
+                		[
+                		 	$NIB("Yes", function yes()
+        				        {
+        				            	var dbrparams = {	taskId:'arch.deleteProject', 
+        				            						projectid:pid
+        				            						
+        				            					};
+        				        		var dbrcb = {
+        				        				success: function(res){ _hideWaitPage(); if (callback){callback();} },
+        				        				failure: function(res){ _hideWaitPage(); mstrmojo.alert(res.getResponseHeader('X-MSTR-TaskFailureMsg')); }
+        				        		};
+        				        		_showWaitPage();
+        				        		if (mstrApp.sessionState !== undefined){
+        				        			dbrparams.sessionState = mstrApp.sessionState;
+        				        		}
+        				        		mstrmojo.xhr.request('POST', mstrmojo.App.taskURL, dbrcb, dbrparams);
+        				        }, null),
+                           $NIB("No", null, null )
+                      ]);
+            },
+ 
+            getFunctions: function(fname,callback){
+    		    var getFncs_params = {taskId:'getSystemFunctions'};
+    		    var fncs=[];
+    			if(fname)
+    			{  getFncs_params.categories=fname;
+    			   getFncs_params.includeFunctionDetails=true;
+    			 }
+    			var getFncscb = {
+    				success: function(res){ 
+    				
+    			         if(res.fncs[0].fns)
+    			        	 fncs=res.fncs[0].fns;
+    			         else{
+    				      for(i=0; i<res.fncs.length;i++)
+    				      fncs[i]={n:res.fncs[i].n, v: res.fncs[i].n};
+    			         }
+    			         _hideWaitPage();
+    			        
+    			         if (callback){callback(fncs);}},
+    		           
+    				failure: function(res){
+    					 _hideWaitPage();
+    					 mstrmojo.alert(res.getResponseHeader('X-MSTR-TaskFailureMsg')); }
+    			};
+    			
+    		     _showWaitPage();
+    			if (mstrApp.sessionState !== undefined){getFncs_params.sessionState = mstrApp.sessionState; }
+    			
+    			mstrmojo.xhr.request('POST', mstrmojo.App.taskURL, getFncscb, getFncs_params);
+            },	
+    		
+            renameProject: function( pid, oid, callback){
+         	      var pn=new mstrmojo.Editor({ 
+  	    		       title: "Rename Project",
+  	    		       cssText:"width:250px;",
+  	    		     children: [
+  	    	         {//Name label
+  	    	             scriptClass:"mstrmojo.Label",
+  	    	             cssText: "font-weight:bold; width:100%; padding: 5px;",
+  	    	             alias: "nameinfo",
+  	    	             text: "New Project Name:"
+  	    	         },
+
+  	    	          {//	Project name
+  	    	           scriptClass: "mstrmojo.TextBox",
+  	    	           alias: "txtname",
+  	    	           cssText: "width:200px;"
+  	    	        	
+  	    	          },
+
+  	    	           { // buttons
+  	    		       scriptClass : 'mstrmojo.HBox',
+  	    		       cssClass : 'mstrmojo-Editor-buttonBox',
+  	    		       slot : 'buttonNode',
+  	    		       children : [ 
+  	    		           {//OK
+  	    			        scriptClass : "mstrmojo.HTMLButton",
+  	    			        cssClass : "mstrmojo-Editor-button",
+  	    			        cssText:"float:right;",
+  	    			        text : mstrmojo.desc(1442, "OK"),
+  	    			        onclick : function(evt) {
+  	    				         var e = this.parent.parent;
+  	    				         var ret = true;;
+  	    				         if (e.onOK) { ret = e.onOK(); }
+  	    				         if (ret) { e.close();}
+  	    		
+  	    				var renp_params = {taskId:'arch.renameObject', objectid:pid, objecttype: oid, objectname:e.children[1].value};
+  	    				var renpcb = {
+  	    		    				success: function(res){  _hideWaitPage();if (callback){callback();}},
+  	    					        failure: function(res){
+  	    		    					 _hideWaitPage();
+  	    		    					 mstrmojo.alert(res.getResponseHeader('X-MSTR-TaskFailureMsg')); }
+  	    		    			};
+  	    		    		
+  	    		    			 _showWaitPage();
+  	    		     			if (mstrApp.sessionState !== undefined){renp_params.sessionState = mstrApp.sessionState; }
+  	    		     			
+  	    		     			mstrmojo.xhr.request('POST', mstrmojo.App.taskURL, renpcb, renp_params);
+  	    			}
+  	    		  }, 
+  	    		{// cancel
+  	    			scriptClass : "mstrmojo.HTMLButton",
+  	    			cssClass : "mstrmojo-Editor-button",
+  	    			text : mstrmojo.desc(221, "Cancel"),
+  	    			onclick : function(evt) {
+  	    				var e = this.parent.parent;
+  	    				if (e.onCancel) { e.onCancel(); }
+  	    				e.close();
+  	    			}
+  	    		}
+  	    	]}
+  	    	]
+  	    			});
+        	      pn.open();
+  	   
+         },
+          
+         exprEditor:function(metricId, type) {
+  	        var id = "mstrAR", 
+  	        fcts = null,
+  	        openME = function(oi){
+  	            var ae = mstrmojo.all[id];
+  	            if(!ae){
+  	               ae = new mstrmojo.ExpressionEditor({id:id, oi: oi, functions: fcts});
+  	            } else {
+  	                ae.set('oi',oi);
+  	            }
+  	            ae.populateEditor();
+  	            ae.open();
+  	            _hideWaitPage();    
+  	        },
+  	        failure = function(res){
+  	        	_hideWaitPage();        
+  	            mstrmojo.alert(res.getResponseHeader('X-MSTR-TaskFailureMsg'));
+  	        },                
+  	        fsuccess = function(res){
+  	            try {
+  	                fcts = res;
+  	                if(metricId){
+  	                    //make a call to retrieve metric definition
+  	                    mstrmojo.ME.MetricDataService.getMetricDefintion({id:metricId},{success: function(res){
+  	                        openME(res);
+  	                    }, failure: failure}); 
+  	                } else {
+  	                    openME({did:'', n: 'New Expression', tks:{items: [], vs: 0, vm: ''}, mhfts:{}, mvfts:{}});
+  	                }
+  	            } catch (ex) {}    // swallow.
+  	        };
+  	       _showWaitPage();
+  	       mstrmojo.ME.MetricDataService.getFunctions({success: fsuccess, failure: failure}); 
+  	 },
+            postCreate: function (){
+            	this.layers[_DEFAULT_LAYER_ID] = new Object();
+            	this.layers[_DEFAULT_LAYER_ID].name = _DEFAULT_LAYER_NAME;
+            	this.layers[_DEFAULT_LAYER_ID].id = _DEFAULT_LAYER_ID;
+            	this.layers[_DEFAULT_LAYER_ID].tables = new Object();
+            },	
+            init: function init(props) {
+                this._super(props);
+                if (!this.features) {
+                    this.features = new mstrmojo.Model();
+                }
+                this.ondefnChange();
+            },
+            ondefnChange: function ondefnChg(){},
+
+        	/***********************************************************************************************
+        	* 												Enumerations
+        	***********************************************************************************************/
+
+            
+            DSSObjectType:
+            	{
+            		"DSSObjectTypeFact"       :13,
+            		"DSSObjectTypeAttribute"  :12,
+            		"DSSObjectTypeTable"      :15
+            	},
+            DSSCatalogStateFlags:
+                {
+                    "DssCatalogStateDefault"                    : 0,
+                    "DssCatalogStateSelected"                   : 1,
+                    "DssCatalogStateFresh"                      : 2,
+                    "DssCatalogStateMissing"                    : 4,
+                    "DssCatalogStateUnexpected"                 : 8,
+                    "DssCatalogStateCompatibleSmaller"          : 16,
+                    "DssCatalogStateCompatibleLarger"           : 32,
+                    "DssCatalogStateCompatible"                 : 64,
+                    "DssCatalogStateIncompatible"               : 128,
+                    "DssCatalogStateCompatibilityMask"          : 240,
+                    "DssCatalogStateFreshTables"                : 256,
+                    "DssCatalogStateMissingTables"              : 512,
+                    "DssCatalogStateFreshColumns"               :1024,
+                    "DssCatalogStateMissingColumns"             : 2048,
+                    "DssCatalogStatePartitionMappingTable"      : 65536,
+                    "DssCatalogStateDummyPartitionMappingTable" : 131072,
+                    "DssCatalogStateDummyPartitionSliceTable"   : 262144
+                },
+            DssCatalogFlags: 
+            	{
+					"DssCatalogDefault"                         : 0x0,
+		        	"DssCatalogGetTables"                       : 0x1,
+		        	"DssCatalogGetColumns"                      : 0x2,
+		        	"DssCatalogGetTablePrimaryKeys"             : 0x4,
+		        	"DssCatalogGetTableForeignKeys"             : 0x8,
+		        	"DssCatalogGetTableKeys"                    : 0xC,
+		        	"DssCatalogGetTableSize"                    : 0x10,
+		        	"DssCatalogGetTableContent"                 : 0x20,
+		        	"DssCatalogGetColumnCardinality"            : 0x40,
+		        	"DssCatalogGetColumnContent"                : 0x80,
+		        	"DssCatalogGetFullCatalog"                  : 0xFF,
+		        	"DssCatalogSelectedOnly"                    : 0x100,
+		        	"DssCatalogApplyConnectionMapping"          : 0x200,
+		        	"DssCatalogAllNamespaces"                   : 0x400,
+		        	"DssCatalogIgnoreNamespace"                 : 0x2000,
+		        	"DssCatalogIgnoreCase"                      : 0x4000,
+		        	"DssCatalogIgnoreInvalidNames"              : 0x8000,
+		        	"DssCatalogReuseMatching"                   : 0x10000,
+		        	"DssCatalogReuseCompatible"                 : 0x20000,
+		        	"DssCatalogReuseAny"                        : 0x40000,
+		        	"DssCatalogAugmentExisting"                 : 0x80000,
+		        	"DssCatalogSortDescending"                  : 0x100000,
+		        	"DssCatalogSortTableNameFirst"              : 0x200000,
+		        	"DssCatalogCompareWithMetadata"             : 0x08000000
+            	},
+                EnumDSSBaseFormType:{
+	                "DssBaseFormBigDecimal"  : 11,
+	                "DssBaseFormDate"        : 8,
+	                "DssBaseFormDateTime"    : 1,
+	                "DssBaseFormEmail"       : 6,
+	                "DssBaseFormHTMLTag"     : 7,
+	                "DssBaseFormNumber"      : 2,
+	                "DssBaseFormPhoneNumber" : 12,
+	                "DssBaseFormPicture"     : 4,
+	                "DssBaseFormSymbol"      : 10,
+	                "DssBaseFormText"        : 3,
+	                "DssBaseFormTime"        : 9,
+	                "DssBaseFormUrl"         : 5
+            	},
+            DssDataType: {
+            	"DssDataTypeReserved"       :0,  //unknown     
+            	"DssDataTypeInteger"        :1,  //signed integer  
+            	"DssDataTypeUnsigned"       :2,  //unsigned integer  
+            	"DssDataTypeNumeric"        :3,  //number with exact precision and scale  
+            	"DssDataTypeDecimal"        :4,  //similar to DssDataTypeNumeric , actual precision may be larger  
+            	"DssDataTypeReal"           :5,  //single precision real number, 4 bytes  
+            	"DssDataTypeDouble"         :6,  //double precision real number, 8 bytes  
+            	"DssDataTypeFloat"          :7,  //floating point number with precision  
+            	"DssDataTypeChar"           :8,  //fixed length character string  
+            	"DssDataTypeVarChar"        :9,  //variable length character string  
+            	"DssDataTypeLongVarChar"    :10, //variable length char data up to 2GB  
+            	"DssDataTypeBinary"         :11, //fixed length binary data  
+            	"DssDataTypeVarBin"         :12, //variable length binary data  
+            	"DssDataTypeLongVarBin"     :13, //variable length binary data, up to 2GB  
+            	"DssDataTypeDate"           :14, //date: containing year, month and day  
+            	"DssDataTypeTime"           :15, //time: hour, minute, second and fraction of second  
+            	"DssDataTypeTimeStamp"      :16, //include both data and time. 
+            	"DssDataTypeNChar"          :17,
+            	"DssDataTypeNVarChar"       :18,
+            	"DssDataTypeBigDecimal"     :30,
+            	"DssDataTypeCellFormatData" :31,
+            	"DssDataTypeUTF8Char"       :33
+            },
+            
+            DSSSchemaUpdateFlag: {
+                "Load"   :1,
+        	    "Unload" :2,
+                "Reload" :3
+            }
+        }
+    );
+})();

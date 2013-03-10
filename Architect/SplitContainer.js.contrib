@@ -1,0 +1,237 @@
+(function(){
+
+    mstrmojo.requiresCls(
+        "mstrmojo.Container",
+        "mstrmojo.dom",
+        "mstrmojo.css");
+        
+    var _C = mstrmojo.css;
+    var $D = mstrmojo.dom;
+
+    var _isLeftSpliterMoving = false;
+    var _isRightSpliterMoving = false;
+    
+    mstrmojo.SplitContainer = mstrmojo.declare(
+        // superclass
+        mstrmojo.Container,
+ 
+        // mixins,
+        null,
+        
+        // instance props+methods
+        /**
+         * @lends mstrmojo.SplitContainer.prototype
+         */
+        {
+            /**
+             * @ignore
+             */
+            scriptClass: "mstrmojo.SplitContainer",
+         
+            
+            cssText: "width:100%;height:100%;",
+            
+            leftWidth: 230,
+            
+            rightWidth: 230,
+            
+            totalWidth: 1024,
+            
+            minWidth: 10,
+            
+            minMiddleWidth: 300,
+            
+            height: 600,
+            
+            width: null,
+            /**
+             * @ignore
+             */
+            markupString: '<div id="{@id}" class="mstrmojo-SplitContainer {@cssClass}" style="height:100%;position:relative;{@cssText}" mstrAttach:mouseup,mousemove >' +
+                          '<div id="{@id}-leftspliter" mstrAttach:mousedown style="cursor:col-resize;font-size:3pt;position:absolute;width:3px;background-color:transparent;height:100%;margin-top:1%;margin-bottom:1%;z-index:99998;"></div>' +
+                          '<div id="{@id}-shadow" style="display:none;font-size:3pt;position:absolute;background-color:yellow;width:3px;height:99%;margin-top:2px;z-index:99999;"></div>' +
+                          '<div id="{@id}-rightspliter" mstrAttach:mousedown style="cursor:col-resize;font-size:3pt;position:absolute;width:3px;background-color:transparent;height:100%;margin-top:1%;margin-bottom:1%;z-index:99998;"></div>' +
+                          '<table cellpadding=0 cellspacing=0 style="border:1px solid gray;height:100%;width:100%;">' + 
+        	              '<tr><td><div class="mstrmojo-SplitContainer-Item1" style="overflow:hidden;"></div></td>' +
+                          '<td><div class="mstrmojo-SplitContainer-Item2" style="padding-left:1px;overflow:hidden;"></div></td>' +
+                          '<td><div class="mstrmojo-SplitContainer-Item3" style="padding-left:1px;overflow:hidden;"></div></td>' +
+                          '</tr></table></div>',
+
+            /**
+             * @ignore
+             */
+            markupSlots: {
+       
+                 leftspliterNode: function(){return this.domNode.childNodes[0];},
+                 shadowNode: function() {return this.domNode.childNodes[1];},
+                 rightspliterNode: function(){return this.domNode.childNodes[2];},
+                 tableNode: function(){return this.domNode.childNodes[3];},
+                 leftContainer: function(){return this.domNode.childNodes[3].childNodes[0].childNodes[0].childNodes[0];},
+                 leftItem: function(){return this.domNode.childNodes[3].childNodes[0].childNodes[0].firstChild.firstChild;},
+                 middleContainer: function(){return this.domNode.childNodes[3].childNodes[0].childNodes[0].childNodes[1];},
+                 middleItem: function(){ return this.domNode.childNodes[3].childNodes[0].childNodes[0].childNodes[1].firstChild;},
+                 rightContainer: function(){return this.domNode.childNodes[3].childNodes[0].childNodes[0].childNodes[2];},
+                 rightItem: function(){ return this.domNode.childNodes[3].childNodes[0].childNodes[0].childNodes[2].firstChild;}
+        	
+            },
+            
+            preBuildRendering: function preBuildRendering() {
+                var rtn = true;
+                if (this._super) {
+                    rtn = this._super();
+                }   
+                return rtn;
+            }, 
+            
+            
+            
+            onmousedown: function(evt){
+               _isLeftSpliterMoving=false;
+       		   _isRightSpliterMoving=false;       		 
+               var e = (window.event) ? window.event : evt;
+               var target = e.target;
+               if ($D.isFF){   //for firefox, the 
+            	    target = (e.e) ? e.e.target : null;
+               }	   
+               if (target){
+	            	if (target.id)
+	            	{
+	            		if (target.id.indexOf("-leftspliter") != -1){
+	            		   _isLeftSpliterMoving=true;            		   
+	            		}
+	            		else{            		
+	         		       _isRightSpliterMoving=true;
+	            		}		
+	            	}
+            	}
+            	e.returnValue = false;
+            	return false;          	
+            	
+            },
+            
+            onmousemove: function(evt){
+            	if (_isLeftSpliterMoving || _isRightSpliterMoving)
+            	{
+            		var e = (window.event) ? window.event : evt;
+            		if ($D.isFF){  //this is for firefox
+            			e=e.e;
+            		}
+            		this.showShadowline(e);
+            		e.returnValue = false;
+            		return false;
+            	}            	
+            },
+           
+            showShadowline: function showShadowline(evt){
+ 	    	 	
+         	 	var ps = mstrmojo.dom.position(this.domNode, true);
+         	 	var leftPos = evt.clientX - ps.x ;
+         	 	if (_isLeftSpliterMoving){ 	          		
+	          		if (leftPos <= this.minWidth)
+	          			leftPos = this.minWidth;
+	          		if (leftPos >=  this.totalWidth - this.rightWidth - this.minMiddleWidth )
+	          			leftPos =  this.totalWidth - this.rightWidth - this.minMiddleWidth ;
+         	 	}else
+         	 	{
+         	 	    if (leftPos<= parseInt(this.leftWidth) + this.minMiddleWidth)
+         	 	    	leftPos= parseInt(this.leftWidth) + this.minMiddleWidth ;
+         	 	}
+          		
+          	 	this.shadowNode.style.left = leftPos.toString() + "px";
+          	 	          		
+                this.shadowNode.style.display = 'block';
+            },
+            
+            hideShadowline: function hideShadowline(evt){
+            
+            	this.shadowNode.style.display = 'none';
+            },
+            
+            onmouseup: function(evt){
+            	if (_isLeftSpliterMoving || _isRightSpliterMoving)
+            	{            	
+                    this.hideShadowline();
+                    this.onResize(evt);
+                	_isLeftSpliterMoving = false;
+            		_isRightSpliterMoving = false;
+            	}           		
+            },
+           
+            setPosition: function setPosition(l,t,w,h) {
+            	 this.height =h;
+            	 this.width =w;
+            	 
+            	 this.onResize();    
+            },
+            
+            onheightChange: function heightChange(evt){
+                this.onResize(evt);       	
+            },
+            
+            onwidthChange: function widthChange(evt){
+                this.onResize(evt);       	
+            },
+            
+            onResize: function onResize(evt){          
+           
+            	var offset = 0;
+            	var id=this.id;
+             	var widget=mstrmojo.all[id];
+                var h=widget.height;
+             	
+            	if (_isLeftSpliterMoving){
+            		widget.leftWidth = parseInt(widget.shadowNode.style.left);                             
+           
+            	}
+            	else {
+            		 if (_isRightSpliterMoving){                            	
+            			 widget.rightWidth = widget.totalWidth - parseInt(widget.shadowNode.style.left);	                	
+            		 }
+            		 else
+            			 widget.rightWidth = widget.rightWidth -4;
+            	}
+                
+            	if (widget.domNode){
+            		widget.totalWidth= parseInt(widget.domNode.clientWidth);
+            	}
+            	
+            	widget.leftspliterNode.style.left= (parseInt(widget.leftWidth)+1) + 'px';
+            	widget.leftContainer.style.width = widget.leftWidth + 'px';
+            	widget.leftItem.style.width = widget.leftWidth + 'px';
+            	widget.leftItem.style.height = widget.height + 'px';
+            	this.raiseEvent({
+			            name: 'resizeLeftItem',
+			            w: widget.leftWidth,
+			            h: h
+			        });
+            	
+              	var middlewidth = widget.totalWidth - parseInt(widget.leftWidth) - parseInt(widget.rightWidth);
+              	if (middlewidth< widget.minMiddleWidth) 
+              		middlewidth= widget.minMiddleWidth;
+              	widget.middleContainer.style.width = middlewidth+ 'px';
+              	widget.middleItem.style.width = middlewidth+ 'px';
+            	widget.middleItem.style.height = widget.height + 'px';        
+            	this.raiseEvent({
+		            name: 'resizeMiddleItem',
+		            w: middlewidth,
+		            h: h
+		        });
+            	
+            	
+            	widget.rightspliterNode.style.left= (this.totalWidth - parseInt(this.rightWidth) + 1 ) + 'px';
+            //	widget.rightContainer.style.width = widget.rightWidth + 'px';
+              	widget.rightWidth=parseInt(widget.rightWidth); // - 5;
+            	widget.rightItem.style.width = widget.rightWidth  + 'px';  
+            	widget.rightItem.style.height = widget.height + 'px';          
+            	this.raiseEvent({
+		            name: 'resizeRightItem',
+		            w: widget.rightWidth,
+		            h: h
+		        });
+            	
+            }
+            
+        }
+    );
+    
+})();
