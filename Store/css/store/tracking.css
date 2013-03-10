@@ -1,0 +1,87 @@
+#trackOrder .content{
+	margin: 15px;
+}
+
+.trackDetails{
+	border: 0px none #000000;
+	-moz-border-radius: 20px;/*Firefox*/
+	-webkit-border-radius: 20px;/*Safari, Chrome*/
+	border-radius: 20px;
+	margin: 20px 0 0;
+	font-weight: bold;
+	background-color: white;
+}
+
+.orderDetails{
+	height: 75px;
+}
+
+.orderDetails img{
+	float: left;
+	width: 25%;
+	max-width: 75px;
+}
+
+.orderInfo div, .shipDetails .date, .trackNum, .updateDate{
+	font-size: 12px;
+	line-height: 19px;
+}
+
+.orderInfo .orderid{
+	font-size: 16px;
+    	line-height: 28px;
+}
+
+.shipDetails{
+	height: 20px;
+}
+
+.shipDetails .status{
+	float: left;
+    	font-size: 15px;
+	
+}
+
+.shipDetails .date{
+	float: right;
+    	font-size: 12px;
+    	line-height: 19px;
+}
+
+.trackDetails .orderInfo{
+	float: left;
+	margin-left: 15px;
+    	width: 65%;
+}
+
+#trackOrder .content .trackInput {
+    font-weight: bold;
+    line-height: 35px;
+}
+
+#trackOrder .content input {
+    background: none repeat scroll 0 0 #FFFFFF;
+    border: 1px solid rgba(0, 0, 0, 0.184);
+    border-radius: 0 0 0 0;
+    box-shadow: none;
+    font-size: 14px;
+    line-height: 18px;
+    margin: 0;
+    padding: 11px 11px 12px;
+    width: 100%;
+}
+
+#trackOrder .content .ui-btn { margin-top: 20px; }
+
+#trackOrder .help {
+	font-size: 14px;
+	margin-left: 10px;
+}
+
+#trackOrder .tooltip {
+	padding:5px 10px 5px 5px;
+}
+
+#trackOrder .tooltip div {
+	color:red;
+}

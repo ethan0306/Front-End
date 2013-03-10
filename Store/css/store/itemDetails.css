@@ -1,0 +1,211 @@
+#accessDetail{
+	background: none repeat scroll 0 0 white;
+}
+.prodMarquee{
+	max-width:400px;
+	display:block;
+	margin:0 auto;
+}
+#accessDetail .prodInfo{
+       margin: 15px;
+}
+#accessDetail .starRating {
+    background-attachment: scroll;
+    background-clip: border-box;
+    background-color: transparent;
+    background-image: url("../images/starRating.gif");
+    background-origin: padding-box;
+    background-position: 0 -120px;
+    background-repeat: no-repeat;
+    background-size: auto auto;
+    height: 18px !important;
+    width: 91px !important;
+    float: right;
+    margin-top: 15px;
+}
+#accessDetail .starRating div{
+    background: url("../images/starRating.gif") no-repeat scroll 0 -160px transparent;
+    height: 18px !important;
+    width: 56px !important;
+
+}
+#accessDetail .starRating .rate_5 {
+    width: 90px !important;
+}
+#accessDetail .starRating .rate_4 {
+    width: 74px !important;
+}
+#accessDetail .starRating .rate_3 {
+    width: 55px !important;
+}
+#accessDetail .starRating .rate_2 {
+    width: 38px !important;
+}
+#accessDetail .starRating .rate_1 {
+    width: 23px !important;
+}
+#accessDetail .starRating .rate_0 {
+    background: none repeat scroll 0 0 transparent;
+    width: 56px !important;
+}
+#accessDetail .secondRow{
+	display: block;
+	height: 42px;
+}
+#accessDetail .ui-select{
+	width: 23%;
+	float: left;
+}
+#accessDetail .prodRate{
+	float: right;
+	margin-top: 7px;
+}
+#accessDetail .prodPrice{
+	font-weight: bold;
+    	line-height: 60px;
+}
+#accessDetail .customer{
+	float: left;
+	width: 30%;
+	font-size: 14px;
+}
+#accessDetail .customer .date{
+	font-size: 10px;
+	line-height: 30px;
+}
+
+#accessDetail .customer div{
+	width: 85%;
+}
+#accessDetail .review .content{
+	float: left;
+	font-size: 14px;
+	width: 70%;
+	font-weight: normal;
+}
+#accessDetail .prodReview .review{
+	background: none repeat scroll 0 0 transparent; 
+	border-top: 1px solid #FFFFFF;
+    	border-bottom: 1px solid #C6C6C6;
+}
+
+#accessDetail .myDevice {
+	background-color: #EEEEEE;
+    	color: #686868;
+    	font-size: 13px;
+    	font-weight: bold;
+    	list-style: none outside none;
+    	text-align: center;
+	padding: 10px;
+	position: relative;
+}
+#accessDetail .myDevice img{
+	position: absolute;
+	padding-left: 10px;
+	margin-top: -2px;
+}
+#accessDetail .myDevice .deviceName{
+	color: black;
+    	padding-right: 30px;
+    	text-decoration: underline;
+	white-space:normal;
+}
+#accessDetail .myDevice span{
+	line-height: 20px;
+}
+
+
+
+#customerReview .BVRRDisplayContent {
+    background: none repeat scroll 0 0 white;
+    clear: both;
+}
+#customerReview .BVRRContainer .BVDI_QTSummaryBox {
+	margin:10px 20px;
+}
+
+#customerReview .BVDI_QTHeader  {
+    display: none;
+}
+
+#customerReview .BVDI_QT {
+	background-color: white;
+}
+
+#customerReview .BVRRContainer .BVDI_QTTags {
+    margin-left: 0;
+    
+}
+
+#customerReview .BVRRContainer .BVDI_QTAttributes {
+ 
+    width: 270px;
+}
+/*
+#accessDetail .BVRRContainer .BVDI_QTHeaderAttributes, .BVRRContainer .BVDI_QTBodyAttributes {
+    margin-left: 0;
+}
+*/
+#customerReview .BVRRContainer .BVDI_QTFilterSummary {
+    /*clear: right;
+    float: right;
+    overflow: hidden;*/
+    width: 270px;
+}
+
+#customerReview .BVRRContainer .BVDI_QTInsideFilterSummary {
+    margin-left: 0;
+}
+
+#customerReview .BVRRReviewDisplayStyle5Header .BVRRReviewDateContainer {
+   /* clear: none;
+    float: none;*/
+    text-align: left;
+    width: 100%;
+}
+
+#customerReview .BVRRReviewDisplayStyle5 {
+    padding: 0;
+}
+
+#customerReview .BVRRReviewDisplayStyle5Header .BVRRReviewTitleContainer {
+   /* clear: none;
+    float: none;*/
+    margin-left: 0px;
+    width: 100%;
+}
+
+
+#customerReview .BVRRReviewDisplayStyle5Header .BVRRReviewRatingsContainer {
+   /* float: left;*/
+    padding-top: 0px;
+    width: 100%;
+}
+
+
+#customerReview .BVRROverallRatingContainer .BVRRRatingContainerStar {
+    padding: 0;
+}
+
+
+#customerReview .BVRRReviewDisplayStyle5BodyContentSecondary {
+    margin-bottom: 0;
+}
+
+#customerReview .BVRRDisplayContentBody {
+    padding: 0 5px;
+}
+
+
+#customerReview .BVRRDisplayContentHeader{
+	margin-top: 0px;
+}
+
+#customerReview .BVRRDisplayContentFooter {
+    display: none;
+}
+
+
+
+
+

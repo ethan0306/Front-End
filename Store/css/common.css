@@ -1,0 +1,55 @@
+@import url('store/home.css');
+@import url('store/deviceList.css');
+@import url('store/itemLists.css');
+@import url('store/itemDetails.css');
+@import url('store/tracking.css');
+@import url('store/cart.css');
+@import url('store/miniCart.css');
+@import url('store/autoSuggest.css');
+@import url('store/filterPanel.css');
+@import url('store/recommendation.css');
+@import url('checkout/checkout.css');
+@import url('checkout/login.css');
+
+.clear { clear: both; }
+.clear50 { clear: both; height: 50px; }
+.clear25 { clear: both; height: 25px; }
+.clear10 { clear: both; height: 10px; }
+.clearFooter { clear: both; height: 60px; }
+   
+.checkoutButton { margin: 0 auto; width: 100%; height: 55px }
+.checkoutButton .ui-btn-inner { padding-top: 19px; padding-bottom: 20px; }
+
+.vzwLogo { text-align: center; padding-top: 4px; padding-bottom: 3px; }
+.vzwLogo img { height: 30px; width: auto; } 
+
+.number_in_cart{
+    background-color: green;
+    height: 20px;
+    left: 25px;
+    line-height: 19px;
+    position: absolute;
+    top: -15px;
+    min-width: 17px;
+}
+
+.number_in_cart.On{
+	display:block;
+}
+
+.ui-page .ui-footer .selectDevice{
+	/* height: 57px; */
+    overflow: hidden;
+}
+
+.ui-page .ui-footer .selectDevice .ui-btn-text span {
+	display: block;
+}
+
+.ui-page .ui-footer .selectDevice .ui-btn-text img {
+
+}
+
+
+
+

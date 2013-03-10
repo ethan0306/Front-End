@@ -1,0 +1,14 @@
+<!DOCTYPE weblogic-web-app PUBLIC "-//BEA Systems, Inc.//DTD Web Application 8.1//EN" "http://www.bea.com/servers/wls810/dtd/weblogic810-web-jar.dtd">
+
+<weblogic-web-app>
+
+
+	<context-root>mas</context-root>
+	<!--<place-holder-for-context-root-task/>-->
+<container-descriptor>
+<prefer-web-inf-classes>true</prefer-web-inf-classes>
+</container-descriptor>
+
+
+</weblogic-web-app>
+<!-- @version $Id: //product/Eclipse/main/plugins/atg.project/templates/weblogic.xml#1 $$Change: 425088 $ -->

@@ -1,0 +1,56 @@
+#deviceItemList .popupMenu .ui-listview, #deviceItemList2 .popupMenu .ui-listview { margin: -15px; }
+
+.popupMenu ul li img { left: 22px; max-height: 65px; top: 8px;}
+
+.popupMenu ul li h2 {white-space:normal; max-height: 40px;} /*for two lines*/
+
+#deviceItemList .popupMenu li a, #deviceItemList2 .popupMenu li a{ padding-left: 90px; }  
+
+#deviceItemList ul .ui-btn-up-c, #deviceItemList2 ul .ui-btn-up-c { 
+	background: none repeat scroll 0 0 transparent; 
+	border-top: 1px solid #FFFFFF;
+    	border-bottom: 1px solid #C6C6C6;
+}
+#deviceItemList ul .ui-btn-active, #deviceItemList2 ul .ui-btn-active {
+    	background: linear-gradient(#C10000, #9E0000) repeat scroll 0 0 #B00000;
+	background: -webkit-gradient(linear, left top, left bottom, from(#C10000), to(#9E0000)); /* Safari 4+, Chrome */
+	background: -webkit-linear-gradient(left top, left bottom, #C10000, #9E0000); /* Chrome 10+, Safari 5.1+, iOS 5+ */
+}
+#deviceItemList form, #deviceItemList2 form {
+	background: linear-gradient(#FFFFFF, #C6C6C6) repeat scroll 0 0 #B00000;
+	background: -webkit-gradient(linear, left top, left bottom, from(#FFFFFF), to(#C6C6C6)); /* Safari 4+, Chrome */
+	background: -webkit-linear-gradient(left top, left bottom, #FFFFFF, #C6C6C6); /* Chrome 10+, Safari 5.1+, iOS 5+ */
+	border: 1px solid #C6C6C6;
+}
+#deviceItemList .ui-corner-top .ui-btn, #deviceItemList2 .ui-corner-top .ui-btn{
+    background: linear-gradient(#C10000, #9E0000) repeat scroll 0 0 #B00000;
+    border: 1px solid #9B0000;
+    color: #FFFFFF;
+    font-weight: bold;
+    text-shadow: 0 1px 0 #444444;
+}
+
+#selectedDevice .ui-header .ui-btn-left {
+  display: none;
+}
+
+#selectedDevice .popupMenu .deviceInfo {
+	font-size: 14px;
+	font-weight: bold;
+	position: relative;
+	margin: 0 10px 20px;
+}
+
+#selectedDevice .popupMenu .deviceName img{
+	position: absolute;
+	padding-left: 10px;
+	margin-top: -2px;
+}
+#selectedDevice .popupMenu .deviceName{
+	color: black;
+    	padding-right: 30px;
+	white-space:normal;
+}
+#selectedDevice .popupMenu .deviceName{
+	line-height: 20px;
+}

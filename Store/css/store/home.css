@@ -1,0 +1,89 @@
+#home .ui-content{
+	padding: 0;
+}
+#home .banner{ display: block; position: relative; }
+#home .bannerWrapper { display: block; position: relative; overflow: hidden;} 
+.bannerWrapper .wrapper { display: block; position: relative;  float: left;}
+
+/*#home .content .navSearch { width: 78%; float: left; margin-right: 10px;}
+#home .content .ui-btn { float: left; }*/
+
+.marketBanner { position: relative; }
+
+.marketBanner .glassDiv { 
+	position: absolute;  
+	top: 70%; 
+	height: 30%; 
+	z-index: 1; 
+	background: #e2e2e2; /* for non-css3 browsers */
+	background: transparent;
+	background: linear-gradient(top, rgba(179, 179, 179, 0.2), rgba(0, 0, 0, 0.1) ); /* W3C */
+	background: -webkit-gradient(linear, left top, left bottom, from(rgba(179, 179, 179, 0.2)), to(rgba(0, 0, 0, 0.1))); /* Safari 4+, Chrome */
+	background: -webkit-linear-gradient(left top, left bottom, rgba(179, 179, 179, 0.2), rgba(0, 0, 0, 0.1)); /* Chrome 10+, Safari 5.1+, iOS 5+ */
+	border-top: 1px solid rgba(217, 217, 217, 0.4);
+}
+
+.marketBanner .glassDiv .dots{
+	float: right;
+}
+
+.marketBanner .glassDiv .dot{
+	background-color: rgba(0, 0, 0, 0.4);
+	float: left;
+    	height: 6px;
+    	margin: 9px 4px;
+    	position: relative;
+    	right: 20px;
+    	width: 6px;
+	border-radius: 6px;
+	-moz-border-radius: 6px;
+	-webkit-border-radius: 6px;
+}
+
+.marketBanner .glassDiv .dot.selected{
+	background-color: white;
+}
+
+#home .imgWrapper { 	
+	height: 100%;
+	background: none repeat scroll 0 0 #F8F8F8;
+	box-shadow: 0 1px 2px 1px #D5D5D5;
+	border-radius: 5px;
+} 
+
+#home .category{
+	height: 105px;
+	text-align: center;
+	cursor: pointer;
+	text-decoration: none;
+	padding: 5px;
+	width: 33.33%;		
+}
+#home .category.gray{
+	background-color: #e3dfdf;
+}
+#home .category img{
+	height: 50%;
+	width: auto;
+	margin-top: 7px;
+}
+#home .category .name{
+	font-size: 13px;
+	color: #B00000;
+	height: 30px;
+	overflow: hidden;
+}
+
+.homeFooter .deviceImageDiv {
+    height: 28px;
+    width: 100%;
+    text-align: center;
+    position: absolute;
+    top: -26px;
+}
+
+.homeFooter li a { width: 100%; }
+.homeFooter li:nth-child(1) .ui-btn-text { display: block; }
+
+
+
