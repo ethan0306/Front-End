@@ -1,0 +1,71 @@
+<!-- Ant Build front-end css and js with YUI compressor and closure compiler -->
+
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<project name="VZW_MAS_FE" default="minify"  basedir=".">
+	<!--<property name="build.dir" value="${basedir}/build/FE"/>-->
+	<property name="source.dir" value="${basedir}/mas/masStore/j2ee-apps/mas/mas.war"/>
+	
+	<filelist id="jslist" dir="${source.dir}/scripts">
+		       	       <file name="jquery.js"/>
+		       	       <file name="jquery.mobile-1.2.0.min.js" />
+		       	    	<file name="jquery.validate.js"/>
+		       	        <file name="common.js"/>
+		       	    	<file name="checkout.js"/>
+		       	        <file name="endeca-auto-suggest.js"/>
+		       	    	<file name="catalyst.js"/>
+   </filelist>
+	
+	<filelist id="csslist" dir="${source.dir}/css">
+	     	       	       <file name="store/home.css"/>
+	     	       	       <file name="store/deviceList.css" />
+	     	       	       <file name="store/itemLists.css"/>
+	     	       	       <file name="store/itemDetails.css"/>
+	     	       	       <file name="store/cart.css"/>
+	     	       	       <file name="store/miniCart.css"/>
+	     		           <file name="store/autoSuggest.css"/>
+	     	       	       <file name="store/filterPanel.css"/>
+	     	       	       <file name="checkout/checkout.css"/>
+	     		           <file name="checkout/login.css"/>
+	     		           <file name="global.css"/>
+	 </filelist>
+	
+    <echo>source.dir=${source.dir}</echo>
+     <target name="minify">
+       <!--${libs} is path to the downloaded jars -->
+       <available file="${source.dir}/WEB-INF/lib/yuicompressoranttask-0.5.jar"  property="YUIANT_AVAILABLE" />
+       <fail unless="YUIANT_AVAILABLE" message="YUIAnt.jar not found" />
+       <path id="task.classpath">
+           <pathelement location="${source.dir}/WEB-INF/lib/yuicompressor-2.4.4.jar" />
+           <pathelement location="${source.dir}/WEB-INF/lib/yuicompressoranttask-0.5.jar" />
+           <pathelement location="${source.dir}/WEB-INF/lib/yui-rhino-1.6R7.jar" />
+       </path>
+     <!-- yui-compressor task definition -->
+     	  <taskdef name="yui-compressor" classname="net.noha.tools.ant.yuicompressor.tasks.YuiCompressorTask">
+     	            <classpath refid="task.classpath" />
+     	         </taskdef>   
+       <mkdir dir="${source.dir}/bundles"/>
+    <!-- concatenation of javascript -->
+       <echo message="Building global javascript" />
+       <concat destfile="${source.dir}/bundles/masStatic.js" fixlastline="true">
+               <filelist refid="jslist" />
+        </concat>
+         
+    <!-- concatenation of cascading stylesheets -->
+       <echo message="Building global cascading stylesheets" />
+       <concat destfile="${source.dir}/bundles/masStatic.css"  fixlastline="true">
+             <filelist refid="csslist" />
+        </concat>
+    
+ <!-- invoke compressor -->
+       <yui-compressor warn="false" charset="UTF-8" fromdir="${source.dir}/bundles" todir="${source.dir}/bundles">
+           <include name="masStatic.js" />
+           <include name="masStatic.css" />
+       </yui-compressor>
+     	
+     
+ </target>
+ 
+</project>    
+ 
