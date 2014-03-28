@@ -1,0 +1,83 @@
+.dimSearchSuggContainer{
+	position: absolute;
+	left: 0 !important; 
+	width: 100% !important;
+	background: none repeat scroll 0 0 transparent;
+	top: 44px !important;
+	box-shadow: 0 4px 15px 0 rgba(5, 5, 5, 0.45);
+	display: none;
+}
+
+.dimSearchSuggContainer ul li{ list-style: none; border-left: none; border-right: none; }
+.dimSearchSuggContainer ul li .highlighted { font-size: 14px; font-weight: bold; }
+.dimSearchSuggContainer ul li .highlighted span { color: #9E0000; }
+
+.searchPanelShowing .filterType,
+.searchPanelShowing .ui-footer, 
+.searchPanelShowing .ui-header, 
+.searchPanelShowing .clearFooter,
+.searchPanelShowing .main_panels,
+.searchPanelShowing #cart,
+.searchPanelShowing .myDevice{
+	display: none;
+}
+
+.searchPanelShowing .marketBanner { display: none !important; }
+
+.searchPanelShowing.ui-page { background: none repeat scroll 0 0 transparent; }
+
+.content .search .ui-input-search {
+    background: none repeat scroll 0 0 #FFFFFF;
+    border: 1px solid rgba(0, 0, 0, 0.184);
+    border-radius: 0 0 0 0;
+    box-shadow: none;
+    font-size: 14px;
+    line-height: 18px;
+    padding: 0 0 0 30px;
+}
+
+.searchPanelShowing .content .search.On {
+	border-bottom: 1px solid #CCCCCC;
+	background-color: #F2F2F2;
+}
+.content .cancelSearch{
+	background: none repeat scroll 0 0 #F8F8F8;
+       border-radius: 4px;
+    	box-shadow: none;
+    	color: #666666;
+    	margin: 5px 0;
+	height: 32px;
+	display: none;
+}
+
+.searchPanelShowing .content .cancelSearch {
+	display: block;
+}
+
+.search{
+	display:none;
+	overflow:hidden;
+}
+
+.search.On{
+	display:block;
+	width: 100%;
+}
+
+.search .ui-input-search {
+	float: left;
+   	margin: 4px 2%;
+    	width: 96%;
+}
+
+.searchPanelShowing .search .ui-input-search {
+       margin: 4px 5px;
+	width: 73%;
+}
+
+.search .ui-btn { float: left; }
+
+/******************** Auto Suggestion List Item Styling ******************************/
+
+.dimSearchSuggContainer ul li { background: none repeat scroll 0 0 white; border-bottom: 1px solid #FFFFFF; border-top: 1px solid #C6C6C6; }
+.dimSearchSuggContainer ul li .ui-icon { background: url("../images/icons-18-black.png") no-repeat scroll -108px 0 transparent; }

@@ -1,0 +1,57 @@
+.recommendation{
+    border-top: 1px solid #EAEAEA;
+    height: 260px;
+    margin-top: 50px;
+    width: 1300px;
+}
+.recommendation .title{
+    font-size: 18px;
+    line-height: 45px;
+    margin: 0 18px;
+    font-weight: bold;
+    color: #B00000;
+}
+.recommendation .itemsWrapper{
+	min-width: 450px;
+	background-color: white;
+	position: relative; 
+	/*height: 150px;*/
+	overflow:hidden;
+}
+
+.recommendation .items .prodRating{
+	width: 80%;
+    display: block;
+    margin: 0 auto;
+    max-width: 400px;
+}
+.recommendation .items{
+	float: left;
+   	margin: 15px;
+   	width: 120px;
+    	position: relative;
+	top: 10px;
+}
+.recommendation .image{
+	width: 100%;
+}
+.recommendation .itemName{
+	font-size: 12px;
+    	position: absolute;
+    	top: 120px;
+	color: #4F4F4F;
+}
+
+.recommendation .itemsWrapper .starRating{
+	margin-top: 80px !important;
+	float: left !important;
+	background: url("../images/starRating.gif") no-repeat scroll 0 -177px transparent !important;
+	margin-left: -2px;
+	max-width: 65px;
+}
+.recommendation .itemsWrapper .starRating div{
+	background: url("../images/starRating.gif") no-repeat scroll 0 -207px transparent !important;
+}
+.recommendation .itemsWrapper .prodPrice{
+	margin-top: 58px;
+}

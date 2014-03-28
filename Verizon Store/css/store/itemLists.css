@@ -1,0 +1,81 @@
+#accessList {  background-color: white; background-image: none; }
+#accessList .ui-content{
+	background: none repeat scroll 0 0 white;
+}
+
+#accessList ul .ui-btn-up-c { 
+	background: none repeat scroll 0 0 transparent; 
+}
+#accessList ul .ui-btn-up-c, #accessList ul .ui-btn-hover-c:hover, #accessList ul .ui-btn-down-c{
+	border-left: none;
+    	border-right: none;
+	border-top: 1px solid #FFFFFF;
+    	border-bottom: 1px solid #C6C6C6;
+}
+#accessList ul .ui-btn-active {
+    background: linear-gradient(#C10000, #9E0000) repeat scroll 0 0 #B00000 !important;
+	background: -webkit-gradient(linear, left top, left bottom, from(#C10000), to(#9E0000)); /* Safari 4+, Chrome */
+	background: -webkit-linear-gradient(left top, left bottom, #C10000, #9E0000); /* Chrome 10+, Safari 5.1+, iOS 5+ */
+}
+
+
+#accessList .search{
+	border-bottom: 1px solid #C6C6C6;
+	display:block !important;
+	overflow:hidden;
+}
+
+
+#accessList .content ul li img { margin-left: 10px; }
+
+#accessList .search .ui-btn { float: left; }
+
+#accessList .main_panels .ui-btn-text h2 { font-size: 13px; white-space:normal; max-height: 32px; margin: 0 0 0.6em; }
+#accessList .main_panels .ui-btn-text .devicePrice { font-size: 14px; bottom: 10px; position: absolute;}
+
+
+/* -------------------- Responsive Design -------------------------- */
+
+.gridView .main_panels .ui-listview li { float: left; min-width: 0; width: 24.925%;}
+	
+@media all and (min-width: 460px) {
+	/* Change list view to grid view */
+	.gridView .main_panels .ui-listview li .ui-icon { display: none; }
+	#accessList .gridView .main_panels li .ui-btn-text img { float: none; height: 65%; margin: 0; max-height: none; max-width: none; position: relative; }
+	#accessList .gridView .main_panels li a { height: 200px; margin: 0 15px; padding: 0; text-align: center; }
+	#accessList .gridView .main_panels li .ui-btn-inner { border-right: 1px solid #C6C6C6; }
+	#accessList .gridView .main_panels li .infoWrapper h2 { text-align: left; }
+	
+	#accessList .gridView ul .ui-btn-up-c, #accessList .gridView ul .ui-btn-hover-c:hover, #accessList .gridView ul .ui-btn-down-c{
+		border-top: 1px solid #FFFFFF !important;
+    		border-bottom: 1px solid #C6C6C6 !important; 
+	}
+
+	
+}
+
+@media all and (min-width: 1060px) {
+	#accessList .gridView .main_panels li:nth-child(4n) .ui-btn-inner { border-right: none; }
+}
+
+@media all and (max-width: 1060px) and (min-width: 760px) {
+	.gridView .main_panels .ui-listview li { width: 33.333%; }
+	#accessList .gridView .main_panels li:nth-child(3n) .ui-btn-inner { border-right: none; }
+}
+
+@media all and (max-width: 760px) and (min-width: 460px) {
+	.gridView .main_panels .ui-listview li { width: 49.95%; }
+	#accessList .gridView .main_panels li:nth-child(2n) .ui-btn-inner { border-right: none; }
+}
+
+@media all and (max-width: 460px) {
+	
+	#accessList .gridView li { width: 50%; float: left; }
+	#accessList .gridView li:nth-child(odd) .ui-btn-inner { border-right: 1px solid #C6C6C6; }
+	#accessList .gridView li .ui-icon { display: none; }
+	#accessList .gridView li a { padding: 0; height: 200px; text-align: center; margin: 0 15px; }
+	#accessList .gridView li .ui-btn-text img { height: 65%; float: none; position: relative; max-height: none; max-width: none; margin: 0; }
+	#accessList .gridView li .ui-btn-text .devicePrice { bottom: 7px; position: absolute; }
+	#accessList .gridView li .infoWrapper { text-align: left; }
+
+}

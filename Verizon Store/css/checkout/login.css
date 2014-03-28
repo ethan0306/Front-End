@@ -1,0 +1,63 @@
+#login .login-field.pw input{
+	border-top: 0px solid !important;
+}
+#login .login-field .ui-input-search, #login .login-field.pw input{
+	background: none repeat scroll 0 0 #FFFFFF;
+	padding: 0;	
+	box-shadow: none;
+	margin: 0;
+	border: 1px solid rgba(0, 0, 0, 0.184);
+	border-radius: 0;
+}
+#login .login-field  input.ui-input-text{
+	padding: 11px 11px 12px;
+    	font-size: 14px;
+    	line-height: 18px;
+	margin: 0;
+}
+.login-container .user_login, .login-container .guest_login{
+	padding-top: 16px;
+}
+
+/**** GL *****/
+
+
+#login-container{
+	padding:10px 0px 10px;
+}
+
+#login #spliter{
+	padding:10px 0px 10px;
+}
+
+#login #spliter div:nth-child(2){
+	border-bottom: none;
+	font-size: 18px;
+    text-align: center;
+}
+
+#login #spliter div{
+	height:20px;
+	float:left;
+	width:33%;
+	border-bottom: solid 2px;
+}
+
+
+#login #spliter .or{
+	position: absolute;
+	top:5px;
+}
+
+#login .login-container{
+    	margin: 50px auto;
+}
+
+#login .ui-icon-searchfield::after{
+        display:none !important;
+    }
+	
+ #login .ui-link {
+    text-decoration: none;
+}
+
