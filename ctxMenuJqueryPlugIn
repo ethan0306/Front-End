@@ -1,0 +1,227 @@
+/* PlugIn code */
+(function($, window) {
+    "use strict";
+
+    var isInctxMenu = false;
+    var ctxItem = function(option) {
+        var temp = option.template ? option.template : "<span class='{icon}'/><span>{text}</span>";
+        this.option = option;
+        this.$elem = (option.type === "splitLine") ? $(document.createElement('div')).addClass("b-m-split") : $(document.createElement('div')).addClass("b-m-item");
+        if (option.id) {
+            this.$elem.attr('id', option.id);
+        }
+
+        this.hasGroup = option.items && option.items.length > 0;
+        if (option.type !== "splitLine") {
+            var html = temp.replace(/\{\w+\}/g, function() {
+                return option[arguments[0].slice(1, -1)];
+            });
+            this.$elem.html(html);
+
+            if (option.disable) {
+                this.$elem.attr("class", "b-m-idisable");
+            }
+
+            if (this.hasGroup) {
+                this.panel = new ctxPanel(option);
+                this.$elem.append('<span class="glyphicon glyphicon-chevron-right">');
+            } else {
+                if (!this.option.disable) {
+                    this.$elem.css("cursor", "pointer");
+                }
+
+                this.$elem.click(
+                    $.proxy(
+                        function(e) {
+                            if (!this.option.disable) {
+                                if ($.isFunction(option.action)) {
+                                    option.action.call(this);
+                                }
+                            }
+                            return false;
+                        },
+                        this));
+            } //end if
+            this.$elem.hover($.proxy(overItem, this), $.proxy(outItem, this));
+        }
+
+        //show menu group at specified position
+        this.showSubmenu = function() {
+            this.panel.showPanel(this.$elem.offset(), this.$elem.outerWidth());
+            this.parentPanel.showingPanel = this.panel;
+        }
+    }
+
+    var ctxPanel = function(option) {
+        this.$elem = $(document.createElement('div')).addClass("b-m-mpanel").css("display", "none");
+        this.$elem.width(option.width);
+        this.$elem.addClass(option.menuClass);
+        $("body").append(this.$elem);
+        var self = this;
+        $.each(option.items, function(idx, val) {
+            var item = new ctxItem(val);
+            item.parentPanel = self;
+            self.$elem.append(item.$elem);
+        });
+        this.showPanel = function(pos, width) {
+            var bwidth = $(document).width(),
+                bheight = $(document).height(),
+                mwidth = this.$elem.outerWidth(),
+                mheight = this.$elem.outerHeight();
+            pos.left = (pos.left + width + mwidth > bwidth) ? (pos.left - mwidth < 0 ? 0 : pos.left - mwidth) : pos.left + width;
+            pos.top = (pos.top + mheight > bheight) ? (pos.top - mheight + (width > 0 ? 25 : 0) < 0 ? 0 : pos.top - mheight + (width > 0 ? 25 : 0)) : pos.top;
+            this.$elem.css(pos).show();
+        };
+
+        var self = this;
+        this.$elem.hover(
+            function(e) {
+                isInctxMenu = true;
+            },
+            function(e) {
+                isInctxMenu = false;
+                window.setTimeout(
+                    function() {
+                        if (self.showingPanel) {
+                            self.showingPanel.$elem.hide();
+                        }
+
+                        if (!isInctxMenu) {
+                            $(".b-m-mpanel").hide();
+                        }
+                    },
+                    200);
+            });
+    }
+
+    var overItem = function(e) {
+        isInctxMenu = true;
+        if (this.parentPanel.showingPanel) {
+            this.parentPanel.showingPanel.$elem.hide();
+        }
+
+        if (this.option.disable)
+            return false;
+        //has sub items
+        if (this.hasGroup) {
+            this.showSubmenu();
+            // showMenuGroup.apply(groups[this.aliasx], [pos, width]);
+        }
+        this.$elem.addClass("b-m-ifocus");
+        return false;
+    };
+    //menu loses focus
+    var outItem = function(e) {
+        if (this.option.disable)
+            return false;
+        this.$elem.removeClass("b-m-ifocus");
+        return false;
+    };
+
+    $.fn.contextmenu = function(option) {
+        var rootPanel = new ctxPanel(option);
+        $(this).hover(
+            function(e) {
+                if (option.onShow && $.isFunction(option.onShow)) {
+                    rootPanel.onShow = $.proxy(option.onShow, rootPanel);
+                }
+                rootPanel.showPanel({
+                    left: e.pageX,
+                    top: e.pageY
+                }, 0);
+                return false;
+            },
+            function(e) {
+                isInctxMenu = false;
+                window.setTimeout(
+                    function() {
+                        if (!isInctxMenu) {
+                            $(".b-m-mpanel").hide();
+                        }
+                    },
+                    200);
+            });
+    }
+})(jQuery, window);
+
+/* testing code */
+$().ready(function() {
+    var option = {
+        width: 150,
+        items: [{
+            text: "Item One",
+            disable: true,
+            icon: "glyphicon glyphicon-minus",
+            action: menuAction
+        }, {
+            text: "Item Two",
+            icon: "glyphicon glyphicon-minus",
+            action: menuAction
+        }, {
+            text: "Item Three",
+            icon: "glyphicon glyphicon-minus",
+            action: menuAction
+        }, {
+            type: "splitLine"
+        }, {
+            text: "Group One",
+            icon: "glyphicon glyphicon-plus",
+            type: "group",
+            width: 170,
+            items: [{
+                text: "Group Three",
+                icon: "glyphicon glyphicon-plus",
+                type: "group",
+                width: 190,
+                items: [{
+                    text: "Group3 Item One",
+                    icon: "glyphicon glyphicon-minus",
+                    action: menuAction
+                }, {
+                    text: "Group3 Item Tow",
+                    icon: "glyphicon glyphicon-minus",
+                    action: menuAction
+                }]
+            }, {
+                text: "Group Two Item1",
+                icon: "glyphicon glyphicon-minus",
+                action: menuAction
+            }, {
+                text: "Group Two Item1",
+                icon: "glyphicon glyphicon-minus",
+                action: menuAction
+            }, {
+                text: "Group Two Item1",
+                icon: "glyphicon glyphicon-minus",
+                action: menuAction
+            }]
+        }, {
+            type: "splitLine"
+        }, {
+            text: "Item Four",
+            icon: "glyphicon glyphicon-minus",
+            action: menuAction
+        }, {
+            text: "Group Three",
+            icon: "glyphicon glyphicon-minus",
+            type: "group",
+            width: 180,
+            items: [{
+                text: "Item One",
+                icon: "glyphicon glyphicon-minus",
+                action: menuAction
+            }, {
+                text: "Item Two",
+                icon: "glyphicon glyphicon-minus",
+                action: menuAction
+            }]
+        }],
+    };
+
+    function menuAction() {
+        alert(this.option.text);
+    }
+
+    $("#target").contextmenu(option);
+    $("#target2").contextmenu(option);
+});
